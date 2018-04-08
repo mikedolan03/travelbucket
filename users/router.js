@@ -38,6 +38,7 @@ if(nonStringField) {
 }
 
 //trimming logic here
+let {username, password, firstName = '', lastName = ''} = req.body;
 
 //check is the username is taken already
 return User.find({username})

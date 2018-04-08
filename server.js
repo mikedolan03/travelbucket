@@ -1,12 +1,12 @@
 'use strict'
-require('dotenv').config();
+//require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 
-const { router: usersRouter } = require('./users');
-const { router: authRouter, localStategy, jwtStrategy} = require('./auth');
+const { router: userRouter } = require('./users');
+//const { router: authRouter, localStategy, jwtStrategy} = require('./auth');
 
 mongoose.Promise = global.Promise;
 
@@ -18,19 +18,20 @@ app.use(morgan('common'));
 
 //example had cors stuff here... 
 
-passport.use(localStategy);
-passport.use(jwtStategy);
+//passport.use(localStategy);
+//passport.use(jwtStategy);
 
 app.use('/users/', userRouter);
-app.use('/auth/', authRouter);
+//app.use('/auth/', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false});
 
-app.get('/protected', jwtAuth, (req, res) => {
+/*app.get('/protected', jwtAuth, (req, res) => {
  return res.json({
   data: 'rosebud'
  }); 
 });
+*/
 
 app.use('*', (req, res) => {
  return res.status(404).json({message: 'Not found'});
@@ -40,13 +41,13 @@ let server;
 
 function runServer() {
  return new Promise((resolve, reject) => { 
-  mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
+  mongoose.connect(DATABASE_URL, err => {
    if (err) {
    	return reject(err);
    }
-   server = app;
+   server = app
     .listen(PORT, () => { 
-     console.log('Your app is listening on port ${PORT}');
+     console.log(`Your app is listening on port ${PORT}`);
      resolve();
     })
     .on('error', err => {
