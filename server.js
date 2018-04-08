@@ -1,12 +1,12 @@
-'use strict'
-//require('dotenv').config();
+'use strict';
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 
 const { router: userRouter } = require('./users');
-//const { router: authRouter, localStategy, jwtStrategy} = require('./auth');
+const { router: authRouter, localStrategy, jwtStrategy} = require('./auth');
 
 mongoose.Promise = global.Promise;
 
@@ -18,20 +18,20 @@ app.use(morgan('common'));
 
 //example had cors stuff here... 
 
-//passport.use(localStategy);
-//passport.use(jwtStategy);
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 app.use('/users/', userRouter);
-//app.use('/auth/', authRouter);
+app.use('/auth/', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false});
 
-/*app.get('/protected', jwtAuth, (req, res) => {
+app.get('/protected', jwtAuth, (req, res) => {
  return res.json({
   data: 'rosebud'
  }); 
 });
-*/
+
 
 app.use('*', (req, res) => {
  return res.status(404).json({message: 'Not found'});
