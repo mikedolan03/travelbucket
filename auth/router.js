@@ -14,7 +14,6 @@ const createAuthToken = function(user) {
  	subject: user.username,
  	expiresIn: config.JWT_EXPIRY,
  	algorithm: 'HS256'
-
  });
 };
 
