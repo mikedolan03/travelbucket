@@ -33,6 +33,8 @@ passport.use(jwtStrategy);
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 
+app.use(express.static('public'));
+
 const jwtAuth = passport.authenticate('jwt', { session: false});
 
 app.get('/api/protected', jwtAuth, (req, res) => {
