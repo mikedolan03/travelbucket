@@ -1,12 +1,12 @@
-'use strict'
-//require('dotenv').config();
+'use strict';
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 
-const { router: userRouter } = require('./users');
-//const { router: authRouter, localStategy, jwtStrategy} = require('./auth');
+const { router: usersRouter } = require('./users');
+const { router: authRouter, localStrategy, jwtStrategy} = require('./auth');
 
 mongoose.Promise = global.Promise;
 
@@ -16,30 +16,41 @@ const app = express();
 
 app.use(morgan('common'));
 
-//example had cors stuff here... 
+//example had cors stuff here...
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
+}); 
 
-//passport.use(localStategy);
-//passport.use(jwtStategy);
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
-app.use('/users/', userRouter);
-//app.use('/auth/', authRouter);
+app.use('/api/users/', usersRouter);
+app.use('/api/auth/', authRouter);
+
+app.use(express.static('public'));
 
 const jwtAuth = passport.authenticate('jwt', { session: false});
 
-/*app.get('/protected', jwtAuth, (req, res) => {
+app.get('/api/protected', jwtAuth, (req, res) => {
  return res.json({
-  data: 'rosebud'
+  data: 'super secret data'
  }); 
 });
-*/
+
 
 app.use('*', (req, res) => {
- return res.status(404).json({message: 'Not found'});
+ return res.status(404).json({message: 'Not found *'});
   });
 
 let server;
 
-function runServer() {
+function runServer(databaseURL, port = PORT) {
  return new Promise((resolve, reject) => { 
   mongoose.connect(DATABASE_URL, err => {
    if (err) {
@@ -73,7 +84,7 @@ function closeServer(){
 }
 
 if(require.main === module) {
-	runServer().catch(err => console.error(err));
+	runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
 module.exports = { app, runServer, closeServer};
