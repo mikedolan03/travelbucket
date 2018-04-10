@@ -31,9 +31,12 @@ $.ajax({
 
 function login() {
 
-var data = {};
-data.username = "jenny";
-data.password = "bob";
+let data = {};
+
+data.username = $('.username').val();
+data.password = $('.password').val();
+//data.username = "jenny";
+//data.password = "bob";
 
 /*
 //this does not work not sure why tho... 
@@ -51,20 +54,24 @@ $.ajax({
  success: function(data) {
 		   console.log('success in ajax');
 		   console.log(JSON.stringify(data));
-		   $('.user-token').text(data.authToken);
+		   $('.user-status').text('logging in');
 
-		   $.ajax({
-			 type: 'POST',
-			 data: JSON.stringify({"authToken": data.authToken}),
+			$.ajax({
+			 type: 'GET',
+			 data: {},
+			 beforeSend: function (xhr){ 
+			 	console.log(data.authToken);
+        	 xhr.setRequestHeader('Authorization', ('BEARER '+ data.authToken)); 
+    		 },
 			 contentType: 'application/json',
 			 url: '/api/protected',						
 			 success: function(data) {
 					   console.log('success in protected');
 					   console.log(data);
-					   $('.user-token').text(data.authToken);
+					   $('.user-status').text('Logged In');
 			    	  }
 	
- });
+ 			});
 
     	  }
 	
@@ -72,13 +79,43 @@ $.ajax({
 
 
 
-  }
+}
+
+function createAccount() {
+	console.log('creating account');
+	
+	let data = {};
+
+	data.username = $('.new-username').val();
+	data.password = $('.new-password').val();
+	data.firstName = $('.first-name').val();
+	data.lastName = $('.last-name').val();
+
+	$.ajax({
+		
+	 type: 'POST',
+	 data: JSON.stringify(data),
+	 contentType: 'application/json',
+	 url: '/api/users',						
+	 success: function(data) {
+			   console.log('success in ajax');
+			   console.log(JSON.stringify(data));
+			   $('.user-status').text('done creating an account- try logging in!');
+
+
+	  		  }
+	});
+}
 
 $(function() {
   //getCount();
-  $('form').submit(function(event) {
+  $('.login-form').submit(function(event) {
     event.preventDefault();
     login();
+  });
+  $('.create-account-form').submit(function(event) {
+    event.preventDefault();
+    createAccount();
   });
 
 });

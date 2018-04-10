@@ -38,7 +38,7 @@ if(nonStringField) {
 }
 
 //trimming logic here
-let {username, password, firstName = '', lastName = ''} = req.body;
+let {username, password, firstName, lastName} = req.body;
 
 //check is the username is taken already
 return User.find({username})
@@ -77,7 +77,15 @@ return User.find({username})
 router.get('/', (req, res) => {
 	return User.find()
 	 .then(users => res.json(users.map(user=> user.serialize())))
-	 .catch(err => res.status(500).json({message: 'Internal server error'}));
+	 .catch(err => res.status(500).json({message: 'Internal server error in get'}));
 });
+
+router.delete('/:id', (req, res) => {
+
+  User
+    .findByIdAndRemove(req.params.id)
+    .then( user => res.status(204).end())
+    .catch(err => res.status(500).json({message: 'Internal server error in delete'}));
+ });
 
 module.exports = {router};
