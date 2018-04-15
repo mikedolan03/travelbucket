@@ -62,7 +62,7 @@ function runServer(databaseURL, port = PORT) {
      resolve();
     })
     .on('error', err => {
-    	mongoose.disconect();
+    	mongoose.disconnect();
     	reject(err);
     });
   });	
