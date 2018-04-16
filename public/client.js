@@ -33,11 +33,13 @@ var LOCATIONS = {
 			"reviews" : [
 				{
 					"userId": "468", 
+					"username": "Joe", 
 					"content" : "Epic trip!",
 					"starRating" : "5"
 				},
 				{
 					"userId": "357", 
+					"username": "Bob", 
 					"content" : "Great food.",
 					"starRating" : "4"
 				}
@@ -50,11 +52,13 @@ var LOCATIONS = {
 			"reviews" : [
 				{
 					"userId": "123", 
+					"username": "Phil", 
 					"content" : "great place",
 					"starRating" : "3"
 				},
 				{
 					"userId": "321", 
+					"username": "Hughe", 
 					"content" : "cool scene",
 					"starRating" : "4"
 				}
@@ -65,12 +69,14 @@ var LOCATIONS = {
 			"city":"Lima",
 			"reviews" : [
 				{
-					"userId": "567", 
+					"userId": "567",
+					"username": "Mike", 
 					"content" : "great architecture",
 					"starRating" : "5"
 				},
 				{
 					"userId": "789", 
+					"username": "Pete", 
 					"content" : "second dryest world capital!",
 					"starRating" : "5"
 				}
@@ -91,6 +97,15 @@ function getUserList (callbackFunction) {
 
 }
 
+//this function will eventually be an ajax call to query the database
+function getLocations (callbackFunction) {
+
+	setTimeout(function() {
+		callbackFunction(LOCATIONS)
+	}, 1);
+
+}
+
 function showUserList(data){
 
  $('body').append ('<ul>');
@@ -105,11 +120,29 @@ function showUserList(data){
 
 }
 
+function showLocationList(data){
+
+ $('body').append ('<ul>');
+	
+ for (let i = 0; i < data.locations.length; i++) {
+	$('body').append (
+	'<li>' +data.locations[i].city + ' ' + data.locations[i].country + ' Review: '+data.locations[i].reviews[0].content +' by ' +data.locations[i].reviews[0].username + '</li>');
+ }
+
+ $('body').append ('</ul>');
+
+
+}
+
 function getAndDisplayUserList() {
 
 	getUserList(showUserList);
 }
 
+function getAndDisplayLocationList() {
+
+	getLocations(showLocationList);
+}
 //----------------login code
 
 function login() {
@@ -194,7 +227,7 @@ $(function() {
   //getCount();
 
 getAndDisplayUserList();
-
+getAndDisplayLocationList();
   $('.login-form').submit(function(event) {
     event.preventDefault();
     login();
