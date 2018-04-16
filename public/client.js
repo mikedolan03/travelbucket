@@ -1,33 +1,116 @@
-// client-side js
-/*function getCount() {
 
-/*$.post( '/api/auth/login', 
-	{ "username": "jenny", "password": "bob" },
-	function(data) {
-    $('.user-token').text(data);
-  }  
-  );*/
+var USER_LIST = {
+	"userList" : [
+	{
+		"locId": "12345",
+		"country": "Spain",
+		"city": "Barcelona",
+		"visited": "false"
+	},
+	{
+		"locId": "123456",
+		"country": "USA",
+		"city": "New York",
+		"visited": "false"
+	},
+		{
+		"locId": "1234567",
+		"country": "Peru",
+		"city": "Lima",
+		"visited": "true"
+	},
 
-/*$.get( '/api/users', function(data) {
-    $('.user-token').text(data[0].username);
-  }  );
-  
+	]
 
-//  $.get('/api/auth/login', function(data) {
-  //  $('.user-token').text(data);
-  //});
+}
 
-$.ajax({
-  type: "POST",
-  url: '/api/auth/login',
-  data: { "username": "jenny", "password": "bob" },
-  success: function(data) {
-    $('.user-token').text(data);
-  },
-  dataType: jSON
-});
+var LOCATIONS = {
+	"locations" : [
+		{
+			"locId": "12345", 
+			"country": "Spain",
+			"city":"Barcelona",
+			"reviews" : [
+				{
+					"userId": "468", 
+					"content" : "Epic trip!",
+					"starRating" : "5"
+				},
+				{
+					"userId": "357", 
+					"content" : "Great food.",
+					"starRating" : "4"
+				}
+			]
+		},
+		{
+			"locId": "123456",
+			"country": "USA",
+			"city":"New York",
+			"reviews" : [
+				{
+					"userId": "123", 
+					"content" : "great place",
+					"starRating" : "3"
+				},
+				{
+					"userId": "321", 
+					"content" : "cool scene",
+					"starRating" : "4"
+				}
+			]
+		},
+		{
+			"country": "Peru",
+			"city":"Lima",
+			"reviews" : [
+				{
+					"userId": "567", 
+					"content" : "great architecture",
+					"starRating" : "5"
+				},
+				{
+					"userId": "789", 
+					"content" : "second dryest world capital!",
+					"starRating" : "5"
+				}
+			]
+		}
+	]
+}
 
-} */
+//travel list
+//-locId, country, city, visited 
+
+//this function will eventually be an ajax call to query the database
+function getUserList (callbackFunction) {
+
+	setTimeout(function() {
+		callbackFunction(USER_LIST)
+	}, 1);
+
+}
+
+function showUserList(data){
+
+ $('body').append ('<ul>');
+	
+ for (let i = 0; i < data.userList.length; i++) {
+	$('body').append (
+	'<li>' +data.userList[i].city + ' ' + data.userList[i].country + '</li>');
+ }
+
+ $('body').append ('</ul>');
+
+
+}
+
+function getAndDisplayUserList() {
+
+	getUserList(showUserList);
+}
+
+//----------------login code
 
 function login() {
 
@@ -109,6 +192,9 @@ function createAccount() {
 
 $(function() {
   //getCount();
+
+getAndDisplayUserList();
+
   $('.login-form').submit(function(event) {
     event.preventDefault();
     login();
