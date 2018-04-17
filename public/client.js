@@ -25,7 +25,7 @@ let USER_LIST = {
 		"visited": "false"
 	},
 		{
-		"locId": "1234567",
+		"locId": "55123456",
 		"country": "Peru",
 		"city": "Lima",
 		"visited": "true"
@@ -173,7 +173,7 @@ function getUserList (callbackFunction) {
 function showUserList(data){
 
  //$('body').append ('<ul>');
-	
+	$('.list-set').html(" ");
  for (let i = 0; i < data.userList.length; i++) {
  	let toggle = " ";
  	console.log(data.userList[i].visited);  
@@ -185,12 +185,12 @@ function showUserList(data){
  	}
 
 	$('.list-set').append (
-  `<div><input type="checkbox" id="${data.userList[i].locId}" name="location" value="${data.userList[i].locId}" ${toggle}>
+  `<div><input type="checkbox" id="${data.userList[i].locId}" name="location" value="${data.userList[i].locId}" data="${data.userList[i].locId}" ${toggle}>
    <label for="${data.userList[i].locId}">${data.userList[i].city}, ${data.userList[i].country}</label></div>`
   	);
  }
 
- $('body').append ('</ul>');
+ //$('body').append ('</ul>');
 
 
 }
@@ -205,15 +205,22 @@ function getLocations (callbackFunction) {
 }
 
 function showLocationList(data){
-
-	 $('.featured-places').append ('<ul>');
+	$('.featured-places').html(" ");
+	$('.featured-places').append ('<ul>');
 		
-	 for (let i = 0; i < data.locations.length; i++) {
-		$('.featured-places').append (
-		'<li>' +data.locations[i].city + ' ' + data.locations[i].country + '   Review: '+data.locations[i].reviews[0].content +' by ' +data.locations[i].reviews[0].username + '</li>');
-	 }
+	for (let i = 0; i < data.locations.length; i++) {
 
-	 $('.featured-places').append ('</ul>');
+ 		if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
+	        	  //do nothing! 
+	        	  } else {
+
+		$('.featured-places').append (
+		'<li>' +data.locations[i].city + ' ' + data.locations[i].country + '   Review: '+data.locations[i].reviews[0].content +' by ' +data.locations[i].reviews[0].username);
+		$('.featured-places').append (`<input type="button" class="add-feature-button" name="${data.locations[i].longName}" data="${data.locations[i].locId}" value="Add to list"></li>`);
+		}
+	}
+
+	$('.featured-places').append ('</ul>');
 
 
 }
@@ -231,6 +238,7 @@ function getAndDisplayLocationList() {
 
 function userSearch(searchTerm) {
 console.log("search for ", searchTerm);
+$('.search-results').html(" ");
 $('.search-results').append (`<ul>`);
 
  	getLocations ( function(data) {
@@ -240,9 +248,17 @@ $('.search-results').append (`<ul>`);
 		for (var i=0 ; i < data.locations.length ; i++)
 		{
 	    	if ( data.locations[i][field].includes(searchTerm) ) {
-	        	results.push(data.locations[i]);
-	        	$('.search-results').append (`<li>${data.locations[i].longName}</li> 
+	        	//results.push(data.locations[i]);
+
+	        	//dont show locations already on the users bucket list
+	        	  if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
+	        	  
+	        	  } else {
+	        	  	console.log("adding ", data.locations[i].longName);
+
+	        		$('.search-results').append (`<li>${data.locations[i].longName}</li> 
 	        		<input type="button" class="result-button" name="${data.locations[i].longName}" data="${data.locations[i].locId}" value="Add to list">`);
+	        		}
 	    	}
 		}
 
@@ -354,7 +370,20 @@ $(function() {
   //getCount();
 
 	getAndDisplayUserList();
-	getAndDisplayLocationList();
+	
+	$('.list-set').on('click', function(event) {
+	  		console.log('checked button clicked');
+	  		event.preventDefault();
+	  		let locChecked = event.target.getAttribute('data');
+	  		const listItem = USER_LIST.userList.find(item => item.locId === locChecked);
+	  		listItem.visited = "true"; 
+	  		//event.target.prop("checked", true );  //needs to be a straight javascript setProperty? 
+	  		console.log("user list: ", USER_LIST);
+	  	});
+
+
+
+	
 	//userSearch("USA"); 
 	  $('.login-form').submit(function(event) {
 	    event.preventDefault();
@@ -365,8 +394,13 @@ $(function() {
 	    createAccount();
 	  });
 
+
+//---this button loads the Add View
 	  $('.add-button').click(function(event) {
 	  	event.preventDefault();
+
+	  	getAndDisplayLocationList();
+
 	  	$('.user-list-section').addClass('hide');
 	  	$('.add-section').removeClass('hide');
 
@@ -376,18 +410,50 @@ $(function() {
 	  		userSearch($('.search-box').val());
 	  	});
 
+	  	$('.featured-places').on('click', function(event) {
+	  		console.log('add featured button clicked');
+	  		event.preventDefault();
+	  		$('.featured-places').off('click'); 
+	  		let locAddedId = event.target.getAttribute('data');
+	  		console.log("added ",locAddedId);
+	  		addLocationToList(locAddedId);
+	  		$('.modal-added-section').removeClass('hide');
+
+	  		//ok button event handler
+	  		$('.add-modal-ok').click(function(event) {
+	  		event.preventDefault();
+	  		$('.featured-places').html(" ");
+	  		getAndDisplayLocationList();
+	  		$('.modal-added-section').addClass('hide');
+	  		});
+
+	  	});
+
 
 	  	$('.search-results').on('click', function(event) {
 	  		console.log('add button clicked');
 	  		event.preventDefault();
+	  		$('.search-results').off('click'); 
 	  		let locAddedId = event.target.getAttribute('data');
 	  		console.log("added ",locAddedId);
 	  		addLocationToList(locAddedId);
+	  		$('.modal-added-section').removeClass('hide');
+
+	  		//ok button event handler
+	  		$('.add-modal-ok').click(function(event) {
+	  		event.preventDefault();
+	  		$('.search-results').html(" ");
+	  		userSearch($('.search-box').val());
+	  		$('.modal-added-section').addClass('hide');
+	  		});
+
 	  	});
 
+//-----this back button will reload the user List View
 	  	$('.back-button').click(function(event) {
 	  	event.preventDefault();
 	  	$('.user-list-section').removeClass('hide');
+	  	$('.search-results').html(" ");
 	  	$('.add-section').addClass('hide');
 	  	$('.list-set').html("");
 	  	getAndDisplayUserList();
