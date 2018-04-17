@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Travel Bucket</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
 <header>
@@ -9,30 +10,64 @@
     </header>
 
     <main>
-      <p>You are currently: <span class="user-status">not logged in.</span></p>
-      <form class="login-form">
-      	<legend>Log In-</legend>
-      	<label>Username:
-      	<input type="text" name="username" class="username"></label>
-      	<label>Password:
-      	<input type="password" name="password" class="password"></label>
-        <button type="submit" class="login-button">Login</button>
-      </form>
-      <br>
-      <h2>Not a member? Join travel bucket!</h2>
-     <form class="create-account-form">
-     	<legend>Create an account</legend>
-      	<label>Username:
-      	<input type="text" name="username" class="new-username"></label>
-      	<label>Password:
-      	<input type="password" name="password" class="new-password"></label>
-      	<label>First Name:
-      	<input type="text" name="firstname" class="first-name"></label>
-      	<label>Last Name:
-      	<input type="text" name="lastname" class="last-name"></label>
-        <button type="submit" class="create-button">Create</button>
-      </form>
+      <section class="user-list-section">
+        <h2>User's Bucket list</h2>
+        <form name="add-form"> 
+          <input type="button" name="add-button" class="add-button" value="Add new location to list"></form>
+        <form name="bucketlist-form" class="bucketlist-form">
+          <br>
+          <legend>Check off places that you've been</legend>
+          <fieldset class="list-set">
+            
+          </fieldset>
+        </form>
+      </section>
 
+      <section class="add-section hide">
+        <header>
+          <h2>Find a new place to add to your bucket list...</h2>
+        </header>
+        <form name="back-to-list"> 
+          <input type="button" name="back-button" class="back-button" value="Go back to your Bucket List"></form>
+        <form>
+          <label for="search">Search: <input type="text" id="search" class="search-box" name="search"></label><input type="button" name="search-button" class="search-button" value="Search">
+        </form>
+        <h3>Search Results: </h3>
+        <div class="search-results">
+
+        </div>
+        <h3>Top Rated Places</h3>
+        <div class="featured-places">
+
+        </div>
+
+      </section>
+
+      <section class="hide">
+        <p>You are currently: <span class="user-status">not logged in.</span></p>
+        <form class="login-form">
+        	<legend>Log In-</legend>
+        	<label>Username:
+        	<input type="text" name="username" class="username"></label>
+        	<label>Password:
+        	<input type="password" name="password" class="password"></label>
+          <button type="submit" class="login-button">Login</button>
+        </form>
+        <br>
+        <h2>Not a member? Join travel bucket!</h2>
+       <form class="create-account-form">
+       	<legend>Create an account</legend>
+        	<label>Username:
+        	<input type="text" name="username" class="new-username"></label>
+        	<label>Password:
+        	<input type="password" name="password" class="new-password"></label>
+        	<label>First Name:
+        	<input type="text" name="firstname" class="first-name"></label>
+        	<label>Last Name:
+        	<input type="text" name="lastname" class="last-name"></label>
+          <button type="submit" class="create-button">Create</button>
+        </form>
+      </section>
     </main>
 
     <!-- Your web-app is https, so your scripts need to be too -->
