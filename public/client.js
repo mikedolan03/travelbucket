@@ -361,13 +361,13 @@ function login() {
 
 				$.ajax({
 				 type: 'GET',
-				 data: {},
+				 data: JSON.stringify(data),
 				 beforeSend: function (xhr){ 
 				 	console.log(data.authToken);
 	        	 xhr.setRequestHeader('Authorization', ('BEARER '+ data.authToken)); 
 	    		 },
 				 contentType: 'application/json',
-				 url: '/api/protected',						
+				 url: '/api/bucketlist',						
 				 success: function(data) {
 						   console.log('success in protected');
 						   console.log(data);
