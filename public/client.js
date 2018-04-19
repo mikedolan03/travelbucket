@@ -10,7 +10,7 @@
 //recommended locations below that
 
 
-let USER_LIST = {
+let USER_LIST = {    //change to bucket_list
 	"userList" : [
 	{
 		"locId": "12345",
@@ -162,6 +162,13 @@ let LOCATIONS = {
 //-locId, country, city, visited 
 
 //this function will eventually be an ajax call to query the database
+
+//use a promise here
+//handle the failure here before success
+//write a wrapper called get data from api - shows modal that says loading then
+//hides it once loaded
+
+//this function will eventually be an ajax call to query the database
 function getUserList (callbackFunction) {
 
 	setTimeout(function() {
@@ -170,10 +177,38 @@ function getUserList (callbackFunction) {
 
 }
 
+function wrapperExample (requestObj) {
+
+	$('.loading-modal').removeClass('hide');
+console.log("loading");
+
+	return $.ajax( requestObj )
+  	  	.always(function() {
+    	$('.loading-modal').addClass('hide');
+    	console.log("done loading");
+  		});
+
+
+	/*promise = new promise ((resolve, reject) => {
+		setTimeout(function() {
+		resolve(USER_LIST);
+	}, 1);
+
+		promise.finally( function() {  
+			$('.loading-modal').addClass('hide');
+		});
+
+	} );  */
+
+	
+
+}
+
 function showUserList(data){
 
  //$('body').append ('<ul>');
 	$('.list-set').html(" ");
+
  for (let i = 0; i < data.userList.length; i++) {
  	let toggle = " ";
  	console.log(data.userList[i].visited);  
@@ -223,6 +258,15 @@ function showLocationList(data){
 	$('.featured-places').append ('</ul>');
 
 
+}
+
+function getAndDisplayUserListPromiseExample() {
+
+	getUserList(showUserList)
+	.fail(function(error) { console.log("error", error); } )
+	.done (function(data) {
+	console.log("heres the userlist", data); 
+	})
 }
 
 function getAndDisplayUserList() {
@@ -373,12 +417,21 @@ $(function() {
 	
 	$('.list-set').on('click', function(event) {
 	  		console.log('checked button clicked');
-	  		event.preventDefault();
+	  		//event.preventDefault();
 	  		let locChecked = event.target.getAttribute('data');
 	  		const listItem = USER_LIST.userList.find(item => item.locId === locChecked);
 	  		listItem.visited = "true"; 
 	  		//event.target.prop("checked", true );  //needs to be a straight javascript setProperty? 
 	  		console.log("user list: ", USER_LIST);
+
+	  		$('.modal-added-section').removeClass('hide');
+
+	  		//ok button event handler
+	  		$('.add-modal-ok').click(function(event) {
+	  		event.preventDefault();
+	  		$('.modal-added-section').addClass('hide');
+	  		});
+
 	  	});
 
 
