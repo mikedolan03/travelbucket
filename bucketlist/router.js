@@ -13,14 +13,14 @@ router.get('/', (req, res) => {
 //console.log("req", req);
 
 BucketList
-	.find()
-	.then(lists => {
-		res.json(lists.map(list => list.serialize()));
-	})
-	.catch(err => { 
-		console.log(err);
-		res.status(500).json({error: 'oops'});
-	});
+	.findOne()
+    .then(BucketList => res.json({
+        BucketList
+    }))
+    .catch(err => {
+        console.error(err)
+        res.status(500).json({message: 'Something went wrong'})}
+    );
 
 //let username = req.user.username;
 /*

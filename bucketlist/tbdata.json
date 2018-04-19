@@ -1,0 +1,75 @@
+{"username" : "user", 
+	"BucketList": [
+	{
+		"locId": "12345",
+		"country": "Spain",
+		"city": "Barcelona",
+		"visited": "false"
+	},
+	{
+		"locId": "123456",
+		"country": "USA",
+		"city": "New York",
+		"visited": "false"
+	},
+		{
+		"locId": "55123456",
+		"country": "Peru",
+		"city": "Lima",
+		"visited": "true"
+	},
+	{
+		"locId": "1234345",
+		"country": "USA",
+		"city": "Washington, DC",
+		"visited": "false"
+	},
+	{
+		"locId": "12378456",
+		"country": "USA",
+		"city": "Atlanta",
+		"visited": "false"
+	},
+		{
+		"locId": "12345997",
+		"country": "USA",
+		"city": "Austin",
+		"visited": "true"
+	}
+	]
+}, 
+{
+	"username" : "user2", 
+	"BucketList": [
+	{
+		"locId": "12345",
+		"country": "Spain",
+		"city": "Barcelona",
+		"visited": "false"
+	},
+	{
+		"locId": "123456",
+		"country": "USA",
+		"city": "New York",
+		"visited": "false"
+	},
+	{
+		"locId": "1234345",
+		"country": "USA",
+		"city": "Washington, DC",
+		"visited": "false"
+	},
+	{
+		"locId": "12378456",
+		"country": "USA",
+		"city": "Atlanta",
+		"visited": "false"
+	},
+		{
+		"locId": "12345997",
+		"country": "USA",
+		"city": "Austin",
+		"visited": "true"
+	}
+	]
+} 

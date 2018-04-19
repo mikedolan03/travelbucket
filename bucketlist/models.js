@@ -2,18 +2,26 @@
 const mongoose = require('mongoose');
 
 const BucketListSchema = mongoose.Schema({
- country: {
- 	type: String,
- 	required: true,
-  },
- city: {
-  type: String,
-  },
- visited: {
-  type: String,
-  default: 'false',
- }
+	 username: {
+	 	type: String,
+	 	required: true,
+	  },
+	 BucketList: [ {
+	 	country: {
+	 	type: String,
+	 	required: true,
+	  },
+	 city: {
+	  type: String,
+	  },
+	 visited: {
+	  type: String,
+	  default: 'false',
+	 }
+
+	 }]
 });
+
 
 BucketListSchema.methods.serialize = function() {
 	return {
