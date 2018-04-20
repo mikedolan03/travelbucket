@@ -13,10 +13,11 @@ router.get('/', (req, res) => {
 //console.log("req", req);
 
 BucketList
-	.findOne()
-    .then(BucketList => res.json({
-        BucketList
-    }))
+	.findOne({user: req.user.id}).populate('user', 'firstName lastName username')
+    .then(list => res.json(
+        list
+        //BucketList
+    ))
     .catch(err => {
         console.error(err)
         res.status(500).json({message: 'Something went wrong'})}

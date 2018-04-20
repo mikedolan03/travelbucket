@@ -1,24 +1,24 @@
 'use strict'
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const BucketListSchema = mongoose.Schema({
-	 username: {
-	 	type: String,
-	 	required: true,
+	 user: {
+	 	type: Schema.ObjectId,
+	 	ref: 'User',
 	  },
-	 BucketList: [ {
+	 places: [ {
 	 	country: {
 	 	type: String,
 	 	required: true,
-	  },
-	 city: {
-	  type: String,
-	  },
-	 visited: {
-	  type: String,
-	  default: 'false',
-	 }
-
+	  	},
+	 	city: {
+	  	type: String,
+	  	},
+	 	visited: {
+	  	type: String,
+	  	default: 'false',
+	 	}
 	 }]
 });
 
@@ -32,5 +32,5 @@ BucketListSchema.methods.serialize = function() {
 	};
 };
 
-const BucketList = mongoose.model('BucketList', BucketListSchema);
+const BucketList = mongoose.model('bucketlist', BucketListSchema);
 module.exports = {BucketList};
