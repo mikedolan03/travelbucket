@@ -9,6 +9,7 @@
 //div for results
 //recommended locations below that
 
+let myToken; 
 
 let USER_LIST = {    //change to bucket_list
 	"userList" : [
@@ -209,10 +210,10 @@ function showUserList(data){
  //$('body').append ('<ul>');
 	$('.list-set').html(" ");
 
- for (let i = 0; i < data.userList.length; i++) {
+ for (let i = 0; i < data.places.length; i++) {
  	let toggle = " ";
- 	console.log(data.userList[i].visited);  
- 	if(data.userList[i].visited == "true") {
+ 	console.log(data.places[i].visited);  
+ 	if(data.places[i].visited == "true") {
  		console.log("checked");
  		toggle = "checked";
  	} else {
@@ -220,8 +221,8 @@ function showUserList(data){
  	}
 
 	$('.list-set').append (
-  `<div><input type="checkbox" id="${data.userList[i].locId}" name="location" value="${data.userList[i].locId}" data="${data.userList[i].locId}" ${toggle}>
-   <label for="${data.userList[i].locId}">${data.userList[i].city}, ${data.userList[i].country}</label></div>`
+  `<div><input type="checkbox" id="${data.places[i].locId}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
+   <label for="${data.places[i].locId}">${data.places[i].city}, ${data.places[i].country}</label></div>`
   	);
  }
 
@@ -358,7 +359,10 @@ function login() {
 			   console.log('success in ajax');
 			   console.log(JSON.stringify(data));
 			   $('.user-status').text('logging in');
+			   myToken = data.authToken;
 
+			   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist', showUserList);
+/*
 				$.ajax({
 				 type: 'GET',
 				 data: JSON.stringify(data),
@@ -372,9 +376,11 @@ function login() {
 						   console.log('success in protected');
 						   console.log(data);
 						   $('.user-status').text('Logged In');
+						   showUserList(data);
 				    	  }
 		
 	 			});
+	 			*/
 
 	    	  }
 		
@@ -382,6 +388,25 @@ function login() {
 
 
 
+}
+
+function getAPIData( callType='GET', data ={}, userToken, myUrl = '/api/bucketlist', callback) {
+
+	$.ajax({
+				 type: callType,
+				 data: JSON.stringify(data),
+				 beforeSend: function (xhr){ 
+				 	console.log(data.authToken);
+	        	 xhr.setRequestHeader('Authorization', ('BEARER '+ userToken)); 
+	    		 },
+				 contentType: 'application/json',
+				 url: myUrl,						
+				 success: function(data) {
+						   console.log('success in getting API');
+						   callback(data);
+				    	  }
+		
+	 			});
 }
 
 function createAccount() {
