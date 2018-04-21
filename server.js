@@ -7,6 +7,7 @@ const passport = require('passport');
 
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy} = require('./auth');
+const { router: bucketlistRouter} = require('./bucketlist');
 
 mongoose.Promise = global.Promise;
 
@@ -42,6 +43,8 @@ app.get('/api/protected', jwtAuth, (req, res) => {
   data: 'super secret data'
  }); 
 });
+
+app.use('/api/bucketlist', jwtAuth, bucketlistRouter);
 
 
 app.use('*', (req, res) => {
