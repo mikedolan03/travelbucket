@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const {BucketList} = require('./models');
-const {Place} = require('./models');
+
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ const jsonParser = bodyParser.json();
 
 //retrieve bucketlist of user
 router.get('/', (req, res) => {
-//console.log("req", req);
+console.log("req", req);
 
 BucketList
 	.findOne({user: req.user.id}).populate('user', 'firstName lastName username')
@@ -28,24 +28,7 @@ BucketList
 
 });
 
-//retrieve Places
-router.get('/places', (req, res) => {
-//console.log("req", req);
 
-Place
-	.find()
-    .then(place => res.json(
-        place
-        //BucketList
-    ))
-    .catch(err => {
-        console.error(err)
-        res.status(500).json({message: 'Something went wrong in places'})}
-    );
-
- 	console.log('getting places');
-
-});
 
 //add new location to bucket list
 router.post('/', (req, res) => {

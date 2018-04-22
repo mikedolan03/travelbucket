@@ -234,25 +234,28 @@ function showUserList(data){
 //this function will eventually be an ajax call to query the database
 function getLocations (callbackFunction) {
 
-	setTimeout(function() {
-		callbackFunction(LOCATIONS)
-	}, 1);
+	 getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/place', callbackFunction);
+
+	//setTimeout(function() {
+	//	callbackFunction(LOCATIONS)
+	//}, 1);
 
 }
 
 function showLocationList(data){
+	console.log("locations: ", data);
 	$('.featured-places').html(" ");
 	$('.featured-places').append ('<ul>');
 		
-	for (let i = 0; i < data.locations.length; i++) {
+	for (let i = 0; i < data.length; i++) {
 
- 		if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
+ 		if (USER_LIST.userList.find(item => item.locId === data[i]._id) ) {
 	        	  //do nothing! 
 	        	  } else {
 
 		$('.featured-places').append (
-		'<li>' +data.locations[i].city + ' ' + data.locations[i].country + '   Review: '+data.locations[i].reviews[0].content +' by ' +data.locations[i].reviews[0].username);
-		$('.featured-places').append (`<input type="button" class="add-feature-button" name="${data.locations[i].longName}" data="${data.locations[i].locId}" value="Add to list"></li>`);
+		'<li>' +data[i].city + ' ' + data[i].country + '   Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username);
+		$('.featured-places').append (`<input type="button" class="add-feature-button" name="${data[i].longName}" data="${data[i].locId}" value="Add to list"></li>`);
 		}
 	}
 
@@ -436,7 +439,7 @@ function getListofPlaces() {
 	//while the db is small we can pull all the places
 	//kinda just to see how it works
 	getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist', showUserList);
-	
+
 }
 
 function createAccount() {
