@@ -409,6 +409,36 @@ function getAPIData( callType='GET', data ={}, userToken, myUrl = '/api/bucketli
 	 			});
 }
 
+function addPlace() {
+
+	//user selected a place
+	//build a data object from the data of the place
+
+
+}
+
+function checkOffPlace() {
+//send a request to the bucket list to change the document entry visited = true
+}
+
+function removePlace() {
+//delete a place from the users bucket list
+}
+
+function searchPlaces() {
+
+//take search term
+//have the api give us the places that contain the term in either country or city
+
+}
+
+function getListofPlaces() {
+	//while the db is small we can pull all the places
+	//kinda just to see how it works
+	getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist', showUserList);
+	
+}
+
 function createAccount() {
 	console.log('creating account');
 	

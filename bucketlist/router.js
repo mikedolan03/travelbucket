@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const {BucketList} = require('./models');
+const {Place} = require('./models');
 
 const router = express.Router();
 
@@ -23,26 +24,26 @@ BucketList
         res.status(500).json({message: 'Something went wrong'})}
     );
 
-//let username = req.user.username;
-/*
-return BucketList.find({username})
-	.count()
-	.then(count => {
-		if(count <= 0) {
-			return Promise.reject({
-				code: 422,
-				reason: 'Validation Error',
-				message: 'Username not found',
-				location: 'finding bucketlist'
-			});
-		}
+ 	console.log('getting bucketlist');
 
-	})
-	//.then(bucketlist => res.json(bucketlist.serialize()))
-	.catch(err => res.status(400).json({message: 'Internal server error in get'}));
-*/
- 
-	console.log('getting bucketlist');
+});
+
+//retrieve Places
+router.get('/places', (req, res) => {
+//console.log("req", req);
+
+Place
+	.find()
+    .then(place => res.json(
+        place
+        //BucketList
+    ))
+    .catch(err => {
+        console.error(err)
+        res.status(500).json({message: 'Something went wrong in places'})}
+    );
+
+ 	console.log('getting places');
 
 });
 
