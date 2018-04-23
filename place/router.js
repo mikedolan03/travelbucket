@@ -30,8 +30,19 @@ Place
 */
 
 router.get('/', (req, res) => {
-//console.log("req", req);
-let searchTerm = 'New York';
+console.log("req", req.params.search);
+let searchTerm = "";
+console.log("query: ", JSON.stringify(req.query));
+let myquery = req.query;
+console.log(typeof myquery);
+console.log("myquery: ", myquery,  myquery['searchFor']);
+
+
+searchTerm = myquery.searchFor;
+
+console.log("term: ", searchTerm, myquery.searchFor	);
+
+
 Place
 	.find().or([{
 		'country': searchTerm
