@@ -42,13 +42,14 @@ searchTerm = myquery.searchFor;
 
 console.log("term: ", searchTerm, myquery.searchFor	);
 
+//let mySearch = new RegExp ('searchTerm', 'i');
 
 Place
 	.find().or([{
-		'country': searchTerm
+		'country': new RegExp('.*'+searchTerm+'.*', "i")
 	},
 	{
-		'city': searchTerm
+		'city': new RegExp('.*'+searchTerm+'.*', "i")
 	}])
 	.then(placelist => res.json (
 		placelist
