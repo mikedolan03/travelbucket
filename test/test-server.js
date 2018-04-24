@@ -48,6 +48,7 @@ describe ('logging in a user', function() {
 			.post('/api/auth/login')
 			.send(user)
 			.then(function(res) {
+				console.log(res);
 				//expect(res).to.be.json;
 				expect(res.body).to.be.a('object');
 				expect(res.body).to.include.keys('authToken');
