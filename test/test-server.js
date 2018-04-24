@@ -8,16 +8,25 @@ const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
+describe('BlogPost API resource', function() { 
+
+ before(function() {
+ 	return runServer(TEST_DATABASE_URL)
+ });
+
+ beforeEach(function() {
+  
+ });
+
+ afterEach(function() {
+   
+ });
+
+ after(function() {
+   return closeServer();
+ });
+
 describe('Landing Page', function() {
-
-	before(function() {
-		return runServer();
-	});
-
-	after(function() {
-		return closeServer();
-	});
-
 
 	it('should serve a static page and return 200', function() {
 		return chai.request(app)
@@ -31,14 +40,6 @@ describe('Landing Page', function() {
 });
 
 describe ('logging in a user', function() {
-
-	before(function() {
-		return runServer(TEST_DATABASE_URL);
-	});
-
-	after(function() {
-		return closeServer();
-	});
 
 	it('should log in a user and return a token', function() {
 
@@ -56,4 +57,6 @@ describe ('logging in a user', function() {
 				return(res.body.authToken);
 			})
 	});
+});
+
 });
