@@ -8,6 +8,7 @@ const passport = require('passport');
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy} = require('./auth');
 const { router: bucketlistRouter} = require('./bucketlist');
+const { router: placeRouter} = require('./place');
 
 mongoose.Promise = global.Promise;
 
@@ -46,10 +47,11 @@ app.get('/api/protected', jwtAuth, (req, res) => {
 
 app.use('/api/bucketlist', jwtAuth, bucketlistRouter);
 
+app.use('/api/place', jwtAuth, placeRouter);
 
 app.use('*', (req, res) => {
  return res.status(404).json({message: 'Not found *'});
-  });
+  }); 
 
 let server;
 

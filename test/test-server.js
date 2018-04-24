@@ -28,3 +28,30 @@ describe('Landing Page', function() {
 		});
 	});
 });
+
+describe ('logging in a user', function() {
+
+	before(function() {
+		return runServer();
+	});
+
+	after(function() {
+		return closeServer();
+	});
+
+	it('should log in a user and return a token', function() {
+
+		let user = {};
+		user.username = 'user';
+		user.password = 'pass';
+			return chai.request(app)
+			.post('/api/auth/login')
+			.send(user)
+			.then(function(res) {
+				expect(res).to.be.json;
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.include.keys('authToken');
+				return(res.body.authToken);
+			})
+	});
+});

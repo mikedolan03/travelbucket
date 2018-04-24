@@ -18,19 +18,14 @@ const BucketListSchema = mongoose.Schema({
 	 	visited: {
 	  	type: String,
 	  	default: 'false',
+	 	},
+	 	locId: {
+	 	 type: Schema.ObjectId,	
 	 	}
 	 }]
 });
 
 
-BucketListSchema.methods.serialize = function() {
-	return {
-		LocId: this._id,
-		country: this.country || '',
-		city: this.city || '',
-		visited: this.visited || ''
-	};
-};
-
 const BucketList = mongoose.model('bucketlist', BucketListSchema);
 module.exports = {BucketList};
+

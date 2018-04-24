@@ -232,27 +232,33 @@ function showUserList(data){
 }
 
 //this function will eventually be an ajax call to query the database
-function getLocations (callbackFunction) {
+function getLocations (searchTerm, callbackFunction) {
 
-	setTimeout(function() {
-		callbackFunction(LOCATIONS)
-	}, 1);
+	 getAPIData( callType='GET', data={searchFor:searchTerm}, myToken, myUrl = '/api/place', callbackFunction);
+
+	//setTimeout(function() {
+	//	callbackFunction(LOCATIONS)
+	//}, 1);
 
 }
 
 function showLocationList(data){
+	console.log("locations: ", data);
 	$('.featured-places').html(" ");
 	$('.featured-places').append ('<ul>');
 		
-	for (let i = 0; i < data.locations.length; i++) {
+	for (let i = 0; i < data.length; i++) {
 
- 		if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
+ 		if (USER_LIST.userList.find(item => item.locId === data[i]._id) ) {
 	        	  //do nothing! 
 	        	  } else {
+	        	  let locationsContent = '<li>';
+	        	  if(data[i].city) locationsContent += data[i].city + ' ';
+	        	  if(data[i].country) locationsContent += data[i].country + ' ';
+	        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
 
-		$('.featured-places').append (
-		'<li>' +data.locations[i].city + ' ' + data.locations[i].country + '   Review: '+data.locations[i].reviews[0].content +' by ' +data.locations[i].reviews[0].username);
-		$('.featured-places').append (`<input type="button" class="add-feature-button" name="${data.locations[i].longName}" data="${data.locations[i].locId}" value="Add to list"></li>`);
+		$('.featured-places').append (locationsContent);
+		$('.featured-places').append (`<input type="button" class="add-feature-button" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`);
 		}
 	}
 
@@ -272,13 +278,22 @@ function getAndDisplayUserListPromiseExample() {
 
 function getAndDisplayUserList() {
 
-	getUserList(showUserList);
+	getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/userlist', showUserList);
+
+	//getUserList(showUserList);
 }
 
 function getAndDisplayLocationList() {
 
+	getLocations("USA", showLocationList);
+}
+
+
+function getSearchLocationList() {
+
 	getLocations(showLocationList);
 }
+
 
 
 function userSearch(searchTerm) {
@@ -286,25 +301,30 @@ console.log("search for ", searchTerm);
 $('.search-results').html(" ");
 $('.search-results').append (`<ul>`);
 
- 	getLocations ( function(data) {
-		let results = [];
-		let field = "longName";
-		//let searchTerm = "new york";
-		for (var i=0 ; i < data.locations.length ; i++)
+getLocations(searchTerm, function(data) {
+		
+	
+		for (var i=0 ; i < data.length ; i++)
 		{
-	    	if ( data.locations[i][field].includes(searchTerm) ) {
-	        	//results.push(data.locations[i]);
+				let locationsContent = "";
+	    	//if ( data.locations[i][field].includes(searchTerm) ) {
+	        	
 
 	        	//dont show locations already on the users bucket list
-	        	  if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
+	        	//  if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
 	        	  
-	        	  } else {
-	        	  	console.log("adding ", data.locations[i].longName);
+	        	 // } else {
+	        	  	
+				
+	        	  if(data[i].city) locationsContent += data[i].city + ' ';
+	        	  if(data[i].country) locationsContent += data[i].country + ' ';
+	        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
 
-	        		$('.search-results').append (`<li>${data.locations[i].longName}</li> 
-	        		<input type="button" class="result-button" name="${data.locations[i].longName}" data="${data.locations[i].locId}" value="Add to list">`);
-	        		}
-	    	}
+
+	        		$('.search-results').append (`<li>${locationsContent}</li> 
+	        		<input type="button" class="result-button" name="${data[i]._id}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list">`);
+	        		//}
+	    	//}
 		}
 
 
@@ -317,9 +337,9 @@ $('.search-results').append (`<ul>`);
 	
 }
 
-function addLocationToList(locationId){
+function addLocationToList(location){
 
-	let location = LOCATIONS.locations.find(item => item.locId === locationId);
+	/*let location = LOCATIONS.locations.find(item => item.locId === locationId);
 	console.log("", location);
 	USER_LIST.userList.push( {
 		"locId": location.locId,
@@ -328,6 +348,19 @@ function addLocationToList(locationId){
 		"visited": "false"
 	})
 	console.log("Updated list: ", USER_LIST);
+*/
+let data={country:location.country, city:location.city, locId:location.Id};
+JSON.stringify(data);
+
+console.log('data to send:', data);
+
+ //getAPIData( callType='POST', data, myToken, myUrl = '/api/bucketlist', function () {
+ //	console.log("sent update to server ");
+ //});
+
+ getAPIData( callType='GET', data, myToken, myUrl = '/api/bucketlist/addplace', function () {
+ 	console.log("sent update to server ");
+ });
 }
 
 
@@ -361,7 +394,7 @@ function login() {
 			   $('.user-status').text('logging in');
 			   myToken = data.authToken;
 
-			   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist', showUserList);
+			   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/userlist', showUserList);
 /*
 				$.ajax({
 				 type: 'GET',
@@ -394,7 +427,7 @@ function getAPIData( callType='GET', data ={}, userToken, myUrl = '/api/bucketli
 
 	$.ajax({
 				 type: callType,
-				 data: JSON.stringify(data),
+				 data: data,//JSON.stringify(data),
 				 beforeSend: function (xhr){ 
 				 	console.log(data.authToken);
 	        	 xhr.setRequestHeader('Authorization', ('BEARER '+ userToken)); 
@@ -407,6 +440,36 @@ function getAPIData( callType='GET', data ={}, userToken, myUrl = '/api/bucketli
 				    	  }
 		
 	 			});
+}
+
+function addPlace() {
+
+	//user selected a place
+	//build a data object from the data of the place
+
+
+}
+
+function checkOffPlace() {
+//send a request to the bucket list to change the document entry visited = true
+}
+
+function removePlace() {
+//delete a place from the users bucket list
+}
+
+function searchPlaces() {
+
+//take search term
+//have the api give us the places that contain the term in either country or city
+
+}
+
+function getListofPlaces() {
+	//while the db is small we can pull all the places
+	//kinda just to see how it works
+	getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist', showUserList);
+
 }
 
 function createAccount() {
@@ -492,9 +555,17 @@ $(function() {
 	  		console.log('add featured button clicked');
 	  		event.preventDefault();
 	  		$('.featured-places').off('click'); 
-	  		let locAddedId = event.target.getAttribute('data');
-	  		console.log("added ",locAddedId);
-	  		addLocationToList(locAddedId);
+	  		//let locAddedId = event.target.getAttribute('data');
+
+	  		//console.log("added ",locAddedId);
+
+	  			let location = { 
+	  				city: event.target.getAttribute('city'),
+	  				country:event.target.getAttribute('country'),
+	  				Id:event.target.getAttribute('locationId')
+	  		}
+
+	  		addLocationToList(location);
 	  		$('.modal-added-section').removeClass('hide');
 
 	  		//ok button event handler
@@ -512,9 +583,16 @@ $(function() {
 	  		console.log('add button clicked');
 	  		event.preventDefault();
 	  		$('.search-results').off('click'); 
-	  		let locAddedId = event.target.getAttribute('data');
-	  		console.log("added ",locAddedId);
-	  		addLocationToList(locAddedId);
+	  		//let locAddedId = event.target.getAttribute('data');
+	  		//console.log("added ",locAddedId);
+
+	  		let location = { 
+	  				city: event.target.getAttribute('city'),
+	  				country:event.target.getAttribute('country'),
+	  				Id:event.target.getAttribute('locationId')
+	  		}
+
+	  		addLocationToList(location);
 	  		$('.modal-added-section').removeClass('hide');
 
 	  		//ok button event handler
