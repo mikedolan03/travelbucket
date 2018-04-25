@@ -278,7 +278,7 @@ function getAndDisplayUserListPromiseExample() {
 
 function getAndDisplayUserList() {
 
-	getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/userlist', showUserList);
+	getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/', showUserList);
 
 	//getUserList(showUserList);
 }
@@ -350,7 +350,7 @@ function addLocationToList(location){
 	console.log("Updated list: ", USER_LIST);
 */
 let data={country:location.country, city:location.city, locId:location.Id};
-JSON.stringify(data);
+data = JSON.stringify(data);
 
 console.log('data to send:', data);
 
@@ -358,7 +358,7 @@ console.log('data to send:', data);
  //	console.log("sent update to server ");
  //});
 
- getAPIData( callType='GET', data, myToken, myUrl = '/api/bucketlist/addplace', function () {
+ getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/', function () {
  	console.log("sent update to server ");
  });
 }
@@ -394,7 +394,7 @@ function login() {
 			   $('.user-status').text('logging in');
 			   myToken = data.authToken;
 
-			   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/userlist', showUserList);
+			   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/', showUserList);
 /*
 				$.ajax({
 				 type: 'GET',

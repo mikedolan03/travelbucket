@@ -2,17 +2,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-
-
 const {BucketList} = require('./models');
-
 
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
 
 //retrieve bucketlist of user
-router.get('/userlist', (req, res) => {
+router.get('/', (req, res) => {
 //console.log("req", req);
 
 BucketList
@@ -33,24 +30,37 @@ BucketList
 
 
 //add new location to bucket list
-router.get('/addplace', (req, res) => {
+router.put('/', (req, res) => {
+
+
+console.log(req);
+
+
+if(!req.body.country) {
+    res.status(400).json({message: 'Missing country'});
+}
+//do locid too
 
 //let {country, city, LocId} = req.body;
 
 console.log("/n/n/n req", req.user.id	);
 
+const country = req.body.country;
+const locId = req.body.locId;
+
 let newPlaceToAdd = {
-	country: req.query.country,		
+	country: country,		
 	visited: 'false',
-	locId: req.query.locId	
+	locId: locId	
 }
 
-if(req.query.city != 'undefined') newPlaceToAdd.city = req.query.city;
+if(req.body.city) newPlaceToAdd.city = req.body.city;
 
 console.log("adding on server side ", newPlaceToAdd);
 
 console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
 
+//mongoose - look for update only if.. 
 BucketList.update(
 	{user: req.user.id},
 	{$push: {places: newPlaceToAdd} },

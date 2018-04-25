@@ -4,11 +4,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy} = require('./auth');
 const { router: bucketlistRouter} = require('./bucketlist');
 const { router: placeRouter} = require('./place');
+
+const jsonParser = bodyParser.json();
 
 mongoose.Promise = global.Promise;
 
@@ -31,6 +34,18 @@ app.use(function (req, res, next) {
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+
+/* A debug middleware to see the req before body parser runs
+app.use(function(req, res, next) {
+  console.log("=============================req printed",req);
+  console.log("========================================");
+
+next();
+} );
+*/
+
+app.use(jsonParser);
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
