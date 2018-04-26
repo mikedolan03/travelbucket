@@ -27,13 +27,40 @@ BucketList
 
 });
 
+router.put('/checkoff', (req, res) => {
 
+if(!req.body.placeIndex) {
+      res.status(400).json({message: 'Missing place to check off'});
+}
+console.log("req body", req.body);
+
+const placeIndex = req.body.placeIndex;
+
+BucketList.findOne({user: req.user.id }, function (err, list) {
+    
+    if(err) console.log("error finding list of user ", err);
+
+    console.log("list", list.places);
+
+    if(list.places[placeIndex].visited == 'false') {
+        list.places[placeIndex].visited = 'true';
+    } else {
+        list.places[placeIndex].visited = 'false';
+    }
+    
+    list.save(function(err, list) {
+        if(err) console.log("error saving place data to list", err);
+    res.send(list);
+    });
+});
+
+});
 
 //add new location to bucket list
 router.put('/', (req, res) => {
 
 
-console.log(req);
+//console.log(req);
 
 
 if(!req.body.country) {
@@ -61,7 +88,8 @@ console.log("adding on server side ", newPlaceToAdd);
 console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
 
 //mongoose - look for update only if.. 
-BucketList.update(
+BucketList
+    .update(
 	{user: req.user.id},
 	{$push: {places: newPlaceToAdd} },
 	function(err, bucketlist) {
@@ -77,7 +105,8 @@ PersonModel.update(
     done
 );
 */
-
+// 5adaae551f7d510cd0272644"
+//db.bucketlists.update({ "_id" : ObjectId("5adaae551f7d510cd0272644") }, {$pull : { "places" : { "country" : "Spain" } } } )
 
 });
 

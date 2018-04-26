@@ -221,8 +221,8 @@ function showUserList(data){
  	}
 
 	$('.list-set').append (
-  `<div><input type="checkbox" id="${data.places[i].locId}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
-   <label for="${data.places[i].locId}">${data.places[i].city}, ${data.places[i].country}</label></div>`
+  `<div placeIndex="${i}" ><input type="checkbox" id="${data.places[i].locId}" placeIndex="${i}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
+   <label for="${data.places[i].locId}" placeIndex="${i}" >${data.places[i].city}, ${data.places[i].country}</label></div>`
   	);
  }
 
@@ -249,17 +249,14 @@ function showLocationList(data){
 		
 	for (let i = 0; i < data.length; i++) {
 
- 		if (USER_LIST.userList.find(item => item.locId === data[i]._id) ) {
-	        	  //do nothing! 
-	        	  } else {
 	        	  let locationsContent = '<li>';
 	        	  if(data[i].city) locationsContent += data[i].city + ' ';
 	        	  if(data[i].country) locationsContent += data[i].country + ' ';
 	        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
 
 		$('.featured-places').append (locationsContent);
-		$('.featured-places').append (`<input type="button" class="add-feature-button" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`);
-		}
+		$('.featured-places').append (`<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`);
+		
 	}
 
 	$('.featured-places').append ('</ul>');
@@ -450,9 +447,20 @@ function addPlace() {
 
 }
 
-function checkOffPlace() {
-//send a request to the bucket list to change the document entry visited = true
+function checkOffPlace(_placeIndex) {
+	//send a request to the bucket list to change the document entry visited = true
+	
+	let data= {placeIndex: _placeIndex};
+	
+	data = JSON.stringify(data);
+
+
+	getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/checkoff', function () {
+		console.log("sent check off update to server ");
+		});
+
 }
+
 
 function removePlace() {
 //delete a place from the users bucket list
@@ -504,13 +512,16 @@ $(function() {
 	getAndDisplayUserList();
 	
 	$('.list-set').on('click', function(event) {
-	  		console.log('checked button clicked');
+	  		console.log('checked button clicked', event.target);
 	  		//event.preventDefault();
-	  		let locChecked = event.target.getAttribute('data');
-	  		const listItem = USER_LIST.userList.find(item => item.locId === locChecked);
-	  		listItem.visited = "true"; 
+	  		let placeIndex = event.target.getAttribute('placeIndex');
+	  		console.log("place ind on client: ", placeIndex);
+	  		//const listItem = USER_LIST.userList.find(item => item.locId === locChecked);
+	  		//listItem.visited = "true"; 
 	  		//event.target.prop("checked", true );  //needs to be a straight javascript setProperty? 
-	  		console.log("user list: ", USER_LIST);
+	  		//console.log("user list: ", USER_LIST);
+
+	  		checkOffPlace(placeIndex); 
 
 	  		$('.modal-added-section').removeClass('hide');
 
