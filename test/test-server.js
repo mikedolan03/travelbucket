@@ -3,6 +3,8 @@ const chaiHttp = require('chai-http');
 
 const expect = chai.expect;
 
+const {BucketList} = require('../bucketlist/models');
+
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 let authTok = '';
@@ -80,27 +82,44 @@ let user = {};
 			})
 			.then(function(list) { 
 					console.log("checking list", list);
-					//expect(list.user).to.equal(res.user.id);
+					
 			} );
-			//.then(function(res) {
-			//	console.log("after add list");
-			//	expect(res).to.have.status(200);
-			//	expect(res.body).to.be.a('object');
-			//	return BucketList.find( {user: req.user.id, places: {country: "Argentina"} } )
-			//	})
-			//	.then(function(list) { 
-			//		console.log("checking list", list);
-			//		expect(list.user).to.equal(req.user.is);
-			//	} );
 		
 			
 
 
 	} );
 
-	//it('should check off a visited place on user list')
+it('should check off / update db list - place user visited', function() {
+		console.log("checking off place in user list");
+
+		this.timeout(10000);
+
+		
+		let user = {};
+		user.username = 'user';
+		user.password = 'pass';
+
+		let data= {placeIndex: 0};
+	
+		data = JSON.stringify(data);
+
+		return chai.request(app)
+			.post('/api/auth/login')
+			.send(user)
+			.then( function(res) {
+				
+				return chai.request(app)	
+				.post('/api/bucketlist/checkoff')
+				.set('Authorization', ('BEARER '+ authTok))
+				.send(data)
+				expect(res).to.have.status(200);
+				expect(res.body).to.be.a('object');
+			})
 
 
+				
+});
 	//if('should ')
 
 
