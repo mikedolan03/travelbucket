@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const {User} = require('./models');
-
+const {BucketList} = require('../bucketlist/models');
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
@@ -64,9 +64,13 @@ return User.find({username})
  	});
  })
  .then(user => {
+  BucketList.create( {
+    user: user._id,
+    places : []
+  });
  	return res.status(201).json(user.serialize());
  })
- .catch(err => {
+  .catch(err => {
  	if (err.reason === "ValidationError") {
  		return res.status(err.code).json(err);
  	}
