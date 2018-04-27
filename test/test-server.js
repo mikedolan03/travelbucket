@@ -50,6 +50,29 @@ describe('Bucket List Load Page and Log in', function() {
 			} )
 	});
 
+	it('should add a place to the user list', function() {
+		this.timeout(10000);
+
+		let newPlaceToAdd = {
+		country: 'Argentina',		
+		visited: 'false',
+		locId: '5add4352f74fb812933cfc88'	
+		}
+
+		return chai.request(app)
+		.post('/')
+		.send(newPlaceToAdd)
+		.then(function(res) {
+			expect(res).to.have.status(200);
+			expect(res.body).to.be.a('object');
+		})
+		.catch(function(err){ 
+			console.log(err);
+
+		})
+
+	} )
+
 
 });
 
