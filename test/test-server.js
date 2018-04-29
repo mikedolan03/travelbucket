@@ -72,13 +72,13 @@ describe('Bucket List Load Page and Log in', function() {
 		});
 
 		after(function() {
-			return User.findOne({username: 'user'})
-			.then(function(myuser) {
-				return BucketList.findOne( {user: myuser._id} )
-				.then(function(list) {
-					list.places[1].visited = 'false';
-				})
-			});
+			//return User.findOne({username: 'user'})
+			//.then(function(myuser) {
+			//	return BucketList.findOne( {user: myuser._id} )
+			//	.then(function(list) {
+			//		list.places[1].visited = 'false';
+			//	})
+			//});
 		});
 
 		it('should not allow unauthorized access', function() {
