@@ -50,6 +50,7 @@ describe('Bucket List Load Page and Log in', function() {
 				expect(res.body).to.be.a('object');
 				expect(res.body).to.include.keys('authToken');
 				authTok = res.body.authToken; 
+				console.log("db", BucketList.db.name); // myDatabase
 			})
 	});
 
