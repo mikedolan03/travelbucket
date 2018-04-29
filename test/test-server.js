@@ -45,12 +45,12 @@ describe('Bucket List Load Page and Log in', function() {
 			.post('/api/auth/login')
 			.send(user)
 			.then(function(res) {
-				console.log(req);
+				
 				//expect(res).to.be.json;
 				expect(res.body).to.be.a('object');
 				expect(res.body).to.include.keys('authToken');
 				authTok = res.body.authToken; 
-				console.log("db", BucketList.db.name); // myDatabase
+				
 			})
 	});
 
@@ -76,13 +76,13 @@ describe('Bucket List Load Page and Log in', function() {
 		});
 
 		after(function() {
-			//return User.findOne({username: 'user'})
-			//.then(function(myuser) {
-			//	return BucketList.findOne( {user: myuser._id} )
-			//	.then(function(list) {
-			//		list.places[1].visited = 'false';
-			//	})
-			//});
+			return User.findOne({username: 'user'})
+			.then(function(myuser) {
+				return BucketList.findOne( {user: myuser._id} )
+				.then(function(list) {
+					list.places[1].visited = 'false';
+				})
+			});
 		});
 
 		it('should not allow unauthorized access', function() {
