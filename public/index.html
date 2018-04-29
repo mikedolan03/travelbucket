@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Travel Bucket</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height">
+  <title>Travel Bucket</title>
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <!--<link rel="stylesheet" type="text/css" href="grid.css">-->
   <link rel="stylesheet" type="text/css" href="main.css">
+  
+  <script>
+    FontAwesomeConfig = { searchPseudoElements: true };
+  </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
-<body>
-<header>
+  <body class="front-page-background">
+    <main role="main">
+    <header role="banner">
       <h1>Welcome to travel bucket!</h1>
     </header>
-
-    <main>
-      <section class="user-list-section">
+    <section class="user-list-section">
         <h2>User's Bucket list</h2>
         <form name="add-form"> 
-          <input type="button" name="add-button" class="add-button" value="Add new location to list"></form>
+          <input type="button" name="add-button" class="add-button important-button" value="Add new location to list"></form>
         <form name="bucketlist-form" class="bucketlist-form">
           <br>
           <legend>Check off places that you've been</legend>
@@ -30,7 +38,7 @@
         <form name="back-to-list"> 
           <input type="button" name="back-button" class="back-button" value="Go back to your Bucket List"></form>
         <form>
-          <label for="search">Search: <input type="text" id="search" class="search-box" name="search"></label><input type="button" name="search-button" class="search-button" value="Search">
+          <label for="search">Search: <input type="text" id="search" class="search-box" name="search"></label><input type="button" name="search-button" class="search-button main-button" value="Search">
         </form>
         <h3>Search Results: </h3>
         <div class="search-results">
@@ -69,7 +77,7 @@
         	<input type="text" name="username" class="username"></label>
         	<label>Password:
         	<input type="password" name="password" class="password"></label>
-          <button type="submit" class="login-button">Login</button>
+          <button type="submit" class="login-button main-button">Login</button>
         </form>
         <br>
         <h2>Not a member? Join travel bucket!</h2>
@@ -83,7 +91,7 @@
         	<input type="text" name="firstname" class="first-name"></label>
         	<label>Last Name:
         	<input type="text" name="lastname" class="last-name"></label>
-          <button type="submit" class="create-button">Create</button>
+          <button type="submit" class="create-button main-button">Create</button>
         </form>
       </section>
     </main>

@@ -30,37 +30,36 @@ Place
 */
 
 router.get('/', (req, res) => {
-console.log("req", req.params.search);
-let searchTerm = "";
-console.log("query: ", JSON.stringify(req.query));
-let myquery = req.query;
-console.log(typeof myquery);
-console.log("myquery: ", myquery,  myquery['searchFor']);
+	console.log("req", req.params.search);
 
+	let searchTerm = "";
+	
+	console.log("query: ", JSON.stringify(req.query));
+	let myquery = req.query;
+	console.log(typeof myquery);
+	console.log("myquery: ", myquery,  myquery['searchFor']);
 
-searchTerm = myquery.searchFor;
+	searchTerm = myquery.searchFor;
 
-console.log("term: ", searchTerm, myquery.searchFor	);
+	console.log("term: ", searchTerm, myquery.searchFor	);
 
-//let mySearch = new RegExp ('searchTerm', 'i');
+	//let mySearch = new RegExp ('searchTerm', 'i');
 
-Place
-	.find().or([{
-		'country': new RegExp('.*'+searchTerm+'.*', "i")
-	},
-	{
-		'city': new RegExp('.*'+searchTerm+'.*', "i")
-	}])
-	.then(placelist => res.json (
-		placelist
-		))
-	.catch(err => {
-        console.error(err)
-       res.status(500).json({message: 'Something went wrong in places'})}
-   );
-
- 	console.log('getting places');
-
-});
+	Place
+		.find().or([{
+			'country': new RegExp('.*'+searchTerm+'.*', "i")
+		},
+		{
+			'city': new RegExp('.*'+searchTerm+'.*', "i")
+		}])
+		.then(placelist => res.json (
+			placelist
+			))
+		.catch(err => {
+	       console.error(err)
+	       res.status(500).json({message: 'Something went wrong in places'})}
+	   );
+	 	console.log('getting places');
+	});
 
 module.exports = {router};
