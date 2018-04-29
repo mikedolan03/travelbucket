@@ -57,6 +57,7 @@ describe('Bucket List Load Page and Log in', function() {
 	describe('BucketList API' , function() { 
 
 		before(function() {
+			console.log("-----in logging in-----");
 
 			let user = {
 				username: 'user',
@@ -67,7 +68,10 @@ describe('Bucket List Load Page and Log in', function() {
 			.post('/api/auth/login')
 			.send(user)
 			.then(function(res) {
-				authTok = res.body.authToken; 
+				authTok = res.body.authToken;
+				console.log("getting auth", authTok );
+
+ 
 			})
 		});
 
