@@ -11,153 +11,6 @@
 
 let myToken; 
 
-let USER_LIST = {    //change to bucket_list
-	"userList" : [
-	{
-		"locId": "12345",
-		"country": "Spain",
-		"city": "Barcelona",
-		"visited": "false"
-	},
-	{
-		"locId": "123456",
-		"country": "USA",
-		"city": "New York",
-		"visited": "false"
-	},
-		{
-		"locId": "55123456",
-		"country": "Peru",
-		"city": "Lima",
-		"visited": "true"
-	},
-	{
-		"locId": "1234345",
-		"country": "USA",
-		"city": "Washington, DC",
-		"visited": "false"
-	},
-	{
-		"locId": "12378456",
-		"country": "USA",
-		"city": "Atlanta",
-		"visited": "false"
-	},
-		{
-		"locId": "12345997",
-		"country": "USA",
-		"city": "Austin",
-		"visited": "true"
-	}
-
-	]
-
-}
-
-let LOCATIONS = {
-	"locations" : [
-		{
-			"locId": "12345", 
-			"country": "Spain",
-			"city":"Barcelona",
-			"longName":"Barcelona, Spain", 
-			"reviews" : [
-				{
-					"userId": "468", 
-					"username": "Joe", 
-					"content" : "Epic trip!",
-					"starRating" : "5"
-				},
-				{
-					"userId": "357", 
-					"username": "Bob", 
-					"content" : "Great food.",
-					"starRating" : "4"
-				}
-			]
-		},
-		{
-			"locId": "123456",
-			"country": "USA",
-			"city":"New York",
-			"longName":"New York, USA", 
-			"reviews" : [
-				{
-					"userId": "123", 
-					"username": "Phil", 
-					"content" : "great place",
-					"starRating" : "3"
-				},
-				{
-					"userId": "321", 
-					"username": "Hughe", 
-					"content" : "cool scene",
-					"starRating" : "4"
-				}
-			]
-		},
-		{
-			"locId": "55123456",
-			"country": "Peru",
-			"city":"Lima",
-			"longName":"Lima, Peru", 
-			"reviews" : [
-				{
-					"userId": "567",
-					"username": "Mike", 
-					"content" : "great architecture",
-					"starRating" : "5"
-				},
-				{
-					"userId": "789", 
-					"username": "Pete", 
-					"content" : "second dryest world capital!",
-					"starRating" : "5"
-				}
-			]
-		},
-		{
-			"locId": "23123456",
-			"country": "USA",
-			"city":"Falls Church",
-			"longName":"Falls Church, USA", 
-			"reviews" : [
-				{
-					"userId": "567",
-					"username": "Mike", 
-					"content" : "great town",
-					"starRating" : "5"
-				},
-				{
-					"userId": "789", 
-					"username": "Bob", 
-					"content" : "a little city indeed!",
-					"starRating" : "5"
-				}
-			]
-		},
-		{
-			"locId": "134423456",
-			"country": "USA",
-			"city":"Las Vegas",
-			"longName":"Las Vegas, USA", 
-			"reviews" : [
-				{
-					"userId": "567",
-					"username": "Mike", 
-					"content" : "great gambling",
-					"starRating" : "5"
-				},
-				{
-					"userId": "789", 
-					"username": "Joe", 
-					"content" : "love the shows!",
-					"starRating" : "5"
-				}
-			]
-		}
-	]
-}
 
 //travel list
 //-locId, country, city, visited 
@@ -493,10 +346,25 @@ function createAccount() {
 	});
 }
 
+function startUp() {
+
+$('.modal-added-section').addClass('hide');
+$('.user-list-section').addClass('hide');
+$('.add-section').addClass('hide');
+
+
+
+}
+
+function main() {
+
+
+}
+
 $(function() {
   //getCount();
-
-	getAndDisplayUserList();
+	startUp();
+	//getAndDisplayUserList();
 	
 	$('.list-set').on('click', function(event) {
 	  		console.log('checked button clicked', event.target);

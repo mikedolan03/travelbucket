@@ -13,12 +13,25 @@
   </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
-  <body class="front-page-background">
-    <main role="main">
-    <header role="banner">
-      <h1>Welcome to travel bucket!</h1>
+  <body>
+    <header role="banner" class="darkgrey-box-background title-box">
+      <h1>Welcome to Travel Bucket!</h1>
     </header>
-    <section class="user-list-section">
+    <main role="main">
+    <section class="welcome-page front-page-background">
+      <header>
+        <h2 class="big-headers">Everyone has a travel bucket list... what's on yours?</h2>
+      </header>
+      <div class="buttons-box center"
+      <form class="sign-in-or-up-form">
+          <button type="submit" class="go-to-login-button main-button big-button">Login</button>
+          <button type="submit" class="go-to-create-account-button important-button big-button">Join!</button>
+        </form>
+      </div>
+
+    </section>
+
+    <section class="user-list-section hide">
         <h2>User's Bucket list</h2>
         <form name="add-form"> 
           <input type="button" name="add-button" class="add-button important-button" value="Add new location to list"></form>
@@ -69,7 +82,7 @@
 
       </section>
 
-      <section class="">
+      <section class="login-form-section hide">
         <p>You are currently: <span class="user-status">not logged in.</span></p>
         <form class="login-form">
         	<legend>Log In-</legend>
@@ -81,7 +94,7 @@
         </form>
         <br>
         <h2>Not a member? Join travel bucket!</h2>
-       <form class="create-account-form">
+       <form class="create-account-form hide">
        	<legend>Create an account</legend>
         	<label>Username:
         	<input type="text" name="username" class="new-username"></label>

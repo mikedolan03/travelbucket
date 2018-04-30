@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+	margin: 0;
+    padding: 0;
 }
 
 body {
@@ -8,14 +10,9 @@ body {
   color: #37454d; 
   margin-left: auto;
   margin-right: auto;
-  margin-top: 0;
+  margin-top: 0px;
 }
 
-html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
 
 .front-page-background {
   background-color:black;
@@ -57,6 +54,18 @@ html, body {
 	background-color: #005f81;
 }
 
+.big-button {
+	height: 100px;
+	width: 200px;
+    border-radius: 5px;
+    padding: 10px 10px;
+    margin: 0 0 0 20px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: normal;
+}
+
 .grey-button: {
 	background-color: #697379;
 }
@@ -71,4 +80,22 @@ html, body {
 
 .lightgrey-box-background {
 	background-color:#ebeced;
+}
+
+.title-box {
+	height: 60px;
+	color: white;
+	margin: 0px;
+	padding-left: 30px;
+	padding-top: 10px;
+}
+
+.big-headers {
+	padding-left: 30px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.box-box {
+	position: relative;
 }
