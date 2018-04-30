@@ -30,14 +30,14 @@ Place
 */
 
 router.get('/', (req, res) => {
-	console.log("req", req.params.search);
+	//console.log("req", req.params.search);
 
 	let searchTerm = "";
 	
 	console.log("query: ", JSON.stringify(req.query));
 	let myquery = req.query;
-	console.log(typeof myquery);
-	console.log("myquery: ", myquery,  myquery['searchFor']);
+	//console.log(typeof myquery);
+	//console.log("myquery: ", myquery,  myquery['searchFor']);
 
 	searchTerm = myquery.searchFor;
 

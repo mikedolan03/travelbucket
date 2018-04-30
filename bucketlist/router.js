@@ -87,9 +87,9 @@ router.put('/', (req, res) => {
         newPlaceToAdd.city = req.body.city;
     }
 
-    console.log("adding on server side ", newPlaceToAdd);
+   // console.log("adding on server side ", newPlaceToAdd);
 
-    console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
+    //console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
 
     //mongoose - look for update only if.. 
     BucketList

@@ -78,6 +78,7 @@ return User.find({username})
  });
 });
 
+/*
 router.get('/', (req, res) => {
 	return User.find()
 	 .then(users => res.json(users.map(user=> user.serialize())))
@@ -91,5 +92,7 @@ router.delete('/:id', (req, res) => {
     .then( user => res.status(204).end())
     .catch(err => res.status(500).json({message: 'Internal server error in delete'}));
  });
+
+ */
 
 module.exports = {router};

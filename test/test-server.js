@@ -69,7 +69,7 @@ describe('Bucket List Load Page and Log in', function() {
 			.send(user)
 			.then(function(res) {
 				authTok = res.body.authToken;
-				console.log("getting auth", authTok );
+				//console.log("getting auth", authTok );
 
  
 			})
@@ -85,17 +85,53 @@ describe('Bucket List Load Page and Log in', function() {
 			});
 		});
 
-		it('should not allow unauthorized access', function() {
+		it('should not allow unauthorized access to api end points', function() {
 
 			return chai.request(app)
 			.get('/api/bucketlist')
 			.then(function(res) {
-				//console.log(res);
-				expect(res.status).to.equal(401);
-				//expect(res.statusMessage).to.equal('Unauthorized');
+				expect(res.status).to.equal(401)
+				return chai.request(app)
+				.get('/api/bucketlist/checkoff')
+				.then(function(res) {
+					expect(res.status).to.equal(401)
+					return chai.request(app)
+					.get('/api/place')
+					.then(function(res) {
+						expect(res.status).to.equal(401)
+						return chai.request(app)
+						.post('/api/users')
+						.then(function(res) {
+							expect(res.status).to.equal(422)
+							return chai.request(app)
+							.post('/api/auth/login')
+							.then(function(res) {
+								expect(res.status).to.equal(400)
+								return chai.request(app)
+								.post('/api/auth')
+								.then(function(res) {
+									expect(res.status).to.equal(404)
+								})
+							})
+						})
+					})
+				})
 			})
 
+
 		});
+
+		it('should retrieve users bucketlist', function() {
+			return chai.request(app)	
+					.get('/api/bucketlist')
+					.set('Authorization', ('BEARER '+ authTok))
+					.then(function(res) { 
+						//console.log("places:", res.body.places)
+						expect(res).to.have.status(200)
+						expect(res.body).to.be.a('object')
+						expect(res.body).to.have.all.keys('places', '_id', 'user');
+					})
+		})
 
 		it('should add a place to the user list', function() {
 			console.log("-----in adding to user list-----");
@@ -119,7 +155,7 @@ describe('Bucket List Load Page and Log in', function() {
 						.then(function(myuser) {
 							return BucketList.findOne( {user: myuser._id} )
 							.then(function(list) { 
-								console.log("checking list", list.places);
+								//console.log("checking list", list.places);
 
     							for (var i=0; i < list.places.length; i++) {
 
@@ -140,7 +176,7 @@ describe('Bucket List Load Page and Log in', function() {
 									{multi: true}
 									)
 									.then( function(list) {
-										console.log("updated", list.places );
+										//console.log("updated", list.places );
 									})
 							} )	
 						})
@@ -183,6 +219,25 @@ describe('Bucket List Load Page and Log in', function() {
 					})
 					
 		});
+
+		it('should retrieve a list of places based on a given term', function() {
+			this.timeout(10000);
+
+			let data = {searchFor: 'USA'};
+
+			return chai.request(app)
+			.get('/api/place')
+			.set('Authorization', ('BEARER '+ authTok))
+			.send(data)
+			.then(function(res) {
+				console.log("res body", res.body.places);
+				expect(res).to.have.status(200)
+				expect(res.body).to.be.a('array');
+				//xpect(res.body).
+				//expect(res.query).to.include.keys('searchFor')
+			})
+
+		})
 						
 	});
 
