@@ -415,12 +415,12 @@ $(function() {
 
 	  		checkOffPlace(placeIndex); 
 
-	  		$('.modal-added-section').removeClass('hide');
+	  		$('.modal-checkedoff-section').removeClass('hide');
 
 	  		//ok button event handler
-	  		$('.add-modal-ok').click(function(event) {
+	  		$('.check-modal-ok').click(function(event) {
 	  		event.preventDefault();
-	  		$('.modal-added-section').addClass('hide');
+	  		$('.modal-checkedoff-section').addClass('hide');
 	  		});
 
 	  	});
