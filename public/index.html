@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, height=device-height">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Travel Bucket</title>
   <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <!--<link rel="stylesheet" type="text/css" href="grid.css">-->
@@ -15,33 +15,83 @@
 </head>
   <body>
     <header role="banner" class="darkgrey-box-background title-box">
-      <h1>Welcome to Travel Bucket!</h1>
+      <h1>Travel Bucket!</h1>
     </header>
     <main role="main">
     <section class="welcome-page front-page-background">
       <header>
         <h2 class="big-headers">Everyone has a travel bucket list... what's on yours?</h2>
       </header>
-      <div class="buttons-box center"
+      <!-- <div class="buttons-box center"
       <form class="sign-in-or-up-form">
           <button type="submit" class="go-to-login-button main-button big-button">Login</button>
           <button type="submit" class="go-to-create-account-button important-button big-button">Join!</button>
         </form>
       </div>
-
+-->
+    </section>
+    <section class="welcome-login">
+      <form class="login-form">
+          <legend>Log In-</legend>
+          <div class= "login-input-group"> 
+            <label>Username:
+            <input type="text" name="username" class="username"></label>
+          </div>
+          <div class= "login-input-group">
+            <label class= "login-label">Password:
+            <input type="password" name="password" class="password"></label>
+          </div>
+          <div class="center">
+            <button type="submit" class="login-button main-button button-95">Login</button>
+          </div>
+      </form>
     </section>
 
-    <section class="user-list-section hide">
-        <h2>User's Bucket list</h2>
-        <form name="add-form"> 
-          <input type="button" name="add-button" class="add-button important-button" value="Add new location to list"></form>
-        <form name="bucketlist-form" class="bucketlist-form">
-          <br>
-          <legend>Check off places that you've been</legend>
-          <fieldset class="list-set">
-            
-          </fieldset>
+    <section class="join-form-section">
+      <div class="join-button-area">
+        <h3>Not a member? Join travel bucket!</h3>
+        <div class="center">
+          <form class="join-button-form">
+           <button type="submit" class="show-join-button important-button">Join!</button>
+          </form>
+        </div>
+      </div>      
+      <form class="create-account-form hide">
+        <legend>Create an account</legend>
+        <div class= "login-input-group"> 
+          <label>Username:
+          <input type="text" name="username" class="new-username"></label>
+        </div>
+        <div class= "login-input-group"> 
+          <label>Password:
+          <input type="password" name="password" class="new-password"></label>
+        </div>
+        <div class= "login-input-group"> 
+          <label>First Name:
+          <input type="text" name="firstname" class="first-name"></label>
+        </div>
+        <div class= "login-input-group"> 
+          <label>Last Name:
+          <input type="text" name="lastname" class="last-name"></label>
+        </div>
+          <button type="submit" class="create-button main-button button-95">Create</button>
         </form>
+      </section>
+
+    <section class="user-list-section hide">
+      <div class="user-list">
+        <h2 class="bucketlist-heading">User's Bucket list</h2>
+        <form name="add-form"> 
+          <input type="button" name="add-button" class="add-button important-button center" value="Add new location to list"></form>
+        <div class="bucketlist-form-container">
+          <form name="bucketlist-form" class="bucketlist-form">
+            <legend>Check off places that you've been</legend>
+            <fieldset class="list-set">
+              
+            </fieldset>
+          </form>
+        </div>
+      </div>
       </section>
 
       <section class="add-section hide">
@@ -65,48 +115,29 @@
       </section>
 
       <section class="modal-checkedoff-section hide">
-      <form>
-        <fieldset>
-          Great job! You checked a place off your list! <input type="button" name="check-modal-ok" id="check-modal-ok" class="check-modal-ok" value="Ok">
-        </fieldset>
-      </form>  
+        <div class="modal">
+          <div class="modal-content">
+            <form>
+              Great job! You checked a place off your list!<br>
+              <input type="button" name="check-modal-ok" id="check-modal-ok" class="check-modal-ok big-button .important-button" value="Ok">
+            </form>  
+          </div>
+        </div>
 
       </section>
 
       <section class="modal-added-section hide">
-      <form>
-        <fieldset>
-          Location added to your list! <input type="button" name="add-modal-ok" id="add-modal-ok" class="add-modal-ok" value="Ok">
-        </fieldset>
-      </form>  
-
+        <div class="modal">
+          <div class="modal-content">
+            <form>
+            Location added to your list! <br>
+            <input type="button" name="add-modal-ok" id="add-modal-ok" class="add-modal-ok big-button modal-button important-button" value="Ok">
+            </form> 
+          </div> 
+        </div>
       </section>
 
-      <section class="login-form-section hide">
-        <p>You are currently: <span class="user-status">not logged in.</span></p>
-        <form class="login-form">
-        	<legend>Log In-</legend>
-        	<label>Username:
-        	<input type="text" name="username" class="username"></label>
-        	<label>Password:
-        	<input type="password" name="password" class="password"></label>
-          <button type="submit" class="login-button main-button">Login</button>
-        </form>
-        <br>
-        <h2>Not a member? Join travel bucket!</h2>
-       <form class="create-account-form hide">
-       	<legend>Create an account</legend>
-        	<label>Username:
-        	<input type="text" name="username" class="new-username"></label>
-        	<label>Password:
-        	<input type="password" name="password" class="new-password"></label>
-        	<label>First Name:
-        	<input type="text" name="firstname" class="first-name"></label>
-        	<label>Last Name:
-        	<input type="text" name="lastname" class="last-name"></label>
-          <button type="submit" class="create-button main-button">Create</button>
-        </form>
-      </section>
+      
     </main>
 
     <!-- Your web-app is https, so your scripts need to be too -->

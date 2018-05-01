@@ -11,16 +11,19 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 0px;
+  font-size: 18px;
 }
 
 
 .front-page-background {
-  background-color:black;
+  /*background-color:black;
+ 
   background:url(https://images.unsplash.com/photo-1508495761350-6a8bf2a2128a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d6f5c6aef82385e442e5b1b6f439c733&auto=format&fit=crop&w=1950&q=80) center center  no-repeat;
   background-size: cover;
   width:100%;
-  height:400px;
+  height:300px;
   padding: 0px;
+*/
 }
 
 
@@ -56,14 +59,25 @@ body {
 
 .big-button {
 	height: 100px;
-	width: 200px;
+	width: 100px;
     border-radius: 5px;
     padding: 10px 10px;
     margin: 0 0 0 20px;
     text-align: center;
     white-space: nowrap;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: normal;
+}
+
+.add-button {
+	display: block;
+    width: 95%;
+    height: 30px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: 700;
 }
 
 .grey-button: {
@@ -83,7 +97,7 @@ body {
 }
 
 .title-box {
-	height: 60px;
+	height: 50px;
 	color: white;
 	margin: 0px;
 	padding-left: 30px;
@@ -91,11 +105,128 @@ body {
 }
 
 .big-headers {
-	padding-left: 30px;
+	padding-left: 8px;
 	padding-top: 10px;
 	text-align: center;
+}
+
+h1 {
+	font-size: 20px;
+}
+
+h2 {
+	font-size: 18px;
 }
 
 .box-box {
 	position: relative;
 }
+
+.login-form {
+
+}
+
+.create-account-form {
+	margin-left: 5px;
+	margin-top: 10px;
+}
+
+
+.login-input-group {
+	margin-top: 5px;
+}
+
+.button-95 {
+	display: block;
+    width: 95%;
+    height: 30px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: 700;
+}
+
+.show-join-button {
+	display: block;
+    width: 75%;
+    height: 25px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: 700;
+}
+
+fieldset {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+.welcome-login {
+	margin: 5px;
+}
+
+.bucketlist-heading {
+	text-align: center; 
+}
+
+.bucketlist-form {
+padding: 5px;
+}
+
+.bucket-list-item {
+	margin: 5px;
+	font-size: 18px; 
+} 
+
+.user-list {
+  border-width: 2px;
+  width: 80%;
+  padding: 5px 8px;
+  border-style: solid;
+  background: white;
+  margin: 15px auto;
+  border-radius: 10px; 
+  box-shadow: 2px 2px; 
+}
+
+.place-result {
+	border-width: 1px;
+  	border-style: solid;
+  	padding: 5px;
+  	margin: 5px;
+  	border-radius: 5%; 
+}
+
+
+/* The Modal (background) */
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  text-align: center;
+    background-color: white;
+    margin: auto auto; /*originally 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 20px;
+    width: 200px;
+    height: 300px;
+ }
+
+ .modal-button {
+display: block;
+
+ }

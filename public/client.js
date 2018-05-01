@@ -60,7 +60,10 @@ console.log("loading");
 
 function showUserList(data){
 
- //$('body').append ('<ul>');
+	$('.welcome-login').addClass('hide');
+	$('.welcome-page').addClass('hide');
+	$('.user-list-section').removeClass('hide');
+	$('.join-form-section').addClass('hide');
 	$('.list-set').html(" ");
 
  for (let i = 0; i < data.places.length; i++) {
@@ -74,7 +77,7 @@ function showUserList(data){
  	}
 
 	$('.list-set').append (
-  `<div placeIndex="${i}" ><input type="checkbox" id="${data.places[i].locId}" placeIndex="${i}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
+  `<div class="bucket-list-item" placeIndex="${i}" ><input type="checkbox" id="${data.places[i].locId}" placeIndex="${i}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
    <label for="${data.places[i].locId}" placeIndex="${i}" >${data.places[i].city}, ${data.places[i].country}</label></div>`
   	);
  }
@@ -102,13 +105,16 @@ function showLocationList(data){
 		
 	for (let i = 0; i < data.length; i++) {
 
-	        	  let locationsContent = '<li>';
-	        	  if(data[i].city) locationsContent += data[i].city + ' ';
-	        	  if(data[i].country) locationsContent += data[i].country + ' ';
-	        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
+	    let locationsContent = '<li class="place-result">';
+	    if(data[i].city) locationsContent += data[i].city + ' ';
+	    if(data[i].country) locationsContent += data[i].country + ' ';
+	   	if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
+
+	    locationsContent += `<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`;
+
 
 		$('.featured-places').append (locationsContent);
-		$('.featured-places').append (`<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`);
+		//$('.featured-places').append (`<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`);
 		
 	}
 
@@ -147,44 +153,44 @@ function getSearchLocationList() {
 
 
 function userSearch(searchTerm) {
-console.log("search for ", searchTerm);
-$('.search-results').html(" ");
-$('.search-results').append (`<ul>`);
+	console.log("search for ", searchTerm);
+	$('.search-results').html(" ");
+	$('.search-results').append (`<ul>`);
 
-getLocations(searchTerm, function(data) {
+	getLocations(searchTerm, function(data) {
+			
 		
-	
-		for (var i=0 ; i < data.length ; i++)
-		{
-				let locationsContent = "";
-	    	//if ( data.locations[i][field].includes(searchTerm) ) {
-	        	
+			for (var i=0 ; i < data.length ; i++)
+			{
+					let locationsContent = "";
+		    	//if ( data.locations[i][field].includes(searchTerm) ) {
+		        	
 
-	        	//dont show locations already on the users bucket list
-	        	//  if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
-	        	  
-	        	 // } else {
-	        	  	
-				
-	        	  if(data[i].city) locationsContent += data[i].city + ' ';
-	        	  if(data[i].country) locationsContent += data[i].country + ' ';
-	        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
-
-
-	        		$('.search-results').append (`<li>${locationsContent}</li> 
-	        		<input type="button" class="result-button" name="${data[i]._id}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list">`);
-	        		//}
-	    	//}
-		}
+		        	//dont show locations already on the users bucket list
+		        	//  if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
+		        	  
+		        	 // } else {
+		        	  	
+					
+		        	  if(data[i].city) locationsContent += data[i].city + ' ';
+		        	  if(data[i].country) locationsContent += data[i].country + ' ';
+		        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
 
 
- 	});
+		        		$('.search-results').append (`<li class="place-result">${locationsContent}</li> 
+		        		<input type="button" class="result-button" name="${data[i]._id}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list">`);
+		        		//}
+		    	//}
+			}
 
- 	$('.search-results').append (`</ul>`);
+
+	 	});
+
+	 	$('.search-results').append (`</ul>`);
 
 
-	  	
-	
+		  	
+		
 }
 
 function addLocationToList(location){
@@ -234,11 +240,11 @@ function login() {
 						
 	$.ajax({
 		
-	 type: 'POST',
-	 data: JSON.stringify(data),
-	 contentType: 'application/json',
-	 url: '/api/auth/login',						
-	 success: function(data) {
+	 	type: 'POST',
+	 	data: JSON.stringify(data),
+	 	contentType: 'application/json',
+	 	url: '/api/auth/login',						
+	 	success: function(data) {
 			   console.log('success in ajax');
 			   console.log(JSON.stringify(data));
 			   $('.user-status').text('logging in');
@@ -265,7 +271,18 @@ function login() {
 	 			});
 	 			*/
 
-	    	  }
+	    	  },
+	  	statusCode: {
+    		404: function() {
+      		alert( "page not found" );
+    		},
+    		401: function() {
+    			alert("username or password were incorrect");
+    		},
+    		400: function() {
+    			alert("missing a username or password");
+    		}
+    	}
 		
 	 });
 
@@ -336,13 +353,33 @@ function createAccount() {
 	 data: JSON.stringify(data),
 	 contentType: 'application/json',
 	 url: '/api/users',						
-	 success: function(data) {
-			   console.log('success in ajax');
-			   console.log(JSON.stringify(data));
-			   $('.user-status').text('done creating an account- try logging in!');
+	 success: 	function(data) {
+				   console.log('success in ajax');
+				   console.log(JSON.stringify(data));
+				   $('.user-status').text('done creating an account- try logging in!');
+				   let userdata = {};
+
+					userdata.username = $('.new-username').val();
+					userdata.password = $('.new-password').val();
+
+				   $.ajax({
+			
+					 	type: 'POST',
+					 	data: JSON.stringify(userdata),
+					 	contentType: 'application/json',
+					 	url: '/api/auth/login',						
+					 	success: function(data) {
+								   console.log('success in ajax');
+								   console.log(JSON.stringify(data));
+								   $('.user-status').text('logging in');
+								   myToken = data.authToken;
+
+								   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/', showUserList);
+								}
+					});
 
 
-	  		  }
+	  		  	}
 	});
 }
 
@@ -395,11 +432,19 @@ $(function() {
 	  $('.login-form').submit(function(event) {
 	    event.preventDefault();
 	    login();
+	    $('.join-button-area').addClass('hide');
 	  });
 	  
 	  $('.create-account-form').submit(function(event) {
 	    event.preventDefault();
 	    createAccount();
+	  });
+
+	  $('.show-join-button').click(function(event) {
+	  	event.preventDefault();
+	  	$('.create-account-form').removeClass('hide');
+	  	$('.welcome-login').addClass('hide');
+		$('.join-button-area').addClass('hide');
 	  });
 
 
