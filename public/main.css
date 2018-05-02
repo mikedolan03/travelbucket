@@ -30,6 +30,13 @@ body {
   margin-right: auto;
 }
 
+.center-text {
+  text-align: center;
+}
+
+.top-icon {
+  margin-top: -40px;
+}
 
 .hide {
 	display: none;
