@@ -13,12 +13,12 @@
   </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
-  <body>
+  <body class="front-page-background">
     <header role="banner" class="darkgrey-box-background title-box">
       <h1>Travel Bucket!</h1>
     </header>
     <main role="main">
-    <section class="welcome-page front-page-background">
+    <section class="welcome-page ">
       <header>
         <h2 class="big-headers">Everyone has a travel bucket list... what's on yours?</h2>
       </header>
@@ -31,51 +31,62 @@
 -->
     </section>
     <section class="welcome-login">
-      <form class="login-form">
-          <legend>Log In-</legend>
-          <div class= "login-input-group"> 
-            <label>Username:
-            <input type="text" name="username" class="username"></label>
-          </div>
-          <div class= "login-input-group">
-            <label class= "login-label">Password:
-            <input type="password" name="password" class="password"></label>
-          </div>
-          <div class="center">
-            <button type="submit" class="login-button main-button button-95">Login</button>
-          </div>
-      </form>
+      <div class="login-form-container">
+        <form class="login-form">
+            <legend>Log In</legend>
+            <div class= "login-input-group"> 
+              <label>Username:
+              <input type="text" name="username" class="username"></label>
+            </div>
+            <div class= "login-input-group">
+              <label class= "login-label">Password:
+              <input type="password" name="password" class="password"></label>
+            </div>
+            <div class="center">
+              <button type="submit" class="login-button main-button button-95">Login</button>
+            </div>
+            <div class="join-button-area">
+              <div class="center">
+                <form class="join-button-form">
+                 <p>Not a member? Join travel bucket!<button type="submit" class="show-join-button"><i class="fas fa-user-plus"></i>Join!</button></p>
+                </form>
+              </div>
+            </div>
+        </form>
+      </div>
     </section>
 
-    <section class="join-form-section">
-      <div class="join-button-area">
-        <h3>Not a member? Join travel bucket!</h3>
-        <div class="center">
-          <form class="join-button-form">
-           <button type="submit" class="show-join-button important-button">Join!</button>
-          </form>
-        </div>
-      </div>      
+    <section>
+        
       <form class="create-account-form hide">
+        <div class="login-form-container"> 
         <legend>Create an account</legend>
-        <div class= "login-input-group"> 
+        <div class= "create-input-group"> 
           <label>Username:
           <input type="text" name="username" class="new-username"></label>
         </div>
-        <div class= "login-input-group"> 
+        <div class= "create-input-group"> 
           <label>Password:
           <input type="password" name="password" class="new-password"></label>
         </div>
-        <div class= "login-input-group"> 
+        <div class= "create-input-group"> 
           <label>First Name:
           <input type="text" name="firstname" class="first-name"></label>
         </div>
-        <div class= "login-input-group"> 
+        <div class= "create-input-group"> 
           <label>Last Name:
           <input type="text" name="lastname" class="last-name"></label>
         </div>
+        <div class= "create-input-group"> 
+          <label>City: <input type="text" name="city" class="city"></label>
+        </div>
+        <div class= "create-input-group"> 
+        <label>Country: <input type="text" name="country" class="country"></label>
+        </div>
           <button type="submit" class="create-button main-button button-95">Create</button>
-        </form>
+        </div>
+      </form>
+      
       </section>
 
     <section class="user-list-section hide">
