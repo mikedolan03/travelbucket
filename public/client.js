@@ -11,7 +11,10 @@
 
 let myToken; 
 
-
+//arrays to be filled in with api data
+let locationSearchResults = [];
+let featuredResults = [];
+let userBucketList = []; 
 //travel list
 //-locId, country, city, visited 
 
@@ -60,6 +63,9 @@ console.log("loading");
 
 function showUserList(data){
 
+	userBucketList = data; 
+	console.log("bucketlist", userBucketList);
+
 	$('.welcome-login').addClass('hide');
 	$('.welcome-page').addClass('hide');
 	$('.user-list-section').removeClass('hide');
@@ -77,8 +83,11 @@ function showUserList(data){
  	}
 
 	$('.list-set').append (
-  `<div class="bucket-list-item" placeIndex="${i}" ><input type="checkbox" id="${data.places[i].locId}" placeIndex="${i}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
-   <label for="${data.places[i].locId}" placeIndex="${i}" >${data.places[i].city}, ${data.places[i].country}</label></div>`
+  `<div class="bucket-list-item" placeIndex="${i}" >
+  <input type="checkbox" class="checkbox-btn" id="${data.places[i].locId}" placeIndex="${i}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
+   <label for="${data.places[i].locId}" placeIndex="${i}" >${data.places[i].city}, ${data.places[i].country}</label>
+   <a class="btn btn-delete" href="#" placeIndex="${i}"><i class="fas fa-trash-alt" placeIndex="${i}"></i></a>
+   </div>`
   	);
  }
 
@@ -99,18 +108,22 @@ function getLocations (searchTerm, callbackFunction) {
 }
 
 function showLocationList(data){
-	console.log("locations: ", data);
+
+	featuredResults = data;
+
+	console.log("locations: ", featuredResults);
 	$('.featured-places').html(" ");
 	$('.featured-places').append ('<ul>');
 		
-	for (let i = 0; i < data.length; i++) {
+	for (let i = 0; i < featuredResults.length; i++) {
 
 	    let locationsContent = '<li class="place-result">';
-	    if(data[i].city) locationsContent += data[i].city + ' ';
-	    if(data[i].country) locationsContent += data[i].country + ' ';
-	   	if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
+	    if(featuredResults[i].city) locationsContent += featuredResults[i].city + ' ';
+	    if(featuredResults[i].country) locationsContent += featuredResults[i].country + ' ';
+	   	if(featuredResults[i].reviews.length	> 0) locationsContent += 'Review: '+featuredResults[i].reviews[0].content +' by ' +featuredResults[i].reviews[0].username;
 
-	    locationsContent += `<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`;
+	    //locationsContent += `<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`;
+	    locationsContent += `<input type="button" class="add-feature-button" placeIndex="${i}" name="${featuredResults[i].longName}" locationId="${featuredResults[i]._id}" value="Add to list"></li>`;
 
 
 		$('.featured-places').append (locationsContent);
@@ -139,6 +152,7 @@ function getAndDisplayUserList() {
 	//getUserList(showUserList);
 }
 
+//----this function gets the suggested locations
 function getAndDisplayLocationList() {
 
 	getLocations("USA", showLocationList);
@@ -163,15 +177,8 @@ function userSearch(searchTerm) {
 			for (var i=0 ; i < data.length ; i++)
 			{
 					let locationsContent = "";
-		    	//if ( data.locations[i][field].includes(searchTerm) ) {
-		        	
-
-		        	//dont show locations already on the users bucket list
-		        	//  if (USER_LIST.userList.find(item => item.locId === data.locations[i].locId) ) {
-		        	  
-		        	 // } else {
-		        	  	
-					
+		    	
+		        	  					
 		        	  if(data[i].city) locationsContent += data[i].city + ' ';
 		        	  if(data[i].country) locationsContent += data[i].country + ' ';
 		        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
@@ -205,7 +212,14 @@ function addLocationToList(location){
 	})
 	console.log("Updated list: ", USER_LIST);
 */
-let data={country:location.country, city:location.city, locId:location.Id};
+let data = {
+	country:location.country, 
+	city:location.city, 
+	locId:location.Id,
+	departDate: location.departDate,
+    returnDate: location.returnDate,
+    planNotes: location.planNotes
+	};
 data = JSON.stringify(data);
 
 console.log('data to send:', data);
@@ -317,6 +331,19 @@ function addPlace() {
 
 }
 
+//----deletes a place of bucket list
+function deletePlace(_placeIndex) {
+	
+	let data= {placeIndex: _placeIndex};
+	
+	data = JSON.stringify(data);
+
+
+	getAPIData( callType='DELETE', data, myToken, myUrl = '/api/bucketlist/', function () {
+		console.log("sent delete to server ");
+		});
+}
+
 function checkOffPlace(_placeIndex) {
 	//send a request to the bucket list to change the document entry visited = true
 	
@@ -403,7 +430,7 @@ $(function() {
 	startUp();
 	//getAndDisplayUserList();
 	
-	$('.list-set').on('click', function(event) {
+	$('.list-set').on('click', '.checkbox-btn', function(event) {
 	  		console.log('checked button clicked', event.target);
 	  		//event.preventDefault();
 	  		let placeIndex = event.target.getAttribute('placeIndex');
@@ -424,6 +451,17 @@ $(function() {
 	  		});
 
 	  	});
+
+	$('.list-set').on('click', '.btn-delete', function(event) {
+		
+		let placeIndex = event.target.getAttribute('placeIndex');
+		if(!placeIndex) {
+			placeIndex = event.target.getAttribute('placeindex');
+		}
+		console.log("place ind on client for delete: ", placeIndex);
+		console.log('clicked..', event.target);
+		deletePlace(placeIndex);
+	})
 
 
 
@@ -467,26 +505,72 @@ $(function() {
 	  		console.log('add featured button clicked');
 	  		event.preventDefault();
 	  		$('.featured-places').off('click'); 
+
+	  		//show modal planning option window
+
+			let fLindex = event.target.getAttribute('placeIndex');
+			
+
+	  		//event handle option windows add submit button
+	  		$('.adding-place-options-pop-up').removeClass('hide');
+
+	  		let placeAddedName = featuredResults[fLindex].country;
+
+	  		if (featuredResults[fLindex].city) {
+	  			placeAddedName = featuredResults[fLindex].city+", "+ placeAddedName;
+	  		}
+	  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
+
+	  		$('.adding-button').click(function(event) {
+		  		event.preventDefault();
+
+		  		let depDate = $('.departure-date').val();
+		  		let retDate = $('.return-date').val();
+		  		let planNotes = $('.plan-notes').val();
+
+		  		let location = { 
+	  			city: featuredResults[fLindex].city,
+	  			country:featuredResults[fLindex].country,
+	  			Id:featuredResults[fLindex]._id,
+	  			departDate: depDate,
+	  			returnDate: retDate,
+	  			planNotes: planNotes
+	  			}
+
+				addLocationToList(location);
+
+				//reset the listed places ------still need to check suggestion against user list
+				$('.featured-places').html(" ");
+		  		getAndDisplayLocationList();
+		  		$('.adding-place-options-pop-up').addClass('hide');
+		  	});
+
 	  		//let locAddedId = event.target.getAttribute('data');
 
 	  		//console.log("added ",locAddedId);
 
-	  			let location = { 
+	  		
+
+	  			/*let location = { 
 	  				city: event.target.getAttribute('city'),
 	  				country:event.target.getAttribute('country'),
 	  				Id:event.target.getAttribute('locationId')
-	  		}
+	  				}*/
 
-	  		addLocationToList(location);
-	  		$('.modal-added-section').removeClass('hide');
+	  		
+
+	  		
+	  		/*$('.modal-added-section').removeClass('hide');
 
 	  		//ok button event handler
 	  		$('.add-modal-ok').click(function(event) {
-	  		event.preventDefault();
-	  		$('.featured-places').html(" ");
-	  		getAndDisplayLocationList();
-	  		$('.modal-added-section').addClass('hide');
+		  		event.preventDefault();
+
+		  		$('.featured-places').html(" ");
+		  		getAndDisplayLocationList();
+		  		$('.modal-added-section').addClass('hide');
 	  		});
+	  		*/
 
 	  	});
 

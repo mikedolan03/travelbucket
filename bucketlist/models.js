@@ -21,7 +21,16 @@ const BucketListSchema = mongoose.Schema({
 	 	},
 	 	locId: {
 	 	 type: Schema.ObjectId,	
-	 	}
+	 	},
+	 	departDate: {
+	  	type: Date,
+	  	},
+	  	returnDate: {
+	  	type: Date,
+	  	},
+	  	planNotes: {
+	  		type: String,
+	  	}
 	 }]
 });
 

@@ -188,6 +188,15 @@ font-size: 12px;
     border-color: darkgray;
 }
 
+.adding-place-container {
+    width: 300px;
+    padding: 40px;
+    border-radius: 3px;
+    background: #ffffffbd;
+    margin: 41px auto;
+    box-shadow: 2px 2px; 
+}
+
 fieldset {
   padding: 0;
   border: 0;
@@ -266,6 +275,11 @@ display: block;
  .login-form-container {
     width: 400px;
   
+}
+
+.adding-place-container {
+    width: 500px;
+    
 }
 
 }

@@ -76,11 +76,17 @@ router.put('/', (req, res) => {
 
     const country = req.body.country;
     const locId = req.body.locId;
+    const departDate = req.body.departDate;
+    const returnDate = req.body.returnDate;
+    const planNotes = req.body.planNotes;
 
     let newPlaceToAdd = {
     	country: country,		
     	visited: 'false',
-    	locId: locId	
+    	locId: locId,
+        departDate: departDate,
+        returnDate: returnDate,
+        planNotes: planNotes	
     }
 
     if(req.body.city) { 
@@ -106,4 +112,40 @@ router.put('/', (req, res) => {
   
 });
 
+//find the place on the list by index number, delete it and save bucketlist
+router.delete('/', (req, res) => {
+
+    if(!req.body.placeIndex) {
+            console.log("------------------error in req", req.body.placeIndex);
+            res.status(400).json({message: 'Missing place to remove'});
+        }
+
+        console.log("req body", req.body);
+
+        const placeIndex = req.body.placeIndex;
+
+        BucketList.findOne({user: req.user.id }, function (err, list) {
+            
+            if(err) {
+                console.log("error finding list of user ", err);
+            }
+
+            //console.log("list", list.places);
+
+            if(list.places[placeIndex]){
+            
+                list.places.splice(placeIndex, 1);
+            }
+            
+            list.save(function(err, list) {
+                if(err) {
+                 console.log("error saving place data to list", err);
+                }
+                res.status(204).end();
+            });
+        });
+
+
+
+ } );
 module.exports = {router};
