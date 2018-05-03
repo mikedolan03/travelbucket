@@ -28,9 +28,11 @@ let userBucketList = [];
 //this function will eventually be an ajax call to query the database
 function getUserList (callbackFunction) {
 
-	setTimeout(function() {
-		callbackFunction(USER_LIST)
-	}, 1);
+	 getAPIData( callType='GET', data={}, myToken, myUrl = '/api/bucketlist', callbackFunction);
+
+	//setTimeout(function() {
+	//	callbackFunction(USER_LIST)
+	//}, 1);
 
 }
 
@@ -63,6 +65,8 @@ console.log("loading");
 
 function showUserList(data){
 
+
+
 	userBucketList = data; 
 	console.log("bucketlist", userBucketList);
 
@@ -72,23 +76,46 @@ function showUserList(data){
 	$('.join-form-section').addClass('hide');
 	$('.list-set').html(" ");
 
- for (let i = 0; i < data.places.length; i++) {
- 	let toggle = " ";
- 	console.log(data.places[i].visited);  
- 	if(data.places[i].visited == "true") {
- 		console.log("checked");
- 		toggle = "checked";
- 	} else {
- 		toggle = "";
- 	}
+ 	for (let i = 0; i < data.places.length; i++) {
+	 	let toggle = " ";
+	 	console.log(data.places[i].visited);  
+	 	if(data.places[i].visited == "true") {
+	 		console.log("checked");
+	 		toggle = "checked";
+	 	} else {
+	 		toggle = "";
+	 	}
 
-	$('.list-set').append (
-  `<div class="bucket-list-item" placeIndex="${i}" >
-  <input type="checkbox" class="checkbox-btn" id="${data.places[i].locId}" placeIndex="${i}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
-   <label for="${data.places[i].locId}" placeIndex="${i}" >${data.places[i].city}, ${data.places[i].country}</label>
-   <a class="btn btn-delete" href="#" placeIndex="${i}"><i class="fas fa-trash-alt" placeIndex="${i}"></i></a>
-   </div>`
-  	);
+	 	let placeName ="";
+	 	let tripDate = ""; 
+	 	console.log("city value: ", userBucketList.places[i].city ); 
+
+	 	if(typeof userBucketList.places[i].city != 'undefined') {
+
+	 		if(userBucketList.places[i].city != 'undefined') {
+	 			placeName = userBucketList.places[i].city + ", " + userBucketList.places[i].country; 
+	 		} else {
+	 			placeName = userBucketList.places[i].country; 
+	 		}
+
+	 	} else {
+	 		placeName = userBucketList.places[i].country; 
+	 	}
+
+	 	if(typeof userBucketList.places[i].departDate != 'undefined') {
+	 		tripDate = userBucketList.places[i].departDate;
+	 		tripDate =  '- Trip planned for '+ tripDate.toString().substr(0, 10);
+	 	} else {
+	 		tripDate = ""; 
+	 	}
+
+		$('.list-set').append (
+	  `<div class="bucket-list-item" placeIndex="${i}" >
+	  <input type="checkbox" class="checkbox-btn" id="${data.places[i].locId}" placeIndex="${i}" name="location" value="${data.places[i].locId}" data="${data.places[i].locId}" ${toggle}>
+	   <label for="${data.places[i].locId}" placeIndex="${i}" >${placeName}  ${tripDate} </label>
+	   <div role="button" class="btn-delete" placeIndex="${i}"><i class="fas fa-trash-alt" placeIndex="${i}"></i></div>
+	   </div>`
+	  	);
  }
 
  //$('body').append ('</ul>');
@@ -113,26 +140,36 @@ function showLocationList(data){
 
 	console.log("locations: ", featuredResults);
 	$('.featured-places').html(" ");
-	$('.featured-places').append ('<ul>');
+
+	let locationsContent = '<div class="lightgrey-box-background results-box"><ul>';
 		
 	for (let i = 0; i < featuredResults.length; i++) {
 
-	    let locationsContent = '<li class="place-result">';
-	    if(featuredResults[i].city) locationsContent += featuredResults[i].city + ' ';
-	    if(featuredResults[i].country) locationsContent += featuredResults[i].country + ' ';
-	   	if(featuredResults[i].reviews.length	> 0) locationsContent += 'Review: '+featuredResults[i].reviews[0].content +' by ' +featuredResults[i].reviews[0].username;
+	    locationsContent += '<li class="place-result">';
+
+	    if(featuredResults[i].city) {
+	    	locationsContent += featuredResults[i].city + ' ';
+	    }
+
+	    if(featuredResults[i].country){ 
+	    	locationsContent += featuredResults[i].country + ' ';
+		}
+	   	//
+	   	//if(featuredResults[i].reviews.length	> 0) locationsContent += 'Review: '+featuredResults[i].reviews[0].content +' by ' +featuredResults[i].reviews[0].username;
 
 	    //locationsContent += `<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`;
+	    
 	    locationsContent += `<input type="button" class="add-feature-button" placeIndex="${i}" name="${featuredResults[i].longName}" locationId="${featuredResults[i]._id}" value="Add to list"></li>`;
 
 
-		$('.featured-places').append (locationsContent);
+	
 		//$('.featured-places').append (`<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`);
 		
 	}
 
-	$('.featured-places').append ('</ul>');
-
+	locationsContent +='</ul></div>';
+	
+	$('.featured-places').append (locationsContent);
 
 }
 
@@ -169,34 +206,41 @@ function getSearchLocationList() {
 function userSearch(searchTerm) {
 	console.log("search for ", searchTerm);
 	$('.search-results').html(" ");
-	$('.search-results').append (`<ul>`);
+
+	let searchResultsContent = `<div class="lightgrey-box-background results-box"><ul>`;
 
 	getLocations(searchTerm, function(data) {
 			
+			locationSearchResults = data; 
 		
 			for (var i=0 ; i < data.length ; i++)
 			{
-					let locationsContent = "";
-		    	
-		        	  					
-		        	  if(data[i].city) locationsContent += data[i].city + ' ';
-		        	  if(data[i].country) locationsContent += data[i].country + ' ';
-		        	  if(data[i].reviews.length	> 0) locationsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
+			    	
+		       
+		       searchResultsContent += `<li class="place-result">	`;
+
+		        if(data[i].city)  {
+		        	searchResultsContent += data[i].city + ', ';
+		        }
+		        if(data[i].country) {
+		        	searchResultsContent += data[i].country + ' ';
+		        }
+		        if(data[i].reviews.length	> 0) { 
+		        	//searchResultsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
+		        }
 
 
-		        		$('.search-results').append (`<li class="place-result">${locationsContent}</li> 
-		        		<input type="button" class="result-button" name="${data[i]._id}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list">`);
+		       searchResultsContent += `<input type="button" class="result-button" placeIndex="${i}" name="${data[i]._id}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li> `;
 		        		//}
 		    	//}
 			}
 
+		searchResultsContent += `</ul></div>`;
 
-	 	});
+	 	$('.search-results').append (searchResultsContent);
 
-	 	$('.search-results').append (`</ul>`);
-
-
-		  	
+	});
+	  	
 		
 }
 
@@ -453,14 +497,36 @@ $(function() {
 	  	});
 
 	$('.list-set').on('click', '.btn-delete', function(event) {
+
+			console.log('clicked..', event.target.tagName);
+
+		  var el;
+  
+		  // we can check the tag type, and if it's not the <a>, move up.
+		  if (event.target.tagName == 'path') {
+		    el = event.target.parentElement.parentElement;
+
+		    console.log('changing targ to', el); 
+
+		  	} else if (event.target.tagName == 'svg') {
+		    	el = event.target.parentElement;
+		  		} else {
+		    			el = event.target;
+		  				}
+		  	console.log(el.getAttribute("placeIndex"));
 		
-		let placeIndex = event.target.getAttribute('placeIndex');
+		
+		let placeIndex = el.getAttribute('placeIndex');
+
 		if(!placeIndex) {
-			placeIndex = event.target.getAttribute('placeindex');
+			placeIndex = el.getAttribute('placeindex');
 		}
+
 		console.log("place ind on client for delete: ", placeIndex);
-		console.log('clicked..', event.target);
+		
 		deletePlace(placeIndex);
+
+		getAndDisplayUserList();
 	})
 
 
@@ -582,22 +648,42 @@ $(function() {
 	  		//let locAddedId = event.target.getAttribute('data');
 	  		//console.log("added ",locAddedId);
 
-	  		let location = { 
-	  				city: event.target.getAttribute('city'),
-	  				country:event.target.getAttribute('country'),
-	  				Id:event.target.getAttribute('locationId')
+	  		let fLindex = event.target.getAttribute('placeIndex');
+			
+
+	  		//event handle option windows add submit button
+	  		$('.adding-place-options-pop-up').removeClass('hide');
+
+	  		let placeAddedName = locationSearchResults[fLindex].country;
+
+	  		if (locationSearchResults[fLindex].city) {
+	  			placeAddedName = locationSearchResults[fLindex].city+", "+ placeAddedName;
 	  		}
+	  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
 
-	  		addLocationToList(location);
-	  		$('.modal-added-section').removeClass('hide');
+	  		$('.adding-button').click(function(event) {
+		  		event.preventDefault();
 
-	  		//ok button event handler
-	  		$('.add-modal-ok').click(function(event) {
-	  		event.preventDefault();
-	  		$('.search-results').html(" ");
-	  		userSearch($('.search-box').val());
-	  		$('.modal-added-section').addClass('hide');
-	  		});
+		  		let depDate = $('.departure-date').val();
+		  		let retDate = $('.return-date').val();
+		  		let planNotes = $('.plan-notes').val();
+
+		  		let location = { 
+	  			city: locationSearchResults[fLindex].city,
+	  			country:locationSearchResults[fLindex].country,
+	  			Id:locationSearchResults[fLindex]._id,
+	  			departDate: depDate,
+	  			returnDate: retDate,
+	  			planNotes: planNotes
+	  			}
+
+				addLocationToList(location);
+
+				//reset the listed places ------still need to check suggestion against user list
+				$('.search-results').html(" ");
+	  			userSearch($('.search-box').val());
+		  		$('.adding-place-options-pop-up').addClass('hide');
+		  	});
 
 	  	});
 
