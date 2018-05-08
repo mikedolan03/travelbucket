@@ -115,7 +115,7 @@ router.put('/', (req, res) => {
 //find the place on the list by index number, delete it and save bucketlist
 router.delete('/', (req, res) => {
 
-    if(!req.body.placeIndex) {
+    if(req.body.placeIndex == null) {
             console.log("------------------error in req", req.body.placeIndex);
             res.status(400).json({message: 'Missing place to remove'});
         }

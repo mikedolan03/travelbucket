@@ -38,9 +38,7 @@ body {
   margin-top: -40px;
 }
 
-.hide {
-	display: none;
-}
+
 
 .blue-heading-text {
 	color: #007fad;
@@ -171,6 +169,25 @@ legend {
     margin-bottom: 33px;
     color: white;
     font-weight: 700;
+}
+
+.button-35 {
+   display: inline-block;
+    height: 30px;
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 33px;
+    color: white;
+    font-weight: 700;
+    padding: 5px;
+}
+
+.check {
+  display: inline-block;
+}
+
+.hide {
+  display: none;
 }
 
 .join-button-area p{
