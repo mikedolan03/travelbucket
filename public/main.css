@@ -284,6 +284,10 @@ legend {
 font-size: 12px; 
 }
 
+.search-button {
+margin-left: 5px;
+}
+
 .show-join-button {
 	 display: block;
     width: 30%;
@@ -356,8 +360,8 @@ padding: 5px;
 	  padding: 8px 16px;
     border: 1px solid #ddd;
     overflow: auto;
-    margin: 5px;
-    background-color: #b5d7e2;
+    margin: 2px;
+    
 }
 
 

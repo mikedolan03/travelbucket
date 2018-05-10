@@ -64,7 +64,10 @@ function main() {
 		$('.list-set').html(" ");
 
 		$('.add-form').html('');
-		$('.add-form').html('<input type="button" name="add-button" class="add-button important-button center" value="Add new location to list">');
+		$('.add-form').html(`
+			<input type="button" name="add-button" 
+			class="add-button button-35-b blue-background center" 
+			value="Add new location to list">`);
 
 	
 
@@ -186,7 +189,7 @@ function main() {
 			
 				console.log("place ind on client for delete: ", placeIndex);
 				
-				showModal(`Are you sure you want to delete ${placeName} from your list?`, false, false, true, true, function() {
+				showModal(`Are you sure you want to delete ${placeName} from your list?`, 'Yes', 'No', function() {
 					 deletePlace(placeIndex); 
 					 hideModal();
 					 getListofPlaces();
@@ -238,12 +241,21 @@ function main() {
 		console.log("locations: ", featuredResults);
 		$('.featured-places').html(" ");
 
-		let locationsContent = '<div class="lightgrey-box-background results-box">';
-		$('.featured-places').append (locationsContent);
+		let locationsContent =''; 
+
+		//'<div class="lightgrey-box-background results-box">';
+		//$('.featured-places').append (locationsContent);
 			
 		for (let i = 0; i < featuredResults.length; i++) {
+			let backgroundColor = 'lighterblue-background'; 
 
-		    locationsContent = '<div class="place-result">';
+			if(i%2) {
+				backgroundColor = 'lightblue-background';
+			}
+
+		    locationsContent = `<div class="place-result ${backgroundColor}">
+		    						<div class="row">
+        								<div class="col-6">`;
 
 		    if(featuredResults[i].city) {
 		    	locationsContent += featuredResults[i].city + ' ';
@@ -257,9 +269,15 @@ function main() {
 
 		    //locationsContent += `<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`;
 		    
-		    locationsContent += `<button class="add-feat-${i} add-feature-button" 
-		    	placeIndex="${i}" name="location # ${i}" 
-		    	locationId="${featuredResults[i]._id}" value="Let's Go!">Let's Go!</button></div>`;
+		    locationsContent += `</div>	
+		    				<div class="col-6 text-align-right">
+		    				<button class="add-feat-${i} add-feature-button button-35-b complimentary-color black-text" 
+		    				placeIndex="${i}" name="location # ${i}" 
+		    				locationId="${featuredResults[i]._id}" 
+		    				value="Let's Go!">Let's Go!</button>
+		    				</div>
+			   			 </div>	
+		      		</div>`;
 
 			$('.featured-places').append (locationsContent);
 
@@ -267,7 +285,7 @@ function main() {
 			$(`.add-feat-${i}`).on('click', function(event) {
 		  		console.log('add featured button clicked', i);
 		  		event.preventDefault();
-		  		$('.featured-places').off('click');
+		  		$(this).off(event);
 
 		  		planTripView(i);
 
@@ -315,7 +333,7 @@ function main() {
 
 					addLocationToList(location);
 
-					showModal(`You are on your way to ${placeAddedName}!`, true, false, false, false, function() {
+					showModal(`You are on your way to ${placeAddedName}!`, 'Ok', null, function() {
 						hideModal();
 						$('.user-list-section').removeClass('hide');
 		  				$('.search-results').html(" ");
@@ -411,6 +429,9 @@ function main() {
 	//----this function gets the suggested locations
 	function getAndDisplayLocationList() {
 
+	$('.place-results-header').html("Must see Locations!");
+
+
 		getLocations("USA", showLocationList);
 	}
 
@@ -471,9 +492,11 @@ function main() {
 		console.log("search for ", searchTerm);
 		$('.search-results').html(" ");
 
-		let searchResultsContent = `<div class="lightgrey-box-background results-box"><ul>`;
+		//let searchResultsContent = `<div class="lightgrey-box-background results-box"><ul>`;
+		$('.place-results-header').html("Top Search Results");
+		getLocations(searchTerm, showLocationList); 
 
-		getLocations(searchTerm, function(data) {
+		/* getLocations(searchTerm, function(data) {
 				
 				locationSearchResults = data; 
 			
@@ -505,7 +528,7 @@ function main() {
 
 		 	$('.search-results').append (searchResultsContent);
 
-		});
+		}); */
 		  	
 			
 	}
@@ -786,64 +809,42 @@ function main() {
 
 	}
 
-	function showModal(text, ok, cancel, yes, no, affirmCallback, negateCallback) {
+	function showModal(text, option1txt,option2txt, affirmCallback, negateCallback) {
 		
 
+		let modalContent = `<div class="modal-text">${text}</div>
+            <button class="modal-ok-button">${option1txt}</button>`;
+
+        if(option2txt != null) {
+            modalContent += `<button class="modal-cancel-button">${option2txt}</button>`;
+        }
+
+        $('.gen-modal-content').html(modalContent); 
+		
 		$('.modal-general-section').removeClass('hide'); 
 
-		$('.modal-text').html(text); 
-
-		if( ok === true) {
+		
 			$('.modal-ok-button').removeClass('hide'); 
+
 			$('.modal-ok-button').on('click', function(event) {
 			  	event.preventDefault();
-			  	$('.modal-ok-button').off('click');
+			  	$(this).off(event);
 			  	affirmCallback();
 	    	} );
 
-		} else {
-			$('.modal-ok-button').addClass('hide');
-			$('.modal-ok-button').off('click');
-		}
 
-		if( cancel === true) {
+		if( option2txt != null) {
 			$('.modal-cancel-button').removeClass('hide'); 
 			$('.modal-cancel-button').on('click', function(event) {
 			  	event.preventDefault();
-			  	$('.modal-cancel-button').off('click');
+			  	$(this).off(event);
 			  	negateCallback();
 	    	} );
-
-
-
 		} else {
 			$('.modal-cancel-button').addClass('hide');
-			$('.modal-cancel-button').off('click');
+			
 		}
 
-		if( yes === true) {
-			$('.modal-yes-button').removeClass('hide'); 
-			$('.modal-yes-button').on('click', function(event) {
-			  	event.preventDefault();
-			  	$('.modal-yes-button').off('click');
-			  	affirmCallback();
-	    	} );
-		} else {
-			$('.modal-yes-button').addClass('hide');
-			$('.modal-yes-button').off('click');
-		}
-
-		if( no === true) {
-			$('.modal-no-button').removeClass('hide');
-			$('.modal-no-button').on('click', function(event) {
-			  	event.preventDefault();
-			  	$('.modal-no-button').off('click');
-			  	negateCallback();
-	    	} ); 
-		} else {
-			$('.modal-no-button').addClass('hide');
-			$('.modal-no-button').off('click');
-		}
 
 	}
 
@@ -855,7 +856,10 @@ function main() {
 
 		//rebuild button to get rid of old event handlers
 		$('.back-to-list').html('');
-		$('.back-to-list').html('<input type="button" name="back-button" class="back-button" value="Go back to your Bucket List">')
+		$('.back-to-list').html(`
+			<input type="button" name="back-button" 
+			class="back-button button-35-b contrast-color black-text" 
+			value="Go back to your Bucket List">`);
 
 		getAndDisplayLocationList();
 

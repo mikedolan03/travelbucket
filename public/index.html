@@ -98,13 +98,16 @@
 
     <section class="user-list-section hide">
       <div class="row">
-        <div class="col-12">
-            <h2 class="bucketlist-heading">User's Bucket list</h2>
+        <div class="col-6">
+            <h2>User's Bucket list</h2>
+        </div>
+        <div class="col-6">
+          <form name="add-form" class="add-form"> 
+            <input type="button" name="add-button" class="add-button important-button center" value="Add new location to list"></form>
         </div>
       </div>
 
-        <form name="add-form" class="add-form"> 
-          <input type="button" name="add-button" class="add-button important-button center" value="Add new location to list"></form>
+        
         <div class="bucketlist-form-container">
           <form name="bucketlist-form" class="bucketlist-form">
             <legend>Check off places that you've been</legend>
@@ -117,23 +120,35 @@
       </section>
 
       <section class="add-section hide">
+      <div class="row">
+        <div class="col-12">
         <header>
           <h2>Find a new place to add to your bucket list...</h2>
         </header>
-        <form name="back-to-list" class="back-to-list"> 
-          <input type="button" name="back-button" class="back-button" value="Go back to your Bucket List"></form>
-        <form>
-          <label for="search">Search: <input type="text" id="search" class="search-box" name="search"></label><input type="button" name="search-button" class="search-button main-button" value="Search">
-        </form>
-        <h3>Search Results: </h3>
-        <div class="search-results">
-
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <form>
+            <label for="search"><input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button> 
+          </form>
         </div>
-        <h3>Top Rated Places</h3>
+        <div class="col-6 text-align-right">
+          <form name="back-to-list" class="back-to-list"> 
+            <button name="back-button" class="back-button button-35-b contrast-color black-text" value="Go back to your Bucket List">Back</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+        <header>
+          <h3 class="place-results-header">Top Rated Places</h3>
+        </header>
+      </div>
+      </div>
         <div class="featured-places">
 
         </div>
-
       </section>
 
       <section class="adding-place-options-pop-up hide">
@@ -178,12 +193,8 @@
       </section>
       <section class="modal-general-section hide">
         <div class="modal">
-          <div class="modal-content">
+          <div class="modal-content gen-modal-content">
             <div class="modal-text">Are you Sure?</div>
-            <button class="important-button big-button modal-ok-button">Ok</button>
-            <button class="important-button big-button modal-cancel-button">Cancel</button>
-            <button class="important-button big-button modal-yes-button">Yes</button>
-            <button class="important-button big-button modal-no-button">No</button>
           </div>
         </div>
       </section>
@@ -193,7 +204,7 @@
           <div class="modal-content">
             <form>
               Great job! You checked a place off your list!<br>
-              <input type="button" name="check-modal-ok" id="check-modal-ok" class="check-modal-ok big-button .important-button" value="Ok">
+              <input type="button" name="check-modal-ok" id="check-modal-ok" class="check-modal-ok big-button important-button" value="Ok">
             </form>  
           </div>
         </div>
