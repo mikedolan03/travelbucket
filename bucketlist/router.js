@@ -93,6 +93,10 @@ router.put('/', (req, res) => {
         newPlaceToAdd.city = req.body.city;
     }
 
+
+   // if(true === false) {
+    //    BucketList.
+    //} 
    // console.log("adding on server side ", newPlaceToAdd);
 
     //console.log("locating list: ", BucketList.findOne({user: req.user.id}) );

@@ -120,27 +120,44 @@ function main() {
 		 		tripDate = ""; 
 		 	}
 
-			$('.list-set').append (
-		  `<div class="bucket-list-item ${backgroundColor}" placeIndex="${i}" >
+		 	if(userBucketList.places[i].visited=="false") { 
+
+		 	}
+
+		 	let userListContent = "";
+
+			
+		 	userListContent = `<div class="bucket-list-item ${backgroundColor}" placeIndex="${i}" >
 		  		<div class="row">
         			<div class="col-6">
-        		
-		  					<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
+		  				<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
 		   					<label for="${data.places[i].locId}" placeIndex="${i}" >${placeName} </label>
 		   			</div>
 		   			<div class="col-6 text-align-right">
-		   				<button class="btn-plan-${i} button-35-b contrast-color black-text" placeIndex="${i}">Plan Trip</button>
-		   				<button class="checkbox-btn-${i} button-35-b contrast-color black-text" placeIndex="${i}">Been there</button>
-		   				<button class="btn-delete-${i} button-35-b complimentary-color black-text" placeIndex="${i}"><i class="fas fa-trash-alt"></i></button>
-		   			</div>
+		   				`;
+
+		   	if(userBucketList.places[i].visited == "false") { 
+					userListContent += `
+					<button class="btn-plan-${i} button-35-b contrast-color black-text" 
+		   				placeIndex="${i}">Plan Trip</button>
+					<button class="checkbox-btn-${i} button-35-b contrast-color black-text" 
+					placeIndex="${i}">Been there</button>`;
+	
+		 	}		
+		   	
+		   	userListContent += `
+		   	<button class="btn-delete-${i} button-35-b complimentary-color black-text" 
+					placeIndex="${i}"><i class="fas fa-trash-alt"></i></button>
+		   	</div>
 		   		</div>
 		   		<div class = "row">
 		   			<div class="col-6">
-		   			<p class="smaller-text">${tripDate}</p> 
+		   				<p class="smaller-text">${tripDate}</p> 
 		   			</div>
 		   		</div>
-		   </div>`
-		  	);
+		   		</div>`;
+
+		  	$('.list-set').append (userListContent);
 
 		  	console.log("visited? ",userBucketList.places[i].visited );
 
@@ -176,6 +193,13 @@ function main() {
 
 		  		*/
 
+	  		});
+
+	  		$(`.btn-plan-${i}`).click( function(event) { 
+	  			console.log("clicked plan button", i);
+	  			event.preventDefault();
+
+	  			planTripFromBucketListView(i);
 	  		});
 
 	  		$(`.btn-delete-${i}`).click( function(event) {
@@ -350,10 +374,59 @@ function main() {
 			  	});
 	}
 
+	function planTripFromBucketListView(i) {
+
+		$('.adding-place-options-pop-up').removeClass('hide');
+
+		  		let placeAddedName = userBucketList.places[i].country;
+
+		  		if (userBucketList.places[i].city) {
+		  			placeAddedName = userBucketList.places[i].city+", "+ placeAddedName;
+		  		}
+		  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
+
+		  		$('.adding-button').click(function(event) {
+			  		event.preventDefault();
+			  		$(this).off(event);
+
+			  		let depDate = $('.departure-date').val();
+			  		let retDate = $('.return-date').val();
+			  		let planNotes = $('.plan-notes').val();
+
+			  		let location = { 
+		  			city: userBucketList.places[i].city,
+		  			country:userBucketList.places[i].country,
+		  			Id:userBucketList.places[i]._id,
+		  			departDate: depDate,
+		  			returnDate: retDate,
+		  			planNotes: planNotes
+		  			}
+
+					//addLocationToList(location);
+
+					showModal(`You are on your way to ${placeAddedName}!`, 'Ok', null, function() {
+						hideModal();
+						$('.user-list-section').removeClass('hide');
+		  				$('.search-results').html(" ");
+		  				$('.add-section').addClass('hide');
+		  				$('.list-set').html("");
+		  				$('.back-button').off('click');
+		  				getAndDisplayUserList();
+					}, null);
+
+					//reset the listed places ------still need to check suggestion against user list
+					$('.featured-places').html(" ");
+			  		//getAndDisplayLocationList();
+			  		$('.adding-place-options-pop-up').addClass('hide');
+			  	});
+	}
+
+
 	function ratePlaceView(locationId, placeInd) {
 
 		let starId = "";
-		
+		$(`.stars`).html('<i class="far fa-star"></i>');
+		$('.trip-review').val('');
 		$('.review-place-options-pop-up').removeClass('hide');
 
 		let headerText = "";
@@ -531,6 +604,27 @@ function main() {
 		}); */
 		  	
 			
+	}
+
+	function addPlanToList(location, pIndex){
+
+	let data = {
+			placeIndex: pIndex,
+			country:location.country, 
+			city:location.city, 
+			locId:location.Id,
+			departDate: location.departDate,
+		    returnDate: location.returnDate,
+		    planNotes: location.planNotes
+			};
+		data = JSON.stringify(data);
+
+		console.log('data to send:', data);
+
+		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/', function () {
+		 	console.log("sent update to server ");
+		 });	
+	
 	}
 
 	function addLocationToList(location){
