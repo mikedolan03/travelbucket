@@ -7,21 +7,24 @@
   <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <!--<link rel="stylesheet" type="text/css" href="grid.css">-->
   <link rel="stylesheet" type="text/css" href="main.css">
-  
+    <link rel="stylesheet" type="text/css" href="grid.css">
+
   <script>
     FontAwesomeConfig = { searchPseudoElements: true };
   </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
   <body class="front-page-background">
-    <header role="banner" class="darkgrey-box-background title-box">
-      <h1>Travel Bucket!</h1>
+    <header role="banner" class="blue-background title-box">
+      <h1><i class="fas fa-map-signs"></i>  Travel Bucket!</h1>
     </header>
     <main role="main">
-    <section class="welcome-page ">
-      <header>
-        <h2 class="big-headers">Everyone has a travel bucket list... what's on yours?</h2>
-      </header>
+      <div class="row">
+        <div class="col-12">
+          <section class="welcome-page ">
+            <header>
+              <h2 class="big-headers complimentary-color-text">Everyone has a travel bucket list... what's on yours?</h2>
+            </header>
       <!-- <div class="buttons-box center"
       <form class="sign-in-or-up-form">
           <button type="submit" class="go-to-login-button main-button big-button">Login</button>
@@ -29,26 +32,29 @@
         </form>
       </div>
 -->
-    </section>
+          </section>
+        </div>
+      </div>
     <section class="welcome-login">
-      <div class="login-form-container">
+      <div class="login-form-container blue-background">
         <form class="login-form">
             <legend>Log In</legend>
             <div class= "login-input-group"> 
-              <label>Username:
-              <input type="text" name="username" class="username"></label>
+              <label name="username input ">
+              <input type="text" name="username" class="username no-box-input" placeholder="Username"></label>
             </div>
             <div class= "login-input-group">
-              <label class= "login-label">Password:
-              <input type="password" name="password" class="password"></label>
+              <label class= "login-label" name="password input">
+              <input type="password" name="password" class="password no-box-input" placeholder="Password"></label>
             </div>
             <div class="center">
-              <button type="submit" class="login-button main-button button-95">Login</button>
+              <button type="submit" class="login-button button-95 white-background main-color-text">Login</button>
             </div>
             <div class="join-button-area">
               <div class="center">
                 <form class="join-button-form">
-                 <p>Not a member? Join travel bucket!<button type="submit" class="show-join-button"><i class="fas fa-user-plus"></i>Join!</button></p>
+                 <p>Not a member? Join travel bucket!</p>
+                  <button type="submit" class="show-join-button complimentary-color"><i class="fas fa-user-plus"></i>Join!</button>
                 </form>
               </div>
             </div>
@@ -91,8 +97,12 @@
       </section>
 
     <section class="user-list-section hide">
-      <div class="user-list">
-        <h2 class="bucketlist-heading">User's Bucket list</h2>
+      <div class="row">
+        <div class="col-12">
+            <h2 class="bucketlist-heading">User's Bucket list</h2>
+        </div>
+      </div>
+
         <form name="add-form"> 
           <input type="button" name="add-button" class="add-button important-button center" value="Add new location to list"></form>
         <div class="bucketlist-form-container">
@@ -103,7 +113,7 @@
             </fieldset>
           </form>
         </div>
-      </div>
+      
       </section>
 
       <section class="add-section hide">
@@ -128,7 +138,7 @@
 
       <section class="adding-place-options-pop-up hide">
         <div class="modal">
-          <div class="adding-place-container">
+          <div class="pop-up-container">
             <h3 class="place-options-header">Let's Plan You Trip to New Zealand!</h3>
             <form name="place-options">
               <div class= "create-input-group"> 
@@ -142,6 +152,26 @@
                   <textarea rows="4" cols="50" form="place-options" name ="plan-notes" class="plan-notes"></textarea></label>
               </div>
                <button type="submit" class="adding-button main-button button-95">Add to list</button>
+            </form>
+          </div>
+      </div>
+      </section>
+       <section class="review-place-options-pop-up hide">
+        <div class="modal">
+          <div class="pop-up-container">
+            <h3 class="review-options-header">How was your trip to New Zealand?</h3>
+            <form name="review-place-options">
+              <div class= "create-input-group"> 
+                <label> Rate your trip -  
+                <div class="rating">
+                  <span class="stars" id="star1" data="1"><i class="far fa-star"></i></span><span class="stars" id="star2" data="2"><i class="far fa-star"></i></span><span class="stars" data="3" id="star3"><i class="far fa-star"></i></span><span class="stars" data="4" id="star4"><i class="far fa-star"></i></span><span class="stars" data="5" id="star5"><i class="far fa-star"></i></span>
+                </div></label>
+              </div>
+              <div class= "create-input-group"> 
+                  <textarea rows="4" cols="50" form="place-options" name ="trip-review" class="trip-review" placeholder="Write a review of your trip..."></textarea>
+              </div>
+               
+               <button type="submit" class="checkit-button blue-background  white-text button-95">Check it off!</button>
             </form>
           </div>
       </div>

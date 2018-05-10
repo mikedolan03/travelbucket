@@ -66,6 +66,17 @@ function main() {
 	 	for (let i = 0; i < userBucketList.places.length; i++) {
 		 	let toggle = " ";
 		 	console.log(userBucketList.places[i].visited);  
+;
+		 	let backgroundColor = "";
+
+		 	if(i%2) {
+		 	 backgroundColor = "lightblue-background"; 
+		 	} else {
+
+		 	 backgroundColor = "lighterblue-background"; 
+		 	}
+
+
 		 	if(userBucketList.places[i].visited == "true") {
 		 		console.log("checked");
 		 		toggle = "checked";
@@ -101,12 +112,24 @@ function main() {
 		 	}
 
 			$('.list-set').append (
-		  `<div class="bucket-list-item" placeIndex="${i}" >
-		  	<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
-		   <label for="${data.places[i].locId}" placeIndex="${i}" >${placeName}  ${tripDate} </label>
-		   <button class="btn-plan-${i} button-35 main-button" placeIndex="${i}">Plan Trip</button>
-		   <button class="checkbox-btn-${i} button-35 main-button" placeIndex="${i}">Been there</button>
-		   <button class="btn-delete-${i} button-35 main-button" placeIndex="${i}">Get rid of it</button>
+		  `<div class="bucket-list-item ${backgroundColor}" placeIndex="${i}" >
+		  		<div class="row">
+        			<div class="col-6">
+        		
+		  					<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
+		   					<label for="${data.places[i].locId}" placeIndex="${i}" >${placeName} </label>
+		   			</div>
+		   			<div class="col-6">
+		   				<button class="btn-plan-${i} button-35-b contrast-color black-text" placeIndex="${i}">Plan Trip</button>
+		   				<button class="checkbox-btn-${i} button-35-b contrast-color black-text" placeIndex="${i}">Been there</button>
+		   				<button class="btn-delete-${i} button-35-b complimentary-color black-text" placeIndex="${i}">Get rid of it</button>
+		   			</div>
+		   		</div>
+		   		<div class = "row">
+		   			<div class="col-6">
+		   			<p class="smaller-text">${tripDate}</p> 
+		   			</div>
+		   		</div>
 		   </div>`
 		  	);
 
@@ -128,8 +151,9 @@ function main() {
 
 		  	//showModal(`You are on your way to ${placeAddedName}!`, true, false, false, false, hideModal, null);
 
+		  		ratePlaceView(userBucketList.places[i].locId, i);
 
-		  		checkOffPlace(placeIndex); 
+		  		/*checkOffPlace(placeIndex); 
 
 		  		$('.modal-checkedoff-section').removeClass('hide');
 
@@ -140,6 +164,8 @@ function main() {
 
 		  		getListofPlaces();
 		  		});
+
+		  		*/
 
 	  		});
 
@@ -297,6 +323,63 @@ function main() {
 			  	});
 	}
 
+	function ratePlaceView(locationId, placeInd) {
+
+		let starId = "";
+		
+		$('.review-place-options-pop-up').removeClass('hide');
+
+		let headerText = "";
+		if (userBucketList.places[placeInd].city) {
+			headerText	= userBucketList.places[placeInd].city;
+		}
+		headerText	+= " " + userBucketList.places[placeInd].country; 
+
+		$('.review-options-header').html(`How did you like ${headerText}?`);
+
+		$('.rating').on('click', function(event) {
+			ratingCount = parseInt( event.target.closest('span').getAttribute('data'));
+			console.log("stars ", ratingCount);
+
+			$(`.stars`).html('<i class="far fa-star"></i>');
+
+			for (let si = 1; si <= ratingCount; si++)
+			{
+
+				$(`#star${si}`).html('<i class="fas fa-star"></i>');
+
+			}
+
+		});
+
+
+		$('.checkit-button').on('click', function(event) {
+			
+			event.preventDefault();
+			$('.checkit-button').off('click'); 
+
+			let newReviewdata = {
+			locId: locationId,
+			userId: userBucketList.user._id,
+			 userName: userBucketList.user.username,
+			 content: $('.trip-review').val(),
+			 rating: ratingCount
+			};
+
+			addReview(newReviewdata); 
+			console.log('checking off', placeInd);
+			checkOffPlace(placeInd);
+
+			$('.review-place-options-pop-up').addClass('hide');
+
+			getListofPlaces();
+
+		});
+
+
+
+	}
+
 
 
 	function getAndDisplayUserListPromiseExample() {
@@ -419,23 +502,35 @@ function main() {
 
 	function addLocationToList(location){
 
-	let data = {
-		country:location.country, 
-		city:location.city, 
-		locId:location.Id,
-		departDate: location.departDate,
-	    returnDate: location.returnDate,
-	    planNotes: location.planNotes
-		};
-	data = JSON.stringify(data);
+		let data = {
+			country:location.country, 
+			city:location.city, 
+			locId:location.Id,
+			departDate: location.departDate,
+		    returnDate: location.returnDate,
+		    planNotes: location.planNotes
+			};
+		data = JSON.stringify(data);
 
-	console.log('data to send:', data);
+		console.log('data to send:', data);
 
-	getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/', function () {
-	 	console.log("sent update to server ");
-	 });
+		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/', function () {
+		 	console.log("sent update to server ");
+		 });
 	}
 
+	function addReview(reviewData){
+
+		
+
+		reviewData = JSON.stringify(reviewData);
+
+		console.log('review data to send:', reviewData);
+
+		getAPIData( callType='PUT', reviewData, myToken, myUrl = '/api/place/', function () {
+		 	console.log("sent review to server ");
+		 });
+	}
 
 	//----------------login code
 
@@ -445,6 +540,9 @@ function main() {
 
 		data.username = $('.username').val();
 		data.password = $('.password').val();
+
+		currentUserName = data.username;
+
 									
 		$.ajax({
 			

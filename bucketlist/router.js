@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 //--------------- Check off place - update Place on list as visited
 router.put('/checkoff', (req, res) => {
 
-    if(!req.body.placeIndex) {
+    if(!req.body.placeIndex && req.body.placeIndex != 0 ) {
         console.log("------------------error in req", req.body.placeIndex);
         res.status(400).json({message: 'Missing place to check off'});
     }
