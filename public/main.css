@@ -84,6 +84,8 @@ body {
     font-weight: 700;
 }
 
+
+
 .blue-background {
  background-color: #00b5fc;
 }
@@ -436,6 +438,10 @@ textarea {
 .pop-up-container {
     width: 500px;
     
+}
+
+.text-align-right {
+  text-align:   right; 
 }
 
 }

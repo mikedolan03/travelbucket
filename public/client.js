@@ -63,6 +63,12 @@ function main() {
 		$('.join-form-section').addClass('hide');
 		$('.list-set').html(" ");
 
+		$('.add-form').html('');
+		$('.add-form').html('<input type="button" name="add-button" class="add-button important-button center" value="Add new location to list">');
+
+	
+
+
 	 	for (let i = 0; i < userBucketList.places.length; i++) {
 		 	let toggle = " ";
 		 	console.log(userBucketList.places[i].visited);  
@@ -119,10 +125,10 @@ function main() {
 		  					<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
 		   					<label for="${data.places[i].locId}" placeIndex="${i}" >${placeName} </label>
 		   			</div>
-		   			<div class="col-6">
+		   			<div class="col-6 text-align-right">
 		   				<button class="btn-plan-${i} button-35-b contrast-color black-text" placeIndex="${i}">Plan Trip</button>
 		   				<button class="checkbox-btn-${i} button-35-b contrast-color black-text" placeIndex="${i}">Been there</button>
-		   				<button class="btn-delete-${i} button-35-b complimentary-color black-text" placeIndex="${i}">Get rid of it</button>
+		   				<button class="btn-delete-${i} button-35-b complimentary-color black-text" placeIndex="${i}"><i class="fas fa-trash-alt"></i></button>
 		   			</div>
 		   		</div>
 		   		<div class = "row">
@@ -172,8 +178,10 @@ function main() {
 	  		$(`.btn-delete-${i}`).click( function(event) {
 
 				event.preventDefault();			
+
+
+			 let placeIndex = parseInt( event.target.closest('button').getAttribute('placeIndex'));
 				
-				let placeIndex = i;
 
 			
 				console.log("place ind on client for delete: ", placeIndex);
@@ -290,6 +298,7 @@ function main() {
 
 		  		$('.adding-button').click(function(event) {
 			  		event.preventDefault();
+			  		$(this).off(event);
 
 			  		let depDate = $('.departure-date').val();
 			  		let retDate = $('.return-date').val();
@@ -318,7 +327,7 @@ function main() {
 
 					//reset the listed places ------still need to check suggestion against user list
 					$('.featured-places').html(" ");
-			  		getAndDisplayLocationList();
+			  		//getAndDisplayLocationList();
 			  		$('.adding-place-options-pop-up').addClass('hide');
 			  	});
 	}
@@ -356,7 +365,8 @@ function main() {
 		$('.checkit-button').on('click', function(event) {
 			
 			event.preventDefault();
-			$('.checkit-button').off('click'); 
+			//$('.checkit-button').off('click'); 
+			$(this).off(event);
 
 			let newReviewdata = {
 			locId: locationId,
@@ -842,6 +852,10 @@ function main() {
 	}
 
 	function showSearchPageView() {
+
+		//rebuild button to get rid of old event handlers
+		$('.back-to-list').html('');
+		$('.back-to-list').html('<input type="button" name="back-button" class="back-button" value="Go back to your Bucket List">')
 
 		getAndDisplayLocationList();
 
