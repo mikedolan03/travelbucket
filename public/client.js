@@ -95,6 +95,8 @@ function main() {
 
 		 	let placeName ="";
 		 	let tripDate = ""; 
+		 	let returningDate	= "";
+		 	let notes = "";
 		 	console.log("city value: ", userBucketList.places[i].city ); 
 
 		 	if(typeof userBucketList.places[i].city != 'undefined') {
@@ -114,10 +116,42 @@ function main() {
 		 	if(typeof userBucketList.places[i].departDate != 'undefined' 
 		 	&& typeof userBucketList.places[i].departDate != 'null' && userBucketList.places[i].departDate != null) {
 		 		tripDate = userBucketList.places[i].departDate;
+		 		
+		 		//have to convert the date to UTC or else timezones and DST can shift the day by 1. 
+			 	let aDate = new Date( tripDate.toString() );
+		 		let anotherDate = aDate.getUTCFullYear()+"-"+(aDate.getUTCMonth()+1) +"-" + aDate.getUTCDate(); 
+		 		aDate	= new Date( anotherDate);
+
+		 			console.log	("aDate	", aDate);
+
+		 		aDate = aDate.toString().substr(3,13);
+
 		 		console.log('departDate ', userBucketList.places[i].departDate);
-		 		tripDate =  '- Trip planned for '+ userBucketList.places[i].departDate.toString().substr(0, 10);
+		 		tripDate =  'Traveling there on '+ aDate;
 		 	} else {
 		 		tripDate = ""; 
+		 	}
+
+		 	if(typeof userBucketList.places[i].returnDate != 'undefined' 
+		 	&& typeof userBucketList.places[i].returnDate != 'null' && userBucketList.places[i].returnDate != null) {
+		 		returningDate = userBucketList.places[i].returnDate;
+		 		//console.log('departDate ', userBucketList.places[i].returnDate);
+		 		let raDate = new Date( returningDate.toString() );
+		 		let ranotherDate = raDate.getUTCFullYear()+"-"+(raDate.getUTCMonth()+1) +"-" + raDate.getUTCDate(); 
+		 		raDate	= new Date( ranotherDate);
+		 		raDate = raDate.toString().substr(3,13);
+		 		returningDate =  'Coming back on '+ raDate;
+		 	} else {
+		 		returningDate = ""; 
+		 	}
+
+		 	if(typeof userBucketList.places[i].planNotes != 'undefined' 
+		 	&& typeof userBucketList.places[i].planNotes != 'null' && userBucketList.places[i].planNotes != '') {
+		 		notes = userBucketList.places[i].planNotes;
+		 		//console.log('departDate ', userBucketList.places[i].planNotes);
+		 		notes =  'Notes: '+ notes;
+		 	} else {
+		 		notes = ""; 
 		 	}
 
 		 	if(userBucketList.places[i].visited=="false") { 
@@ -152,8 +186,10 @@ function main() {
 		   	</div>
 		   		</div>
 		   		<div class = "row">
-		   			<div class="col-6">
+		   			<div class="col-9">
 		   				<p class="smaller-text">${tripDate}</p> 
+		   				<p class="smaller-text">${returningDate}</p> 
+		   				<p class="smaller-text">${notes}</p> 
 		   			</div>
 		   		</div>
 		   		</div>`;
@@ -400,6 +436,24 @@ function main() {
 
 		  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
 
+		  		if (userBucketList.places[i].departDate) {
+		  			console.log('setting departDate');
+
+		  			$('.departure-date').val(userBucketList.places[i].departDate.toString().substr(0,10)); 
+		  		}
+
+		  		if (userBucketList.places[i].returnDate) {
+
+		  			$('.return-date').val(userBucketList.places[i].returnDate.toString().substr(0,10)); 
+		  		}
+
+		  		if (userBucketList.places[i].planNotes != '') {
+
+		  			$('.plan-notes').val(userBucketList.places[i].planNotes); 
+		  		}
+
+
+
 		  		$('.p-close-window').on('click', function(event) {
         				event.preventDefault();
 			  			$(this).off(event);
@@ -414,16 +468,15 @@ function main() {
 			  		let retDate = $('.return-date').val();
 			  		let planNotes = $('.plan-notes').val();
 
-			  		let location = { 
-		  			city: userBucketList.places[i].city,
-		  			country:userBucketList.places[i].country,
-		  			Id:userBucketList.places[i]._id,
+			  		let location = {
+			  		bucketId: userBucketList._id,
+			  		placeIndex: i,
 		  			departDate: depDate,
 		  			returnDate: retDate,
 		  			planNotes: planNotes
 		  			}
 
-					//addLocationToList(location);
+					addPlanToList(location);
 
 					showModal(`You are on your way to ${placeAddedName}!`, 'Ok', null, function() {
 						hideModal();
@@ -633,27 +686,30 @@ function main() {
 			
 	}
 
-	function addPlanToList(location, pIndex){
+//Called by Plan it button pop-up on User's Bucket List page
+	function addPlanToList(location){
+
+
 
 	let data = {
-			placeIndex: pIndex,
-			country:location.country, 
-			city:location.city, 
-			locId:location.Id,
+			bucketId: location.bucketId,
+			placeIndex: location.placeIndex,
 			departDate: location.departDate,
 		    returnDate: location.returnDate,
 		    planNotes: location.planNotes
 			};
+
 		data = JSON.stringify(data);
 
 		console.log('data to send:', data);
 
-		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/', function () {
-		 	console.log("sent update to server ");
+		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/planTrip', function () {
+		 	console.log("sent plan update to server ");
 		 });	
 	
 	}
 
+//Called by adding place pop-up on User's Bucket List page
 	function addLocationToList(location){
 
 		let data = {

@@ -63,6 +63,24 @@ router.put('/checkoff', (req, res) => {
 
 });
 
+router.put('/planTrip', (req, res) => {
+
+    BucketList  
+        .findById(req.body.bucketId, function (err, bucket) {
+            if (err) return res.status(400).json({message: 'Could not find bucketlist in db'});
+
+            bucket.places[req.body.placeIndex].departDate = req.body.departDate;
+            bucket.places[req.body.placeIndex].returnDate = req.body.returnDate;
+            bucket.places[req.body.placeIndex].planNotes = req.body.planNotes;
+
+            bucket.save(function (err, bucket) {
+                if (err) return res.status(400).json({message: 'Could not save bucketlist in db'});
+                res.send(bucket);
+            });
+        });
+
+});
+
 //----------------add new location to bucket list
 router.put('/', (req, res) => {
 
