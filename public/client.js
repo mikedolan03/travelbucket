@@ -131,6 +131,7 @@ function main() {
 		  		<div class="row">
         			<div class="col-6">
 		  				<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
+		  				<div class="uncheck-mark${i} check"><i class="far fa-circle"></i></div>
 		   					<label for="${data.places[i].locId}" placeIndex="${i}" >${placeName} </label>
 		   			</div>
 		   			<div class="col-6 text-align-right">
@@ -163,6 +164,7 @@ function main() {
 
 		  	if(userBucketList.places[i].visited == "true") {
 		  		$(`.check-mark${i}`).removeClass('hide');
+		  		$(`.uncheck-mark${i}`).addClass('hide');
 		  	} 
 
 		  	$(`.checkbox-btn-${i}`).click( function(event) {
@@ -333,10 +335,19 @@ function main() {
 
 		  		let placeAddedName = featuredResults[i].country;
 
+		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window">X</button></div>');
+
+
 		  		if (featuredResults[i].city) {
 		  			placeAddedName = featuredResults[i].city+", "+ placeAddedName;
 		  		}
 		  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
+
+		  		$('.p-close-window').on('click', function(event) {
+        				event.preventDefault();
+			  			$(this).off(event);
+			  			$('.adding-place-options-pop-up').addClass('hide');
+        		})
 
 		  		$('.adding-button').click(function(event) {
 			  		event.preventDefault();
@@ -380,10 +391,20 @@ function main() {
 
 		  		let placeAddedName = userBucketList.places[i].country;
 
+		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window">X</button></div>');
+
+
 		  		if (userBucketList.places[i].city) {
 		  			placeAddedName = userBucketList.places[i].city+", "+ placeAddedName;
 		  		}
+
 		  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
+
+		  		$('.p-close-window').on('click', function(event) {
+        				event.preventDefault();
+			  			$(this).off(event);
+			  			$('.adding-place-options-pop-up').addClass('hide');
+        		})
 
 		  		$('.adding-button').click(function(event) {
 			  		event.preventDefault();
@@ -434,7 +455,7 @@ function main() {
 			headerText	= userBucketList.places[placeInd].city;
 		}
 		headerText	+= " " + userBucketList.places[placeInd].country; 
-
+		$('.rp-class-button').html('<div class="text-align-right"><button class="r-close-window">X</button></div>');
 		$('.review-options-header').html(`How did you like ${headerText}?`);
 
 		$('.rating').on('click', function(event) {
@@ -451,6 +472,12 @@ function main() {
 			}
 
 		});
+
+		$('.r-close-window').on('click', function(event) {
+        		event.preventDefault();
+			  	$(this).off(event);
+			  	$('.review-place-options-pop-up').addClass('hide');
+        })
 
 
 		$('.checkit-button').on('click', function(event) {
@@ -471,7 +498,7 @@ function main() {
 			console.log('checking off', placeInd);
 			checkOffPlace(placeInd);
 
-			$('.review-place-options-pop-up').addClass('hide');
+			
 
 			getListofPlaces();
 
@@ -705,6 +732,7 @@ function main() {
 	}
 
 	function getAPIData( callType='GET', data ={}, userToken, myUrl = '/api/bucketlist', callback) {
+			// show loading modal
 
 		$.ajax({
 					 type: callType,
@@ -718,7 +746,7 @@ function main() {
 					 success: function(data) {
 							   console.log('success in getting API');
 							   callback(data);
-					    	  }
+					    	  } //finally? hide modal 
 			
 		 			});
 	}
@@ -906,7 +934,7 @@ function main() {
 	function showModal(text, option1txt,option2txt, affirmCallback, negateCallback) {
 		
 
-		let modalContent = `<div class="modal-text">${text}</div>
+		let modalContent = `<div class="text-align-right"><button class="close-window">X</button></div><div class="modal-text">${text}</div>
             <button class="modal-ok-button">${option1txt}</button>`;
 
         if(option2txt != null) {
@@ -914,6 +942,12 @@ function main() {
         }
 
         $('.gen-modal-content').html(modalContent); 
+
+        $('.close-window').on('click', function(event) {
+        		event.preventDefault();
+			  	$(this).off(event);
+			  	hideModal();
+        })
 		
 		$('.modal-general-section').removeClass('hide'); 
 
