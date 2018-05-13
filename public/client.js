@@ -166,16 +166,26 @@ function main() {
         			<div class="col-6">
 		  				<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
 		  				<div class="uncheck-mark${i} check"><i class="far fa-circle"></i></div>
-		   					<label for="${data.places[i].locId}" placeIndex="${i}" >${placeName} </label>
+		   					<label for="${userBucketList.places[i].locId}" placeIndex="${i}" >${placeName} </label>
 		   			</div>
 		   			<div class="col-6 text-align-right">
 		   				`;
 
-		   	if(userBucketList.places[i].visited == "false") { 
+		   	if(userBucketList.places[i].visited == "false") {
+
+				if(typeof userBucketList.places[i].departDate != 'undefined' 
+					&& typeof userBucketList.places[i].departDate != 'null'
+					&& userBucketList.places[i].departDate != null) {
+					userListContent += `<button class="btn-plan-${i} button-35-b 
+										contrast-color-darker black-text" 
+		   								placeIndex="${i}">Edit Trip</button>`;
+				}	else {
 					userListContent += `
 					<button class="btn-plan-${i} button-35-b contrast-color black-text" 
-		   				placeIndex="${i}">Plan Trip</button>
-					<button class="checkbox-btn-${i} button-35-b contrast-color black-text" 
+		   				placeIndex="${i}">Plan Trip</button>`
+				}	   	 
+					
+					userListContent += `<button class="checkbox-btn-${i} button-35-b contrast-color black-text" 
 					placeIndex="${i}">Been there</button>`;
 	
 		 	}		
@@ -338,8 +348,43 @@ function main() {
 		    				locationId="${featuredResults[i]._id}" 
 		    				value="Let's Go!">Let's Go!</button>
 		    				</div>
-			   			 </div>	
-		      		</div>`;
+			   			 </div>`;
+
+			if(featuredResults[i].reviews.length > 0)
+			{
+				let totalRating = 0;
+
+					for(let ii = 0; ii < featuredResults[i].reviews.length; ii++ ){
+
+						if(featuredResults[i].reviews[ii].starRating) {
+								totalRating += parseInt(featuredResults[i].reviews[ii].starRating);
+						}
+					
+					console.log("total rating loop", totalRating	);
+
+					}
+
+					console.log("total rating total", totalRating	);
+
+					totalRating	= totalRating/featuredResults[i].reviews.length; 
+					let reviewNumber = Math.floor(Math.random() * Math.floor(featuredResults[i].reviews.length));
+
+			   	locationsContent += `<div class="row">
+			   			<div class="col-9">
+			   			<p class="complimentary-color-text">`;
+			   			console.log("total rating after divide", totalRating	);
+			   	if(totalRating	> 0) {
+			   			for(let iii = 1; iii <= totalRating; iii++){
+			   				locationsContent +=`<i class="fas fa-star"></i>`
+			   			}
+			    }
+
+			   	locationsContent +=`</p><p>Review: ${featuredResults[i].reviews[reviewNumber].username} gave it ${featuredResults[i].reviews[reviewNumber].starRating} Stars - "${featuredResults[i].reviews[reviewNumber].content}"</p> 
+			   			 </div>
+			   		</div>`
+			}
+
+		      	 locationsContent +=	`</div>`;
 
 			$('.featured-places').append (locationsContent);
 

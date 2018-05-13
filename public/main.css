@@ -7,7 +7,7 @@
 body {
   font-family: Sans-Serif;
   background-color: white;
-  color: black; 
+  color: #636363; 
   margin-left: auto;
   margin-right: auto;
   margin-top: 0px;
@@ -21,7 +21,7 @@ body {
 }
 
 .front-page-background {
-  background-color:white;
+  background-color:#f8f8f8;
   /*background:url(https://images.unsplash.com/photo-1508495761350-6a8bf2a2128a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d6f5c6aef82385e442e5b1b6f439c733&auto=format&fit=crop&w=1950&q=80) center center  no-repeat;
   background-size: cover;
   width:auto;
@@ -111,11 +111,14 @@ body {
  color: #00b5fc;
 }
 .contrast-color {
- background-color: #b5fc00;
+ background-color: #41e4bc;
+}
+.contrast-color-darker {
+ background-color: #57d2b4;
 }
 
 .contrast-color-text {
- color: #b5fc00;
+ color: #41e4bc;
 }
 
 .white-background {
@@ -127,11 +130,11 @@ body {
 }
 
 .complimentary-color {
-  background-color: #fc4700;
+  background-color: #ff8f64;
 }
 
 .complimentary-color-text {
-  color: #fc4700;
+  color: #ff8f64;
 }
 
 .smaller-text {
