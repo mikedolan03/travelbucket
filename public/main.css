@@ -164,11 +164,17 @@ body {
 }
 
 .title-box {
-	height: 50px;
+	height: 60px;
 	color: white;
 	margin: 0px;
 	padding-left: 30px;
 	padding-top: 10px;
+}
+
+.logOut-button {
+  float:  right;  
+  margin-right:   5px;
+  padding-top: 10px;
 }
 
 .big-headers {

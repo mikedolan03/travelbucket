@@ -63,6 +63,8 @@ function main() {
 		$('.join-form-section').addClass('hide');
 		$('.list-set').html(" ");
 
+		$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List`); 
+
 		$('.add-form').html('');
 		$('.add-form').html(`
 			<input type="button" name="add-button" 
