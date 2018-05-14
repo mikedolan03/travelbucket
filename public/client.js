@@ -65,11 +65,19 @@ function main() {
 
 		$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List`); 
 
-		$('.add-form').html('');
+
+		$('.add-button-tab').html('');
+		$('.add-button-tab').html(`
+			<input type="button" name="add-button" 
+			class="add-button" 
+			value="Find a new place">`);
+
+		/*$('.add-form').html('');
 		$('.add-form').html(`
 			<input type="button" name="add-button" 
 			class="add-button button-35-b blue-background center" 
 			value="Add new location to list">`);
+			*/
 
 	
 
@@ -193,7 +201,7 @@ function main() {
 		 	}		
 		   	
 		   	userListContent += `
-		   	<button class="btn-delete-${i} button-35-b complimentary-color black-text" 
+		   	<button class="btn-delete-${i} button-35-b button-trash complimentary-color black-text" 
 					placeIndex="${i}"><i class="fas fa-trash-alt"></i></button>
 		   	</div>
 		   		</div>

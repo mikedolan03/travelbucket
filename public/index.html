@@ -22,9 +22,10 @@
     </header>
     <main role="main">
       <div class="main-container">
-      <div class="row">
+      <section class="welcome-page ">
+        <div class="row">
         <div class="col-12">
-          <section class="welcome-page ">
+          
             <header>
               <h2 class="big-headers complimentary-color-text">Everyone has a travel bucket list... what's on yours?</h2>
             </header>
@@ -35,9 +36,10 @@
         </form>
       </div>
 -->
-          </section>
+          
         </div>
       </div>
+    </section>
     <section class="welcome-login">
       <div class="login-form-container blue-background">
         <form class="login-form">
@@ -68,7 +70,7 @@
     <section>
         
       <form class="create-account-form hide">
-        <div class="login-form-container">
+        <div class="login-form-container blue-background">
         <div class="center-text top-icon"><i class="fas fa-id-card fa-4x"></i></div>  
         <legend>Create an account</legend>
         <div class= "create-input-group"> 
@@ -100,35 +102,49 @@
       </section>
 
     <section class="user-list-section hide">
-      <div class="row">
+      <div class="row30 row">
         <div class="col-6">
             <h2 class="bucklist-title">User's Bucket list</h2>
         </div>
-        <div class="col-6">
+      </div>
+      <div class="list-background">
+        <div class="row">
+            <div class="col-12 blue-background tab-box">
+              <div class="tab tab-current">Bucket List</div>
+              <div class="dont-show-mobile tab ">Places You've Visited</div>
+              <div class="tab dont-show-mobile add-button-tab"><button class="add-button">Find a New Place</button></div>
+              <div class="tab dont-show-bigscreen"><i class="fas fa-bars"></i></div>
+            </div>
+          </div>
+      
+       <!-- <div class="col-6">
           <form name="add-form" class="add-form"> 
             <input type="button" name="add-button" class="add-button important-button center" value="Add new location to list"></form>
         </div>
-      </div>
-
-        <div class="bucketlist-form-container">
-          <form name="bucketlist-form" class="bucketlist-form">
-            <fieldset class="list-set">
+      </div> -->
+        <div class="row">
+          <div class="col-12">
+            <div class="bucketlist-form-container">
+              <form name="bucketlist-form" class="bucketlist-form">
+                <fieldset class="list-set">
               
-            </fieldset>
-          </form>
+                </fieldset>
+              </form>
+            </div>
+          </div>
         </div>
-      
+      </div>
       </section>
 
       <section class="add-section hide">
-      <div class="row">
+      <div class="row row30">
         <div class="col-12">
         <header>
           <h2>Find a new place to add to your bucket list...</h2>
         </header>
       </div>
       </div>
-      <div class="row">
+     <!-- <div class="row">
         <div class="col-6">
           <form>
             <label for="search"><input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button> 
@@ -139,17 +155,34 @@
             <button name="back-button" class="back-button button-35-b contrast-color black-text" value="Go back to your Bucket List">Back</button>
           </form>
         </div>
-      </div>
+      </div> -->
+      <div class="list-background">
+        <div class="row">
+          <div class="col-12 blue-background tab-box">
+            <div class="tab dont-show-mobile"><button class="back-button blend-button">Bucket List</button></div>
+            <div class="tab dont-show-mobile">Places You've Visited</div>
+            <div class="tab tab-current add-button-tab"><button class="add-button">Find a New Place</button></div>
+          </div>
+        </div>
+
       <div class="row">
-        <div class="col-12">
+        <div class="col-6">
         <header>
           <h3 class="place-results-header">Top Rated Places</h3>
         </header>
+      </div>
+      <div class="col-6">
+        <form class = "search-box">
+          <div class="search-box-content">
+            <label for="search">Search: <input type="text" id="search" class="" name="search" placeholder="Search for..."></label><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button> 
+          </div>
+          </form>
       </div>
       </div>
         <div class="featured-places">
 
         </div>
+  </div>
       </section>
 
       <section class="adding-place-options-pop-up hide">

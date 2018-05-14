@@ -31,6 +31,10 @@ body {
 }
 
 
+.dont-show-bigscreen {
+ /* display: inherit !important;*/
+}
+
 .center {
   margin-left: auto;
   margin-right: auto;
@@ -78,7 +82,22 @@ body {
     font-weight: normal;
 }
 
-.add-button {
+.search-box {
+    padding-top: 10px;
+    display: table;
+    vertical-align: middle;
+}
+
+.search-box-content {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.top-message {
+      margin-bottom: 30px;
+}
+
+.add-button2 {
 	display: block;
     width: 95%;
     height: 30px;
@@ -89,7 +108,19 @@ body {
     font-weight: 700;
 }
 
+.add-button {
+    font-weight: 700;
+    border-style: none;
+    background: none;
+    color: white;
+}
 
+.blend-button {
+    font-weight: 700;
+    border-style: none;
+    background: none;
+    color: white;
+}
 
 .blue-background {
  background-color: #00b5fc;
@@ -181,6 +212,42 @@ body {
 	padding-left: 8px;
 	padding-top: 10px;
 	text-align: center;
+}
+
+.tab-box {
+  height: 0px;
+  color: white;
+  margin: 0px;
+  padding-left: 30px;
+  padding-top: 0px;
+  background-color: #93e1ff;
+}
+
+.tab {
+  display: inline-block;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10Px;
+  position: relative;
+  top: -27px;
+  background-color: #83d6f7;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  z-index: 1;
+}
+
+.tab-current {
+ background-color: #93e1ff;
+ position: relative;
+  top: -27px;
+  z-index: 1;
+}
+
+.list-background {
+  background-color: #93e1ff;
+  width: 100%;
+  border-radius: 10px;
 }
 
 h1 {
@@ -288,6 +355,10 @@ legend {
     margin-right: 5px;
 }
 
+.button-trash {
+  float: right;
+}
+
 .check {
   display: inline-block;
 }
@@ -302,6 +373,7 @@ font-size: 12px;
 
 .search-button {
 margin-left: 5px;
+float: right;
 }
 
 .show-join-button {
@@ -451,7 +523,21 @@ textarea {
    position: absolute;
 }
 */
+
+@media only screen and (max-width: 639px){
+
+  .dont-show-mobile {
+    display: none !important;
+  }
+
+}
+
+
 @media only screen and (min-width: 640px) {
+
+.dont-show-bigscreen {
+  display: none !important;
+}
 
  .login-form-container {
     width: 400px;
@@ -465,6 +551,14 @@ textarea {
 
 .text-align-right {
   text-align:   right; 
+}
+
+.button-trash {
+  float: none;
+}
+
+.search-button {
+margin-left: 5px;
 }
 
 }
