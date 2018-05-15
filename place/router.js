@@ -62,4 +62,55 @@ router.get('/', (req, res) => {
 	 	console.log('getting places');
 	});
 
+
+router.put('/', (req, res) => {
+
+
+    if(!req.body.locId) {
+        res.status(400).json({message: 'Missing location id'});
+    }
+
+    if(!req.body.userId) {
+    	res.status(400).json({message: 'Missing userid'});
+    }
+
+    if(!req.body.userName) {
+    	res.status(400).json({message: 'Missing username'});
+    }
+
+    if(!req.body.content) {
+    	res.status(400).json({message: 'Missing content'});
+    }
+
+    if(!req.body.rating) {
+    	res.status(400).json({message: 'Missing rating'});
+    }
+
+    let newReview = {
+    	 userId: req.body.userId,
+		 username: req.body.userName,
+		 content: req.body.content,
+		 starRating: req.body.rating	
+    }
+
+
+   // console.log("adding on server side ", newPlaceToAdd);
+
+    //console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
+
+    //mongoose - look for update only if.. 
+    Place
+        .update(
+    	{_id: req.body.locId},
+    	{$push: {reviews: newReview} },
+    	function(err, updatedPlace) {
+    		if(err) {
+                console.log("error ", err);
+            }
+    		res.send(updatedPlace);
+    	}
+    );
+  
+});
+
 module.exports = {router};

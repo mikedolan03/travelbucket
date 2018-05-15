@@ -6,22 +6,29 @@
   <title>Travel Bucket</title>
   <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <!--<link rel="stylesheet" type="text/css" href="grid.css">-->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" type="text/css" href="main.css">
-  
+    <link rel="stylesheet" type="text/css" href="grid.css">
+
   <script>
     FontAwesomeConfig = { searchPseudoElements: true };
   </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
   <body class="front-page-background">
-    <header role="banner" class="darkgrey-box-background title-box">
-      <h1>Travel Bucket!</h1>
+    <header role="banner" class="blue-background title-box">
+      <div class="logOut-button smaller-text"><button class="logout-button blend-button hide ">Sign Out</button></div>
+      <h1><i class="fas fa-map-signs"></i>  Travel Bucket!</h1>
     </header>
     <main role="main">
-    <section class="welcome-page ">
-      <header>
-        <h2 class="big-headers">Everyone has a travel bucket list... what's on yours?</h2>
-      </header>
+      <div class="main-container">
+      <section class="welcome-page ">
+        <div class="row">
+        <div class="col-12">
+          
+            <header>
+              <h2 class="big-headers complimentary-color-text">Everyone has a travel bucket list... what's on yours?</h2>
+            </header>
       <!-- <div class="buttons-box center"
       <form class="sign-in-or-up-form">
           <button type="submit" class="go-to-login-button main-button big-button">Login</button>
@@ -29,26 +36,30 @@
         </form>
       </div>
 -->
+          
+        </div>
+      </div>
     </section>
     <section class="welcome-login">
-      <div class="login-form-container">
+      <div class="login-form-container blue-background">
         <form class="login-form">
             <legend>Log In</legend>
             <div class= "login-input-group"> 
-              <label>Username:
-              <input type="text" name="username" class="username"></label>
+              <label name="username input ">
+              <input type="text" name="username" class="username no-box-input" placeholder="Username"></label>
             </div>
             <div class= "login-input-group">
-              <label class= "login-label">Password:
-              <input type="password" name="password" class="password"></label>
+              <label class= "login-label" name="password input">
+              <input type="password" name="password" class="password no-box-input" placeholder="Password"></label>
             </div>
             <div class="center">
-              <button type="submit" class="login-button main-button button-95">Login</button>
+              <button type="submit" class="login-button button-95 white-background main-color-text">Login</button>
             </div>
             <div class="join-button-area">
               <div class="center">
                 <form class="join-button-form">
-                 <p>Not a member? Join travel bucket!<button type="submit" class="show-join-button"><i class="fas fa-user-plus"></i>Join!</button></p>
+                 <p>Not a member? Join travel bucket!</p>
+                  <button type="submit" class="show-join-button complimentary-color white-text"><i class="fas fa-user-plus"></i>Join!</button>
                 </form>
               </div>
             </div>
@@ -59,100 +70,183 @@
     <section>
         
       <form class="create-account-form hide">
-        <div class="login-form-container">
-        <div class="center-text top-icon"><i class="fas fa-id-card fa-4x"></i></div>  
-        <legend>Create an account</legend>
+        <div class="login-form-container blue-background">
+        <div class="center-text top-icon complimentary-color-text"><i class="fas fa-id-card fa-4x"></i></div>  
+        <legend>Sign Up</legend>
         <div class= "create-input-group"> 
-          <label>Username:
-          <input type="text" name="username" class="new-username"></label>
+          <input type="text" name="username" class="new-username no-box-input" placeholder="User Name">
         </div>
         <div class= "create-input-group"> 
-          <label>Password:
-          <input type="password" name="password" class="new-password"></label>
+          <input type="password" name="password" class="new-password no-box-input" placeholder="Password">
         </div>
         <div class= "create-input-group"> 
-          <label>First Name:
-          <input type="text" name="firstname" class="first-name"></label>
+          <input type="text" name="firstname" class="first-name no-box-input" placeholder="First Name">
         </div>
         <div class= "create-input-group"> 
-          <label>Last Name:
-          <input type="text" name="lastname" class="last-name"></label>
+          <input type="text" name="lastname" class="last-name no-box-input" placeholder="Last Name">
         </div>
         <div class= "create-input-group"> 
-          <label>City: <input type="text" name="city" class="city"></label>
+          <input type="text" name="city" class="city no-box-input" placeholder="City">
         </div>
         <div class= "create-input-group"> 
-        <label>Country: <input type="text" name="country" class="country"></label>
+        <input type="text" name="country" class="country  no-box-input" placeholder="Country">
         </div>
-          <button type="submit" class="create-button main-button button-95">Create</button>
+          <button type="submit" class="create-button complimentary-color button-95 white-text ">Let's Go!</button>
         </div>
       </form>
       
       </section>
 
     <section class="user-list-section hide">
-      <div class="user-list">
-        <h2 class="bucketlist-heading">User's Bucket list</h2>
-        <form name="add-form"> 
-          <input type="button" name="add-button" class="add-button important-button center" value="Add new location to list"></form>
-        <div class="bucketlist-form-container">
-          <form name="bucketlist-form" class="bucketlist-form">
-            <legend>Check off places that you've been</legend>
-            <fieldset class="list-set">
+      <div class="row30 row">
+        <div class="col-6">
+            <h2 class="bucklist-title">User's Bucket list</h2>
+        </div>
+      </div>
+      <div class="list-background">
+        <div class="row">
+            <div class="col-12 blue-background tab-box">
+              <div class="tab tab-show-menu dont-show-bigscreen"><i class="fas fa-bars"></i></div>
+              <div class="tab tab-current">Bucket List</div>
+              <div class=" tab visited-list">Places You've Visited</div>
+              <div class="tab  add-button-tab"><button class="add-button">Find a New Place</button></div>
               
-            </fieldset>
-          </form>
+            </div>
+          </div>
+      
+       <!-- <div class="col-6">
+          <form name="add-form" class="add-form"> 
+            <input type="button" name="add-button" class="add-button important-button center" value="Add new location to list"></form>
+        </div>
+      </div> -->
+        <div class="row">
+          <div class="col-12">
+            <div class="bucketlist-form-container">
+              <form name="bucketlist-form" class="bucketlist-form">
+                <fieldset class="list-set">
+              
+                </fieldset>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
       </section>
 
       <section class="add-section hide">
+      <div class="row row30">
+        <div class="col-12">
         <header>
           <h2>Find a new place to add to your bucket list...</h2>
         </header>
-        <form name="back-to-list"> 
-          <input type="button" name="back-button" class="back-button" value="Go back to your Bucket List"></form>
-        <form>
-          <label for="search">Search: <input type="text" id="search" class="search-box" name="search"></label><input type="button" name="search-button" class="search-button main-button" value="Search">
-        </form>
-        <h3>Search Results: </h3>
-        <div class="search-results">
-
+      </div>
+      </div>
+     <!-- <div class="row">
+        <div class="col-6">
+          <form>
+            <label for="search"><input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button> 
+          </form>
         </div>
-        <h3>Top Rated Places</h3>
+        <div class="col-6 text-align-right">
+          <form name="back-to-list" class="back-to-list"> 
+            <button name="back-button" class="back-button button-35-b contrast-color black-text" value="Go back to your Bucket List">Back</button>
+          </form>
+        </div>
+      </div> -->
+      <div class="list-background">
+        <div class="row">
+          <div class="col-12 blue-background tab-box">
+            <div class="tab tab-show-menu dont-show-bigscreen"><i class="fas fa-bars"></i></div>
+            <div class="tab back-to-list hide"><button class="back-button blend-button">Bucket List</button></div>
+            <div class="tab visited-list hide">Places You've Visited</div>
+            <div class="tab tab-current add-button-tab hide"><button class="add-button">Find a New Place</button></div>
+            
+          </div>
+        </div>
+
+      <div class="row">
+        <div class="col-6">
+        <header>
+          <h3 class="place-results-header">Top Rated Places</h3>
+        </header>
+      </div>
+      <div class="col-6">
+        <form class = "search-box-form">
+          <div class="search-box-content">
+            <label for="search">Type a Country: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
+          </div>
+          </form>
+      </div>
+      </div>
         <div class="featured-places">
 
         </div>
-
+  </div>
       </section>
 
       <section class="adding-place-options-pop-up hide">
         <div class="modal">
-          <div class="adding-place-container">
+          <div class="pop-up-container">
+            <div class="p-close-button"></div>
             <h3 class="place-options-header">Let's Plan You Trip to New Zealand!</h3>
             <form name="place-options">
               <div class= "create-input-group"> 
-                <label>When do you want to go? <input type="date" name="departure-date" class="departure-date"></label>
+                <label class="date-label">When do you want to go? <input type="date" name="departure-date" class="departure-date"></label>
               </div>
               <div class= "create-input-group"> 
-                <label>When do you want to return? <input type="date" name="return-date" class="return-date"></label>
+                <label class="date-label">When do you want to return? <input type="date" name="return-date" class="return-date"></label>
               </div>
               <div class= "create-input-group"> 
                 <label>What are you most excited about seeing?
                   <textarea rows="4" cols="50" form="place-options" name ="plan-notes" class="plan-notes"></textarea></label>
               </div>
-               <button type="submit" class="adding-button main-button button-95">Add to list</button>
+               <button type="submit" class="adding-button blue-background button-95 white-text">Add to list</button>
             </form>
           </div>
       </div>
       </section>
+       <section class="review-place-options-pop-up hide">
+        <div class="modal">
+          <div class="pop-up-container">
+            <div class="rp-class-button"></div>
+            <h3 class="review-options-header">How was your trip to New Zealand?</h3>
+            <form name="review-place-options">
+              <div class= "create-input-group"> 
+                <label> Rate your trip -  
+                <div class="rating">
+                  <span class="stars" id="star1" data="1"><i class="far fa-star"></i></span><span class="stars" id="star2" data="2"><i class="far fa-star"></i></span><span class="stars" data="3" id="star3"><i class="far fa-star"></i></span><span class="stars" data="4" id="star4"><i class="far fa-star"></i></span><span class="stars" data="5" id="star5"><i class="far fa-star"></i></span>
+                </div></label>
+              </div>
+              <div class= "create-input-group"> 
+                  <textarea rows="4" cols="50" form="place-options" name ="trip-review" class="trip-review" placeholder="Write a review of your trip..."></textarea>
+              </div>
+               
+               <button type="submit" class="checkit-button blue-background  white-text button-95">Check it off!</button>
+            </form>
+          </div>
+      </div>
+      </section>
+      <section class="modal-general-section hide">
+        <div class="modal">
+          <div class="modal-content gen-modal-content">
+            <h3 class="modal-text">Are you Sure?</h3>
+          </div>
+        </div>
+      </section>
+      <section class="modal-load-section hide">
+        <div class="modal">
+          <div class="modal-content load-modal-content">
+            <h3 class="modal-text">Are you Sure?</h3>
+          </div>
+        </div>
+      </section>
 
       <section class="modal-checkedoff-section hide">
-        <div class="modal">
-          <div class="modal-content">
+        <div class="modal center">
+          <div class="modal-content center">
             <form>
-              Great job! You checked a place off your list!<br>
-              <input type="button" name="check-modal-ok" id="check-modal-ok" class="check-modal-ok big-button .important-button" value="Ok">
+              <h3> Great job! You checked a place off your list!</h3>
+              <input type="button" name="check-modal-ok" id="check-modal-ok" class="check-modal-ok big-button important-button" value="Ok">
             </form>  
           </div>
         </div>
@@ -164,13 +258,13 @@
           <div class="modal-content">
             <form>
             Location added to your list! <br>
-            <input type="button" name="add-modal-ok" id="add-modal-ok" class="add-modal-ok big-button modal-button important-button" value="Ok">
+            <input type="button" name="add-modal-ok" id="add-modal-ok" class="add-modal-ok blue-background" value="Ok">
             </form> 
           </div> 
         </div>
       </section>
 
-      
+      </div>
     </main>
 
     <!-- Your web-app is https, so your scripts need to be too -->

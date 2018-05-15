@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 //--------------- Check off place - update Place on list as visited
 router.put('/checkoff', (req, res) => {
 
-    if(!req.body.placeIndex) {
+    if(!req.body.placeIndex && req.body.placeIndex != 0 ) {
         console.log("------------------error in req", req.body.placeIndex);
         res.status(400).json({message: 'Missing place to check off'});
     }
@@ -60,6 +60,24 @@ router.put('/checkoff', (req, res) => {
             res.status(204).end();
         });
     });
+
+});
+
+router.put('/planTrip', (req, res) => {
+
+    BucketList  
+        .findById(req.body.bucketId, function (err, bucket) {
+            if (err) return res.status(400).json({message: 'Could not find bucketlist in db'});
+
+            bucket.places[req.body.placeIndex].departDate = req.body.departDate;
+            bucket.places[req.body.placeIndex].returnDate = req.body.returnDate;
+            bucket.places[req.body.placeIndex].planNotes = req.body.planNotes;
+
+            bucket.save(function (err, bucket) {
+                if (err) return res.status(400).json({message: 'Could not save bucketlist in db'});
+                res.send(bucket);
+            });
+        });
 
 });
 
@@ -93,6 +111,10 @@ router.put('/', (req, res) => {
         newPlaceToAdd.city = req.body.city;
     }
 
+
+   // if(true === false) {
+    //    BucketList.
+    //} 
    // console.log("adding on server side ", newPlaceToAdd);
 
     //console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
@@ -115,7 +137,7 @@ router.put('/', (req, res) => {
 //find the place on the list by index number, delete it and save bucketlist
 router.delete('/', (req, res) => {
 
-    if(!req.body.placeIndex) {
+    if(req.body.placeIndex == null) {
             console.log("------------------error in req", req.body.placeIndex);
             res.status(400).json({message: 'Missing place to remove'});
         }
