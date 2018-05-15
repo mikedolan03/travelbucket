@@ -106,10 +106,11 @@
       <div class="list-background">
         <div class="row">
             <div class="col-12 blue-background tab-box">
+              <div class="tab tab-show-menu dont-show-bigscreen"><i class="fas fa-bars"></i></div>
               <div class="tab tab-current">Bucket List</div>
-              <div class="dont-show-mobile tab ">Places You've Visited</div>
-              <div class="tab dont-show-mobile add-button-tab"><button class="add-button">Find a New Place</button></div>
-              <div class="tab dont-show-bigscreen"><i class="fas fa-bars"></i></div>
+              <div class=" tab visited-list">Places You've Visited</div>
+              <div class="tab  add-button-tab"><button class="add-button">Find a New Place</button></div>
+              
             </div>
           </div>
       
@@ -155,9 +156,12 @@
       <div class="list-background">
         <div class="row">
           <div class="col-12 blue-background tab-box">
-            <div class="tab back-to-list dont-show-mobile"><button class="back-button blend-button">Bucket List</button></div>
-            <div class="tab dont-show-mobile">Places You've Visited</div>
+            <div class="tab tab-show-menu dont-show-bigscreen"><i class="fas fa-bars"></i></div>
+            <div class="tab back-to-list"><button class="back-button blend-button">Bucket List</button></div>
+            <div class="tab">Places You've Visited</div>
             <div class="tab tab-current add-button-tab"><button class="add-button">Find a New Place</button></div>
+            <div class=" tab visited-list">Places You've Visited</div>
+            
           </div>
         </div>
 
@@ -170,7 +174,7 @@
       <div class="col-6">
         <form class = "search-box-form">
           <div class="search-box-content">
-            <label for="search">Search: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
+            <label for="search">Type a Country: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
           </div>
           </form>
       </div>
@@ -188,10 +192,10 @@
             <h3 class="place-options-header">Let's Plan You Trip to New Zealand!</h3>
             <form name="place-options">
               <div class= "create-input-group"> 
-                <label>When do you want to go? <input type="date" name="departure-date" class="departure-date"></label>
+                <label class="date-label">When do you want to go? <input type="date" name="departure-date" class="departure-date"></label>
               </div>
               <div class= "create-input-group"> 
-                <label>When do you want to return? <input type="date" name="return-date" class="return-date"></label>
+                <label class="date-label">When do you want to return? <input type="date" name="return-date" class="return-date"></label>
               </div>
               <div class= "create-input-group"> 
                 <label>What are you most excited about seeing?
@@ -226,6 +230,13 @@
       <section class="modal-general-section hide">
         <div class="modal">
           <div class="modal-content gen-modal-content">
+            <h3 class="modal-text">Are you Sure?</h3>
+          </div>
+        </div>
+      </section>
+      <section class="modal-load-section hide">
+        <div class="modal">
+          <div class="modal-content load-modal-content">
             <h3 class="modal-text">Are you Sure?</h3>
           </div>
         </div>

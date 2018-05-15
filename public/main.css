@@ -115,7 +115,7 @@ body {
     font-weight: 700;
 }
 
-.add-button {
+.add-button, .visited-button{
     font-weight: 700;
     border-style: none;
     background: none;
@@ -222,7 +222,6 @@ body {
 }
 
 .tab-box {
-  height: 0px;
   color: white;
   margin: 0px;
   padding-left: 30px;
@@ -232,29 +231,28 @@ body {
 
 .tab {
   display: inline-block;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10Px;
-  position: relative;
-  top: -27px;
   background-color: #83d6f7;
   padding-left: 10px;
   padding-right: 10px;
   margin-right: 5px;
   margin-left: 5px;
   z-index: 1;
+  width:  100%;
 }
 
 .tab-current {
  background-color: #93e1ff;
- position: relative;
-  top: -27px;
-  z-index: 1;
+z-index: 1;
 }
 
 .list-background {
   background-color: #93e1ff;
   width: 100%;
   border-radius: 10px;
+}
+
+.date-label {
+  font-size:  16px;
 }
 
 h1 {
@@ -553,6 +551,38 @@ textarea {
 
 
 @media only screen and (min-width: 640px) {
+
+
+.tab {
+  display: inline-block;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10Px;
+  position: relative;
+  top: -27px;
+  background-color: #83d6f7;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  z-index: 1;
+  width:  auto;
+}
+
+.tab-current {
+ background-color: #93e1ff;
+ position: relative;
+  top: -27px;
+  z-index: 1;
+}
+
+.tab-box {
+  height: 0px;
+  color: white;
+  margin: 0px;
+  padding-left: 30px;
+  padding-top: 0px;
+  background-color: #93e1ff;
+}
 
 .main-container {
      margin-left: 5%; 

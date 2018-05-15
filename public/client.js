@@ -52,9 +52,13 @@ function main() {
 
 	}
 
-	function showUserList(data){
+	function showUserList(data, onlyVisits=false){
+
+		//let onlyVisits = true;
 
 		userBucketList = data; 
+
+
 		console.log("bucketlist", userBucketList);
 
 		$('.welcome-login').addClass('hide');
@@ -76,6 +80,11 @@ function main() {
 			<input type="button" name="add-button" 
 			class="add-button" 
 			value="Find a new place">`);
+
+		$('.visited-list').html('');
+		$('.visited-list').html(`<input type="button" name="visited-button" 
+			class="visited-button" 
+			value="Places You've Visited">`)
 
 		/*$('.add-form').html('');
 		$('.add-form').html(`
@@ -99,14 +108,24 @@ function main() {
 
 				}
 
+		let count = 0;
 
 	 	for (let i = 0; i < userBucketList.places.length; i++) {
 		 	let toggle = " ";
+
+		 	if(onlyVisits) {
+		 		if(userBucketList.places[i].visited != "true") { 
+		 				continue;
+		 		}
+		 	}
+
+		 	count++; 
+
 		 	console.log(userBucketList.places[i].visited);  
 ;
 		 	let backgroundColor = "";
 
-		 	if(i%2) {
+		 	if(count%2) {
 		 	 backgroundColor = "lightblue-background"; 
 		 	} else {
 
@@ -317,6 +336,13 @@ function main() {
 
 
 	  	});
+
+	  	$('.visited-button').on('click', function(event) {
+	  		event.preventDefault();
+	  		console.log('loading visited list');
+	  		$('.visited-button').off('click');
+	  		showUserList(data, true);
+	  	})
 
 
 	 
@@ -636,8 +662,9 @@ function main() {
 			addReview(newReviewdata); 
 			console.log('checking off', placeInd);
 			checkOffPlace(placeInd);
+			$('.review-place-options-pop-up').addClass('hide');
 
-			
+			showModal(`${headerText} review saved.`, 'Ok', null, hideModal, null);
 
 			getListofPlaces();
 
@@ -680,50 +707,7 @@ function main() {
 		getLocations(showLocationList);
 	}
 
-	function diplaySearchResults() {
-		$('.search-results').html(" ");
-
-		let searchResultsContent = `<div class="lightgrey-box-background results-box">`;
-		$('.search-results').append (searchResultsContent);
-
-		locationSearchResults = data; 
-			
-				for (var i=0 ; i < locationSearchResults.length ; i++)
-				{
-				    	
-			       
-			       searchResultsContent = `<div class="place-result">	`;
-
-			        if(locationSearchResults[i].city)  {
-			        	searchResultsContent += locationSearchResults[i].city + ', ';
-			        }
-			        if(locationSearchResults[i].country) {
-			        	searchResultsContent += locationSearchResults[i].country + ' ';
-			        }
-			        if(locationSearchResults[i].reviews.length	> 0) { 
-			        	//searchResultsContent += 'Review: '+data[i].reviews[0].content +' by ' +data[i].reviews[0].username;
-			        }
-
-
-			       searchResultsContent += `<input type="button" class="result-button result-${i}" 
-			       	placeIndex="${i}" name="${locationSearchResults[i]._id}" 
-			       	locationId="${locationSearchResults[i]._id}" 
-			       		city="${locationSearchResults[i].city}" 
-			       		country="${locationSearchResults[i].country}" value="Let's Go!"></div> `;
-			        		//}
-			    	//}
-
-			    	$('.search-results').append (searchResultsContent);
-
-
-				}
-
-			searchResultsContent = `</div>`;
-
-		 	$('.search-results').append (searchResultsContent);
-
-
-	}
+	
 
 
 
@@ -876,7 +860,7 @@ function main() {
 	function getAPIData( callType='GET', data ={}, userToken, myUrl = '/api/bucketlist', callback) {
 			// show loading modal
 
-			showModal(`Loading...<br><br><i class="fa-4x fas fa-spinner fa-pulse"></i>`, "Ok", null, hideModal, null);
+			showLoadModal();
 
 		$.ajax({
 					 type: callType,
@@ -893,7 +877,7 @@ function main() {
 							   callback(data);
 					    	  }) //finally? hide modal 
 					 .always( function() {
-					 		hideModal();
+					 		hideLoadModal();
 					 		});
 		 			
 
@@ -1136,6 +1120,7 @@ function main() {
 
 			$('.modal-ok-button').on('click', function(event) {
 			  	event.preventDefault();
+			  	console.log	('ok button clicked');
 			  	$(this).off(event);
 			  	affirmCallback();
 	    	} );
@@ -1158,6 +1143,26 @@ function main() {
 
 	function hideModal() {
 		$('.modal-general-section').addClass('hide'); 
+	}
+
+	function showLoadModal() {
+		
+
+		let modalContent = `<div class="modal-text black-text">Loading...</div>`;
+
+        
+      
+
+        $('.load-modal-content').html(modalContent); 
+
+		
+		$('.modal-load-section').removeClass('hide'); 
+
+
+	}
+
+	function hideLoadModal() {
+		$('.modal-load-section').addClass('hide'); 
 	}
 
 	function showSearchPageView() {
