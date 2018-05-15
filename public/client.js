@@ -6,7 +6,8 @@ function main() {
 	let locationSearchResults = [];
 	let featuredResults = [];
 	let userBucketList = []; 
-	
+	let menuShowing = false;
+	let onlyVisits	= false; 
 
 	
 	//use a promise here
@@ -52,9 +53,11 @@ function main() {
 
 	}
 
-	function showUserList(data, onlyVisits=false){
+	function showUserList(data){
 
 		//let onlyVisits = true;
+
+		console.log("menu status", menuShowing);
 
 		userBucketList = data; 
 
@@ -74,6 +77,10 @@ function main() {
 
 		$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List`); 
 
+		$('.tab-show-menu').html('');
+		$('.tab-show-menu').html(`
+			<button name="show-menu-button" 
+			class="show-menu-button"><i class="fas fa-bars"></i></button>`);
 
 		$('.add-button-tab').html('');
 		$('.add-button-tab').html(`
@@ -85,6 +92,10 @@ function main() {
 		$('.visited-list').html(`<input type="button" name="visited-button" 
 			class="visited-button" 
 			value="Places You've Visited">`)
+
+		$('.back-to-list').html('');
+		$('.back-to-list').html(`
+			<button class="back-button blend-button">Bucket List</button>`);
 
 		/*$('.add-form').html('');
 		$('.add-form').html(`
@@ -122,7 +133,7 @@ function main() {
 		 	count++; 
 
 		 	console.log(userBucketList.places[i].visited);  
-;
+
 		 	let backgroundColor = "";
 
 		 	if(count%2) {
@@ -326,6 +337,28 @@ function main() {
 
 	 	}
 
+	 	$('.show-menu-button').on('click', function(event) {
+	 			
+	 		
+	 		if(!menuShowing) {
+
+	 			$('.back-to-list').removeClass('hide');
+	 			$('.add-button-tab').removeClass('hide');
+	 			$('.visited-list').removeClass('hide');
+
+	 			menuShowing = true; 
+	 		} else {
+
+	 			$('.back-to-list').addClass('hide');
+	 			$('.add-button-tab').addClass('hide');
+	 			$('.visited-list').addClass('hide');
+
+	 			menuShowing	 = false; 
+
+	 		      }
+
+	 	 });
+
 	 	$('.add-button').on('click', function(event) {
 	  		event.preventDefault();
 	  		console.log("add screen fired"); 
@@ -341,8 +374,20 @@ function main() {
 	  		event.preventDefault();
 	  		console.log('loading visited list');
 	  		$('.visited-button').off('click');
-	  		showUserList(data, true);
+	  		//showUserList(data, true);
+	  		getAndDisplayUserListforVisited(); 
 	  	})
+
+	  		//-----this back button will reload the user List View
+	  	$('.back-button').on('click', function(event) {
+		  	event.preventDefault();
+		  	$('.user-list-section').removeClass('hide');
+		  	$('.search-results').html(" ");
+		  	$('.add-section').addClass('hide');
+		  	$('.list-set').html("");
+		  	$('.back-button').off('click');
+		  	getAndDisplayUserList();
+	    } );
 
 
 	 
@@ -687,7 +732,18 @@ function main() {
 
 	function getAndDisplayUserList() {
 
+		onlyVisits = false;
+
 		getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/', showUserList);
+
+		//getUserList(showUserList);
+	}
+
+	function getAndDisplayUserListforVisited() {
+		
+		onlyVisits	= true;
+		getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/', showUserList);
+
 
 		//getUserList(showUserList);
 	}
@@ -1167,6 +1223,22 @@ function main() {
 
 	function showSearchPageView() {
 
+		$('.tab-show-menu').html('');
+		$('.tab-show-menu').html(`
+			<button name="show-menu-button" 
+			class="show-menu-button"><i class="fas fa-bars"></i></button>`);
+
+		$('.add-button-tab').html('');
+		$('.add-button-tab').html(`
+			<input type="button" name="add-button" 
+			class="add-button" 
+			value="Find a new place">`);
+
+		$('.visited-list').html('');
+		$('.visited-list').html(`<input type="button" name="visited-button" 
+			class="visited-button" 
+			value="Places You've Visited">`)
+
 		//rebuild button to get rid of old event handlers
 		$('.back-to-list').html('');
 		$('.back-to-list').html(`
@@ -1187,6 +1259,53 @@ function main() {
 	  		console.log("search clicked", $('.search-box').val() );
 	  		userSearch($('.search-box').val());
 	  	});
+
+	  	$('.show-menu-button').on('click', function(event) {
+	 			
+	 		
+	 		if(!menuShowing) {
+
+	 			$('.back-to-list').removeClass('hide');
+	 			$('.add-button-tab').removeClass('hide');
+	 			$('.visited-list').removeClass('hide');
+
+	 			menuShowing = true; 
+	 		} else {
+
+	 			$('.back-to-list').addClass('hide');
+	 			$('.add-button-tab').addClass('hide');
+	 			$('.visited-list').addClass('hide');
+
+	 			menuShowing	 = false; 
+
+	 		      }
+
+	 	 });
+
+	 	$('.add-button').on('click', function(event) {
+	  		event.preventDefault();
+	  		console.log("add screen fired"); 
+
+	  		$('.add-button').off('click'); 
+
+	  		showSearchPageView(); 
+
+
+	  	});
+
+	  	$('.visited-button').on('click', function(event) {
+	  		event.preventDefault();
+	  		console.log('loading visited list');
+	  		$('.user-list-section').removeClass('hide');
+		  	$('.search-results').html(" ");
+		  	$('.add-section').addClass('hide');
+		  	$('.list-set').html("");
+	  		$('.visited-button').off('click');
+	  		//showUserList(data, true);
+	  		getAndDisplayUserListforVisited();
+	  	})
+
+
 
 	  	//-----this back button will reload the user List View
 	  	$('.back-button').on('click', function(event) {
