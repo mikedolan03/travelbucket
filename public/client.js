@@ -62,6 +62,11 @@ function main() {
 		$('.user-list-section').removeClass('hide');
 		$('.join-form-section').addClass('hide');
 		$('.list-set').html(" ");
+		$('.logout-button').removeClass('hide');
+
+		$('.logout-button').click(function() { 
+			location.reload(); 
+		});
 
 		$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List`); 
 
@@ -79,7 +84,20 @@ function main() {
 			value="Add new location to list">`);
 			*/
 
-	
+			if(userBucketList.places.length <=0) {
+					$('.list-set').append ("Time to build a bucket list! Click 'Find a new place' tab to start searching!");
+			} else 
+
+				{
+					/*	userBucketList.places.sort(function(a,b){
+  						return new Date(a.departDate) - new Date(b.departDate);
+						});	
+
+						*/
+
+
+
+				}
 
 
 	 	for (let i = 0; i < userBucketList.places.length; i++) {
@@ -370,11 +388,11 @@ function main() {
 								totalRating += parseInt(featuredResults[i].reviews[ii].starRating);
 						}
 					
-					console.log("total rating loop", totalRating	);
+					//console.log("total rating loop", totalRating	);
 
 					}
 
-					console.log("total rating total", totalRating	);
+					//console.log("total rating total", totalRating	);
 
 					totalRating	= totalRating/featuredResults[i].reviews.length; 
 					let reviewNumber = Math.floor(Math.random() * Math.floor(featuredResults[i].reviews.length));
@@ -382,7 +400,7 @@ function main() {
 			   	locationsContent += `<div class="row">
 			   			<div class="col-9">
 			   			<p class="complimentary-color-text">`;
-			   			console.log("total rating after divide", totalRating	);
+			   			//console.log("total rating after divide", totalRating	);
 			   	if(totalRating	> 0) {
 			   			for(let iii = 1; iii <= totalRating; iii++){
 			   				locationsContent +=`<i class="fas fa-star"></i>`
@@ -433,6 +451,12 @@ function main() {
 		  			placeAddedName = featuredResults[i].city+", "+ placeAddedName;
 		  		}
 		  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
+		  			
+		  		//make sure the reused modal window values are cleared
+		  		$('.departure-date').val(''); 
+		  		$('.return-date').val('');
+		  		$('.plan-notes').val('');
+
 
 		  		$('.p-close-window').on('click', function(event) {
         				event.preventDefault();
@@ -495,16 +519,22 @@ function main() {
 		  			console.log('setting departDate');
 
 		  			$('.departure-date').val(userBucketList.places[i].departDate.toString().substr(0,10)); 
+		  		} else {
+		  			$('.departure-date').val(''); 
 		  		}
 
 		  		if (userBucketList.places[i].returnDate) {
 
 		  			$('.return-date').val(userBucketList.places[i].returnDate.toString().substr(0,10)); 
+		  		} else {
+		  			$('.return-date').val('');
 		  		}
 
 		  		if (userBucketList.places[i].planNotes != '') {
 
 		  			$('.plan-notes').val(userBucketList.places[i].planNotes); 
+		  		} else {
+		  			$('.plan-notes').val('');
 		  		}
 
 
@@ -531,6 +561,7 @@ function main() {
 		  			planNotes: planNotes
 		  			}
 
+		  	//add a promise here to fire the modal... 
 					addPlanToList(location);
 
 					showModal(`You are on your way to ${placeAddedName}!`, 'Ok', null, function() {
@@ -845,7 +876,28 @@ function main() {
 	function getAPIData( callType='GET', data ={}, userToken, myUrl = '/api/bucketlist', callback) {
 			// show loading modal
 
+			showModal(`Loading...<br><br><i class="fa-4x fas fa-spinner fa-pulse"></i>`, "Ok", null, hideModal, null);
+
 		$.ajax({
+					 type: callType,
+					 data: data,//JSON.stringify(data),
+					 beforeSend: function (xhr){ 
+					 	console.log(data.authToken);
+		        	 xhr.setRequestHeader('Authorization', ('BEARER '+ userToken)); 
+		    		 },
+					 contentType: 'application/json',
+					 url: myUrl
+					})					
+					 .done( function(data) {
+							   console.log('success in getting API');
+							   callback(data);
+					    	  }) //finally? hide modal 
+					 .always( function() {
+					 		hideModal();
+					 		});
+		 			
+
+		/*$.ajax({
 					 type: callType,
 					 data: data,//JSON.stringify(data),
 					 beforeSend: function (xhr){ 
@@ -857,9 +909,11 @@ function main() {
 					 success: function(data) {
 							   console.log('success in getting API');
 							   callback(data);
-					    	  } //finally? hide modal 
-			
-		 			});
+					    	  }, //finally? hide modal 
+					 always: function() {
+					 		hideModal();
+					 		}
+		 			});  */
 	}
 
 	function addPlace() {
@@ -913,6 +967,8 @@ function main() {
 		data.firstName = $('.first-name').val();
 		data.lastName = $('.last-name').val();
 
+		//getAPIData( callType='POST', data, myToken, myUrl = '/api/bucketlist', showUserList);
+
 		$.ajax({
 			
 		 type: 'POST',
@@ -939,6 +995,8 @@ function main() {
 									   console.log(JSON.stringify(data));
 									   $('.user-status').text('logging in');
 									   myToken = data.authToken;
+
+									   $('.create-account-form').addClass('hide');
 
 									   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/', showUserList);
 									}
@@ -1045,12 +1103,23 @@ function main() {
 	function showModal(text, option1txt,option2txt, affirmCallback, negateCallback) {
 		
 
-		let modalContent = `<div class="text-align-right"><button class="close-window">X</button></div><div class="modal-text">${text}</div>
-            <button class="modal-ok-button">${option1txt}</button>`;
+		let modalContent = `<div class="text-align-right">
+		<button class="close-window button-35-b complimentary-color">X</button></div><div class="modal-text black-text">${text}</div>
+            `;
 
-        if(option2txt != null) {
-            modalContent += `<button class="modal-cancel-button">${option2txt}</button>`;
-        }
+        if(option1txt != null) {
+
+            modalContent += `<div class="modal-button-area"><button class="modal-ok-button button-35-b contrast-color">${option1txt}</button>`;
+        
+
+	        if(option2txt != null) {
+	            modalContent += `<button class="modal-cancel-button button-35-b contrast-color">${option2txt}</button>`;
+	        }
+
+	        modalContent += '</div>';
+    	}
+
+        
 
         $('.gen-modal-content').html(modalContent); 
 
@@ -1096,9 +1165,12 @@ function main() {
 		//rebuild button to get rid of old event handlers
 		$('.back-to-list').html('');
 		$('.back-to-list').html(`
-			<input type="button" name="back-button" 
-			class="back-button button-35-b contrast-color black-text" 
-			value="Go back to your Bucket List">`);
+			<button class="back-button blend-button">Bucket List</button>`);
+
+		$('.search-button-container').html('');
+		$('.search-button-container').html(`<button name="search-button" 
+			class="search-button button-35-b contrast-color" 
+			value="Search">Find it!</button>`);
 
 		getAndDisplayLocationList();
 

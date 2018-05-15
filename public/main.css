@@ -15,8 +15,6 @@ body {
 }
 
 .main-container {
-  margin-left:  5%;
-  margin-right:  5%; 
   margin-top: 10px;
 }
 
@@ -82,15 +80,24 @@ body {
     font-weight: normal;
 }
 
-.search-box {
+.search-box-form {
     padding-top: 10px;
     display: table;
     vertical-align: middle;
 }
 
+.search-box {
+  width:  150px; 
+}
+
 .search-box-content {
   display: table-cell;
   vertical-align: middle;
+}
+
+.search-button-container {
+  margin-top:   10px;
+  display:  inline-block; 
 }
 
 .top-message {
@@ -353,10 +360,11 @@ legend {
     border-radius:  5px;
     margin-left: 5px;
     margin-right: 5px;
+    width: 100%;
 }
 
 .button-trash {
-  float: right;
+  float: none;
 }
 
 .check {
@@ -373,7 +381,8 @@ font-size: 12px;
 
 .search-button {
 margin-left: 5px;
-float: right;
+margin-top:   10px; 
+/*float: right; */
 }
 
 .show-join-button {
@@ -479,11 +488,21 @@ padding: 5px;
     height: 300px;
  }
 
+ .modal-text {
+  padding: 5px;
+  margin-top: 10px; 
+ }
+
  .modal-button {
   display: inline-block;
   height: 30px;
   margin: 10px;
   padding: 10px;
+ }
+
+ .modal-button-area {
+  margin-top: 15px; 
+
  }
 
 .btn-delete {
@@ -535,6 +554,11 @@ textarea {
 
 @media only screen and (min-width: 640px) {
 
+.main-container {
+     margin-left: 5%; 
+    margin-right: 5%;
+   }
+
 .dont-show-bigscreen {
   display: none !important;
 }
@@ -559,6 +583,15 @@ textarea {
 
 .search-button {
 margin-left: 5px;
+}
+
+.button-35-b {
+  float: none ;
+  width: auto;  
+}
+
+.button-trash {
+  float: right;
 }
 
 }

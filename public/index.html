@@ -17,7 +17,7 @@
 </head>
   <body class="front-page-background">
     <header role="banner" class="blue-background title-box">
-      <div class="logOut-button smaller-text"><a href=" ">Sign Out</a></div>
+      <div class="logOut-button smaller-text"><button class="logout-button blend-button hide ">Sign Out</button></div>
       <h1><i class="fas fa-map-signs"></i>  Travel Bucket!</h1>
     </header>
     <main role="main">
@@ -59,7 +59,7 @@
               <div class="center">
                 <form class="join-button-form">
                  <p>Not a member? Join travel bucket!</p>
-                  <button type="submit" class="show-join-button complimentary-color"><i class="fas fa-user-plus"></i>Join!</button>
+                  <button type="submit" class="show-join-button complimentary-color white-text"><i class="fas fa-user-plus"></i>Join!</button>
                 </form>
               </div>
             </div>
@@ -71,31 +71,27 @@
         
       <form class="create-account-form hide">
         <div class="login-form-container blue-background">
-        <div class="center-text top-icon"><i class="fas fa-id-card fa-4x"></i></div>  
-        <legend>Create an account</legend>
+        <div class="center-text top-icon complimentary-color-text"><i class="fas fa-id-card fa-4x"></i></div>  
+        <legend>Sign Up</legend>
         <div class= "create-input-group"> 
-          <label>Username:
-          <input type="text" name="username" class="new-username"></label>
+          <input type="text" name="username" class="new-username no-box-input" placeholder="User Name">
         </div>
         <div class= "create-input-group"> 
-          <label>Password:
-          <input type="password" name="password" class="new-password"></label>
+          <input type="password" name="password" class="new-password no-box-input" placeholder="Password">
         </div>
         <div class= "create-input-group"> 
-          <label>First Name:
-          <input type="text" name="firstname" class="first-name"></label>
+          <input type="text" name="firstname" class="first-name no-box-input" placeholder="First Name">
         </div>
         <div class= "create-input-group"> 
-          <label>Last Name:
-          <input type="text" name="lastname" class="last-name"></label>
+          <input type="text" name="lastname" class="last-name no-box-input" placeholder="Last Name">
         </div>
         <div class= "create-input-group"> 
-          <label>City: <input type="text" name="city" class="city"></label>
+          <input type="text" name="city" class="city no-box-input" placeholder="City">
         </div>
         <div class= "create-input-group"> 
-        <label>Country: <input type="text" name="country" class="country"></label>
+        <input type="text" name="country" class="country  no-box-input" placeholder="Country">
         </div>
-          <button type="submit" class="create-button main-button button-95">Create</button>
+          <button type="submit" class="create-button complimentary-color button-95 white-text ">Let's Go!</button>
         </div>
       </form>
       
@@ -159,7 +155,7 @@
       <div class="list-background">
         <div class="row">
           <div class="col-12 blue-background tab-box">
-            <div class="tab dont-show-mobile"><button class="back-button blend-button">Bucket List</button></div>
+            <div class="tab back-to-list dont-show-mobile"><button class="back-button blend-button">Bucket List</button></div>
             <div class="tab dont-show-mobile">Places You've Visited</div>
             <div class="tab tab-current add-button-tab"><button class="add-button">Find a New Place</button></div>
           </div>
@@ -172,9 +168,9 @@
         </header>
       </div>
       <div class="col-6">
-        <form class = "search-box">
+        <form class = "search-box-form">
           <div class="search-box-content">
-            <label for="search">Search: <input type="text" id="search" class="" name="search" placeholder="Search for..."></label><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button> 
+            <label for="search">Search: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
           </div>
           </form>
       </div>
