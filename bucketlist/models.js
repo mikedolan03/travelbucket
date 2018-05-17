@@ -7,10 +7,6 @@ const BucketListSchema = mongoose.Schema({
 	 	type: Schema.ObjectId,
 	 	ref: 'User',
 	  },
-	  place: { 
-	  	type: Schema.ObjectId,
-	 	ref: 'place',
-	  },
 	 places: [ {
 	 	place: {
 	 	type: Schema.ObjectId,

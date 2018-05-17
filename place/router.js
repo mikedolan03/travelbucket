@@ -70,9 +70,7 @@ router.put('/', (req, res) => {
         res.status(400).json({message: 'Missing location id'});
             } else if(!req.body.userId) {
                 res.status(400).json({message: 'Missing userid'});
-                } else if(!req.body.userName) {
-                        res.status(400).json({message: 'Missing username'}); 
-                        } else if(!req.body.content) {
+                } else if(!req.body.content) {
                                     res.status(400).json({message: 'Missing content'});
                                 } else if(!req.body.rating) {
                                          res.status(400).json({message: 'Missing rating'});
