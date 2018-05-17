@@ -170,7 +170,14 @@ console.log("---------", newPlaceToAdd  );
     BucketList
         .update(
     	{user: req.user.id},
-    	{$push: {places: newPlaceToAdd} },
+    	{
+            $push: {
+                places: { 
+                    $each: [newPlaceToAdd],
+                    $position: 0
+                }
+            } 
+        },
         //{place: newPlaceToAdd.place},
     	function(err, bucketlist) {
     		if(err) {
