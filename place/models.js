@@ -11,6 +11,9 @@ const PlaceSchema = mongoose.Schema({
 	 	city: {
 	  	type: String,
 	  	},
+	  	state: {
+	  	type: String,
+	  	},
 	 	visited: {
 	  	type: String,
 	  	default: 'false',
@@ -19,6 +22,9 @@ const PlaceSchema = mongoose.Schema({
 	 		user: {
 	 		type: Schema.ObjectId
 	  		}, 
+	  		username: {
+	  			type: String,
+	  		},
 			content:{
 				type: String,
 			},

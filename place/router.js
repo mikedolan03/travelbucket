@@ -45,13 +45,14 @@ router.get('/', (req, res) => {
 
 	//let mySearch = new RegExp ('searchTerm', 'i');
 
+
 	Place
 		.find().or([{
 			'country': new RegExp('.*'+searchTerm+'.*', "i")
 		},
 		{
 			'city': new RegExp('.*'+searchTerm+'.*', "i")
-		}])
+		}]).limit(40)
 		.then(placelist => res.json (
 			placelist
 			))
@@ -79,7 +80,7 @@ router.put('/', (req, res) => {
     
 
     let newReview = {
-    	 userId: req.body.userId,
+    	 user: req.body.userId,
 		 username: req.body.userName,
 		 content: req.body.content,
 		 starRating: req.body.rating	

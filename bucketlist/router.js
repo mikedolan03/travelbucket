@@ -52,7 +52,7 @@ router.get('/i', (req, res) => {
 //router.get('/try', (req, res) => {
 router.get('/', (req, res) => {
 BucketList
-      .findOne({user: "5ad8fb125823545414675fde"})
+      .findOne({user:  req.user.id})
         .populate('user', 'firstName lastName username')
         .populate({
            path: 'places.place',

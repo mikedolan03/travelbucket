@@ -80,7 +80,7 @@ function main() {
 		$('.tab-show-menu').html('');
 		$('.tab-show-menu').html(`
 			<button name="show-menu-button" 
-			class="show-menu-button"><i class="fas fa-bars"></i></button>`);
+			class="show-menu-button blend-button"><i class="fas fa-bars"></i></button>`);
 
 		$('.add-button-tab').html('');
 		$('.add-button-tab').html(`
@@ -96,6 +96,16 @@ function main() {
 		$('.back-to-list').html('');
 		$('.back-to-list').html(`
 			<button class="back-button blend-button">Bucket List</button>`);
+
+		if(onlyVisits) {
+				$('.visited-list').addClass('tab-current');
+				$('.back-to-list').removeClass('tab-current');
+				$('.add-button-tab').removeClass('tab-current');
+		} else {
+			$('.back-to-list').addClass('tab-current');
+			$('.visited-list').removeClass('tab-current');
+			$('.add-button-tab').removeClass('tab-current');
+		}
 
 
 		/*$('.add-form').html('');
@@ -201,7 +211,7 @@ function main() {
 		 	&& typeof userBucketList.places[i].planNotes != 'null' && userBucketList.places[i].planNotes != '') {
 		 		notes = userBucketList.places[i].planNotes;
 		 		//console.log('departDate ', userBucketList.places[i].planNotes);
-		 		notes =  'Notes: '+ notes;
+		 		notes =  'Things to see: '+ notes;
 		 	} else {
 		 		notes = ""; 
 		 	}
@@ -313,10 +323,17 @@ function main() {
 			
 				console.log("place ind on client for delete: ", placeIndex);
 				
-				showModal(`Are you sure you want to delete ${placeName} from your list?`, 'Yes', 'No', function() {
-					 deletePlace(placeIndex); 
-					 hideModal();
-					 getListofPlaces();
+				showModal(`Are you sure you want to delete ${placeName} from your list?`, 'Yes', 'No', 
+					function() {
+						event.preventDefault();
+					 	deletePlace(placeIndex);
+							$('.user-list-section').removeClass('hide');
+				  			$('.search-results').html(" ");
+				  			$('.add-section').addClass('hide');
+				  			$('.list-set').html("");
+				  			$('.back-button').off('click');
+				  			//getAndDisplayUserList();  -done as api callback
+				  			hideModal();
 					}
 					, hideModal);
 
@@ -336,7 +353,7 @@ function main() {
 		if(count <=0) {
 					$('.list-set').append ("Time to add to your bucket list! Click 'Find a new place' tab to start searching!");
 					//add a button
-					$('.list-set').append(`<button class="button-35-b complimentary-color black-text" 
+					$('.list-set').append(`<button class="button-35-b complimentary-color black-text add-button" 
 					>Find new places!</button>`);
 			} 
 	 		/*if(userBucketList.places.length <=0) {
@@ -414,7 +431,7 @@ function main() {
 		$('.tab-show-menu').html('');
 		$('.tab-show-menu').html(`
 			<button name="show-menu-button" 
-			class="show-menu-button"><i class="fas fa-bars"></i></button>`);
+			class="show-menu-button blend-button"><i class="fas fa-bars"></i></button>`);
 
 		$('.add-button-tab').html('');
 		$('.add-button-tab').html(`
@@ -436,6 +453,10 @@ function main() {
 		$('.search-button-container').html(`<button name="search-button" 
 			class="search-button button-35-b contrast-color" 
 			value="Search">Find it!</button>`);
+		
+		$('.add-button-tab').addClass('tab-current');
+		$('.visited-list').removeClass('tab-current');
+		$('.back-to-list').removeClass('tab-current');
 
 		getAndDisplayLocationList();
 
@@ -526,9 +547,24 @@ function main() {
 		featuredResults = data;
 
 		console.log("locations: ", featuredResults);
+
+		featuredResults = featuredResults.filter(function(placeF) {
+			console.log("comparing f: ",placeF);
+			return !userBucketList.places.some(function(placeU) {
+				
+				console.log("comparing u: ", placeU);
+	
+
+
+				return	placeF._id === placeU.place._id;
+			});
+		});	
+		//console.log("locations filterd: ", featuredResults2);
+
+		console.log("locations: ", featuredResults.length	);
 		$('.featured-places').html(" ");
 
-		let locationsContent =''; 
+		let locationsContent =' '; 
 
 		//'<div class="lightgrey-box-background results-box">';
 		//$('.featured-places').append (locationsContent);
@@ -586,7 +622,7 @@ function main() {
 
 			   	locationsContent += `<div class="row">
 			   			<div class="col-9">
-			   			<p class="complimentary-color-text">`;
+			   			<p class="complimentary-color-text">Average Rating: `;
 			   			//console.log("total rating after divide", totalRating	);
 			   	if(totalRating	> 0) {
 			   			for(let iii = 1; iii <= totalRating; iii++){
@@ -594,12 +630,14 @@ function main() {
 			   			}
 			    }
 
-			   	locationsContent +=`</p><p>Review: ${featuredResults[i].reviews[reviewNumber].username} gave it ${featuredResults[i].reviews[reviewNumber].starRating} Stars - "${featuredResults[i].reviews[reviewNumber].content}"</p> 
+			   	locationsContent +=`</p><p>Review: ${featuredResults[i].reviews[reviewNumber].username} says "${featuredResults[i].reviews[reviewNumber].content}"</p> 
 			   			 </div>
 			   		</div>`
 			}
 
-		      	 locationsContent +=	`</div>`;
+		      	 
+				locationsContent +=	`</div>`;
+		     
 
 			$('.featured-places').append (locationsContent);
 
@@ -617,7 +655,19 @@ function main() {
 			
 		}
 
-		locationsContent ='</div>';
+		if(locationsContent == ' ') 
+		     {
+		     	console.log	('no content');
+		     	locationsContent = `<div>
+		    						<div class="row">
+        							<div class="col-12">No places were found. Try another search!
+        							</div>
+        							</div>`;
+		     } else {
+		     	locationsContent ='</div>';
+		     }
+
+		
 		
 		$('.featured-places').append (locationsContent);
 
@@ -630,6 +680,9 @@ function main() {
 		$('.adding-place-options-pop-up').removeClass('hide');
 
 		  		let placeAddedName = featuredResults[i].country;
+
+		  		$('.add-plan-button-cont').html(`<button type="submit" 
+			class="adding-button blue-background button-95 white-text">Add to list</button>`);
 
 		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window">X</button></div>');
 
@@ -690,6 +743,11 @@ function main() {
 	function planTripFromBucketListView(i) {
 
 		$('.adding-place-options-pop-up').removeClass('hide');
+
+		$('.add-plan-button-cont').html(`<button type="submit" 
+			class="adding-button blue-background button-95 white-text">Update Plan</button>`);
+
+             
 
 		  		let placeAddedName = userBucketList.places[i].place.country;
 
@@ -827,7 +885,7 @@ function main() {
 
 			showModal(`${headerText} review saved.`, 'Ok', null, hideModal, null);
 
-			getListofPlaces();
+			//getListofPlaces();
 
 		});
 
@@ -957,6 +1015,21 @@ function main() {
 
 		let data = {};
 
+		
+		if($('.username').val() == '') {
+
+		console.log( "user test failed", $('.username').val() );
+			$('.error-text').removeClass('hide'); 
+				return;
+		 }
+
+		if($('.password').val() == ''){
+		 console.log( "pass test failed", $('.password').val() );
+		
+			$('.error-text-pass').removeClass('hide'); 
+				return;
+		 }
+
 		data.username = $('.username').val();
 		data.password = $('.password').val();
 
@@ -983,10 +1056,16 @@ function main() {
 	      		alert( "page not found" );
 	    		},
 	    		401: function() {
-	    			alert("username or password were incorrect");
+
+	    		$('.error-text').removeClass('hide'); 
+	    			$('.error-text-pass').removeClass('hide'); 
+	    			//username or password were incorrect");
 	    		},
 	    		400: function() {
-	    			alert("missing a username or password");
+	    			//missing a username or password");
+
+	    		$('.error-text').removeClass('hide'); 
+	    		$('.error-text-pass').removeClass('hide'); 
 	    		}
 	    	}
 			
@@ -1057,6 +1136,7 @@ function main() {
 
 		getAPIData( callType='DELETE', data, myToken, myUrl = '/api/bucketlist/', function () {
 			console.log("sent delete to server ");
+			getAndDisplayUserList();
 			});
 	}
 
@@ -1067,9 +1147,10 @@ function main() {
 		
 		data = JSON.stringify(data);
 
-
+ 
 		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/checkoff', function () {
 			console.log("sent check off update to server ");
+			getListofPlaces();
 			});
 
 	}
@@ -1089,7 +1170,8 @@ function main() {
 		data.password = $('.new-password').val();
 		data.firstName = $('.first-name').val();
 		data.lastName = $('.last-name').val();
-
+		data.city = $('.city').val();
+		data.country =$('.country').val();
 		//getAPIData( callType='POST', data, myToken, myUrl = '/api/bucketlist', showUserList);
 
 		$.ajax({
@@ -1126,7 +1208,19 @@ function main() {
 						});
 
 
-		  		  	}
+		  		  	},
+		statusCode: { 
+						500: function() {
+      						//alert( "no user or pass" );
+      						$('.error-text-usepass').removeClass('hide');
+    					},
+    					422: function() {
+      						//alert( "user taken" );
+      						$('.error-text-usertaken').removeClass('hide');
+
+    					}
+					}
+
 		});
 	}
 
