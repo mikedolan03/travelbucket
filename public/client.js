@@ -1150,7 +1150,7 @@ function main() {
  
 		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/checkoff', function () {
 			console.log("sent check off update to server ");
-			getListofPlaces();
+			getAndDisplayUserListforVisited();
 			});
 
 	}
