@@ -1,15 +1,16 @@
 'use strict';
 require('dotenv').config();
-const express = require('express');
 const mongoose = require('mongoose');
+const express = require('express');
 const morgan = require('morgan');
 const passport = require('passport');
 const bodyParser = require('body-parser'); 
 
 const { router: usersRouter } = require('./users');
+const { router: placeRouter} = require('./place');
 const { router: authRouter, localStrategy, jwtStrategy} = require('./auth');
 const { router: bucketlistRouter} = require('./bucketlist');
-const { router: placeRouter} = require('./place');
+
 
 const jsonParser = bodyParser.json();
 
@@ -18,6 +19,8 @@ mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
 
 const app = express();
+
+const {BucketList} = require('./bucketlist/models');
 
 app.use(morgan('common'));
 
@@ -58,6 +61,27 @@ app.get('/api/protected', jwtAuth, (req, res) => {
  return res.json({
   data: 'super secret data'
  }); 
+});
+
+app.get('/api/try', (req, res) => {
+
+BucketList
+      .findOne({user: "5ad8fb125823545414675fde"})
+        .populate('user', 'firstName lastName username')
+        .populate({
+           path: 'places.place',
+            model: 'place'
+        })
+        //.populate('Place', 'country')
+        .then(list => res.json(
+            list
+            //BucketList
+        ))
+        .catch(err => {
+            console.error(err)
+            res.status(500).json({message: 'Something went wrong'})}
+        );
+
 });
 
 app.use('/api/bucketlist', jwtAuth, bucketlistRouter);

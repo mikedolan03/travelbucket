@@ -7,6 +7,41 @@ const BucketListSchema = mongoose.Schema({
 	 	type: Schema.ObjectId,
 	 	ref: 'User',
 	  },
+	  place: { 
+	  	type: Schema.ObjectId,
+	 	ref: 'place',
+	  },
+	 places: [ {
+	 	place: {
+	 	type: Schema.ObjectId,
+	 	ref: 'place',
+	  	},
+	 	visited: {
+	  	type: String,
+	  	default: 'false',
+	 	},
+	 	departDate: {
+	  	type: Date,
+	  	},
+	  	returnDate: {
+	  	type: Date,
+	  	},
+	  	planNotes: {
+	  		type: String,
+	  	}
+	 }]
+});
+
+const BucketList = mongoose.model('bucketlist', BucketListSchema);
+module.exports = {BucketList};
+
+
+/*
+const BucketListSchema = mongoose.Schema({
+	 user: {
+	 	type: Schema.ObjectId,
+	 	ref: 'User',
+	  },
 	 places: [ {
 	 	country: {
 	 	type: String,
@@ -33,8 +68,5 @@ const BucketListSchema = mongoose.Schema({
 	  	}
 	 }]
 });
-
-
-const BucketList = mongoose.model('bucketlist', BucketListSchema);
-module.exports = {BucketList};
+*/
 

@@ -160,13 +160,13 @@ function main() {
 		 	if(typeof userBucketList.places[i].city != 'undefined') {
 
 		 		if(userBucketList.places[i].city != 'undefined') {
-		 			placeName = userBucketList.places[i].city + ", " + userBucketList.places[i].country; 
+		 			placeName = userBucketList.places[i].city + ", " + userBucketList.places[i].place.country; 
 		 		} else {
-		 			placeName = userBucketList.places[i].country; 
+		 			placeName = userBucketList.places[i].place.country; 
 		 		}
 
 		 	} else {
-		 		placeName = userBucketList.places[i].country; 
+		 		placeName = userBucketList.places[i].place.country; 
 		 	}
 
 		 	if(userBucketList.places[i].departDate == null) console.log("place " + i + " doesn have depart");

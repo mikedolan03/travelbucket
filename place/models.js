@@ -16,13 +16,9 @@ const PlaceSchema = mongoose.Schema({
 	  	default: 'false',
 	 	},
 	 	reviews: [{
-	 		userId: {
-	 			type: String,
-	 			required: true,
-	 		}, 
-			username: {
-				type: String,
-			},
+	 		user: {
+	 		type: Schema.ObjectId
+	  		}, 
 			content:{
 				type: String,
 			},
@@ -36,3 +32,34 @@ PlaceSchema.plugin(searchable);
 
 const Place = mongoose.model('place', PlaceSchema);
 module.exports = {Place};
+
+/*
+const PlaceSchema = mongoose.Schema({
+	 	country: {
+	 	type: String,
+	 	required: true,
+	  	},
+	 	city: {
+	  	type: String,
+	  	},
+	 	visited: {
+	  	type: String,
+	  	default: 'false',
+	 	},
+	 	reviews: [{
+	 		user: {
+	 		type: Schema.ObjectId,
+	 		ref: 'User',
+	  		}, 
+			username: {
+				type: String,
+			},
+			content:{
+				type: String,
+			},
+			starRating: {
+				type: String,
+			}
+	 	}]
+});
+*/
