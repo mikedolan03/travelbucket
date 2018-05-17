@@ -38,7 +38,7 @@ if(nonStringField) {
 }
 
 //trimming logic here
-let {username, password, firstName, lastName} = req.body;
+let {username, password, firstName, lastName, city, country} = req.body;
 
 //check is the username is taken already
 return User.find({username})
@@ -60,7 +60,9 @@ return User.find({username})
      username,
      password: hash,
      firstName,
-     lastName
+     lastName,
+     city,
+     country
  	});
  })
  .then(user => {
@@ -74,7 +76,7 @@ return User.find({username})
  	if (err.reason === "ValidationError") {
  		return res.status(err.code).json(err);
  	}
- 	res.status(500).json({code: 500, message: 'Internal server error'});
+ 	res.status(500).json({code: 500, message: 'Internal server error :('});
  });
 });
 

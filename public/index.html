@@ -47,10 +47,12 @@
             <div class= "login-input-group"> 
               <label name="username input ">
               <input type="text" name="username" class="username no-box-input" placeholder="Username"></label>
+              <div class="error-text complimentary-color hide">Incorrect username, please try again.</div>
             </div>
             <div class= "login-input-group">
               <label class= "login-label" name="password input">
               <input type="password" name="password" class="password no-box-input" placeholder="Password"></label>
+              <div class="error-text-pass complimentary-color hide">Incorrect password, please try again.</div>
             </div>
             <div class="center">
               <button type="submit" class="login-button button-95 white-background main-color-text">Login</button>
@@ -91,7 +93,11 @@
         <div class= "create-input-group"> 
         <input type="text" name="country" class="country  no-box-input" placeholder="Country">
         </div>
+        <div class="error-text-usepass complimentary-color hide">Oop! Make sure you have a username and password.</div>
+        <div class="error-text-usertaken complimentary-color hide">Oop! That user name is taken.</div>
           <button type="submit" class="create-button complimentary-color button-95 white-text ">Let's Go!</button>
+
+
         </div>
       </form>
       
@@ -106,8 +112,8 @@
       <div class="list-background">
         <div class="row">
             <div class="col-12 blue-background tab-box">
-              <div class="tab tab-show-menu dont-show-bigscreen"><i class="fas fa-bars"></i></div>
-              <div class="tab tab-current">Bucket List</div>
+              <div class="tab tab-show-menu tab-current dont-show-bigscreen"><i class="fas fa-bars"></i></div>
+              <div class="tab back-to-list"><button class="back-button blend-button">Bucket List</button></div>
               <div class=" tab visited-list">Places You've Visited</div>
               <div class="tab  add-button-tab"><button class="add-button">Find a New Place</button></div>
               
@@ -156,7 +162,7 @@
       <div class="list-background">
         <div class="row">
           <div class="col-12 blue-background tab-box">
-            <div class="tab tab-show-menu dont-show-bigscreen"><i class="fas fa-bars"></i></div>
+            <div class="tab tab-show-menu tab-current dont-show-bigscreen"><i class="fas fa-bars"></i></div>
             <div class="tab back-to-list hide"><button class="back-button blend-button">Bucket List</button></div>
             <div class="tab visited-list hide">Places You've Visited</div>
             <div class="tab tab-current add-button-tab hide"><button class="add-button">Find a New Place</button></div>
@@ -165,18 +171,19 @@
         </div>
 
       <div class="row">
-        <div class="col-6">
+        <div class="col-12">
+        <form class = "search-box-form">
+          <div class="search-box-content">
+            <label for="search">Search to find your next destsination: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
+          </div>
+          </form>
+      </div>
+        <div class="col-12">
         <header>
           <h3 class="place-results-header">Top Rated Places</h3>
         </header>
       </div>
-      <div class="col-6">
-        <form class = "search-box-form">
-          <div class="search-box-content">
-            <label for="search">Type a Country: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
-          </div>
-          </form>
-      </div>
+      
       </div>
         <div class="featured-places">
 
@@ -200,7 +207,9 @@
                 <label>What are you most excited about seeing?
                   <textarea rows="4" cols="50" form="place-options" name ="plan-notes" class="plan-notes"></textarea></label>
               </div>
+              <div class="add-plan-button-cont">
                <button type="submit" class="adding-button blue-background button-95 white-text">Add to list</button>
+             </div>
             </form>
           </div>
       </div>
@@ -217,8 +226,9 @@
                   <span class="stars" id="star1" data="1"><i class="far fa-star"></i></span><span class="stars" id="star2" data="2"><i class="far fa-star"></i></span><span class="stars" data="3" id="star3"><i class="far fa-star"></i></span><span class="stars" data="4" id="star4"><i class="far fa-star"></i></span><span class="stars" data="5" id="star5"><i class="far fa-star"></i></span>
                 </div></label>
               </div>
-              <div class= "create-input-group"> 
-                  <textarea rows="4" cols="50" form="place-options" name ="trip-review" class="trip-review" placeholder="Write a review of your trip..."></textarea>
+              <div class= "create-input-group">
+              <label> Write a review of your trip: 
+                  <textarea rows="4" cols="50" form="place-options" name ="trip-review" class="trip-review" placeholder="Write a review of your trip..."></textarea></label> 
               </div>
                
                <button type="submit" class="checkit-button blue-background  white-text button-95">Check it off!</button>

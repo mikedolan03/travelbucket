@@ -45,13 +45,14 @@ router.get('/', (req, res) => {
 
 	//let mySearch = new RegExp ('searchTerm', 'i');
 
+
 	Place
 		.find().or([{
 			'country': new RegExp('.*'+searchTerm+'.*', "i")
 		},
 		{
 			'city': new RegExp('.*'+searchTerm+'.*', "i")
-		}])
+		}]).limit(40)
 		.then(placelist => res.json (
 			placelist
 			))
@@ -68,26 +69,18 @@ router.put('/', (req, res) => {
 
     if(!req.body.locId) {
         res.status(400).json({message: 'Missing location id'});
-    }
-
-    if(!req.body.userId) {
-    	res.status(400).json({message: 'Missing userid'});
-    }
-
-    if(!req.body.userName) {
-    	res.status(400).json({message: 'Missing username'});
-    }
-
-    if(!req.body.content) {
-    	res.status(400).json({message: 'Missing content'});
-    }
-
-    if(!req.body.rating) {
-    	res.status(400).json({message: 'Missing rating'});
-    }
+            } else if(!req.body.userId) {
+                res.status(400).json({message: 'Missing userid'});
+                } else if(!req.body.content) {
+                                    res.status(400).json({message: 'Missing content'});
+                                } else if(!req.body.rating) {
+                                         res.status(400).json({message: 'Missing rating'});
+                                        }
+    
+    
 
     let newReview = {
-    	 userId: req.body.userId,
+    	 user: req.body.userId,
 		 username: req.body.userName,
 		 content: req.body.content,
 		 starRating: req.body.rating	

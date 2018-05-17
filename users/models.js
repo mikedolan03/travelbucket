@@ -19,6 +19,14 @@ const UserSchema = mongoose.Schema({
  lastName: {
   type: String,
   default: ''
+ },
+ city: {
+ 	type: String,
+ 	default: ''
+ },
+ country: {
+ 	type: String,
+ 	default: ''
  }
 });
 

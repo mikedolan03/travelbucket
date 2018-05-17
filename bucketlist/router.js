@@ -1,18 +1,27 @@
 'use strict';
+
+const mongoose = require('mongoose');
+const {Place} = require('../place/models');
 const express = require('express');
 const bodyParser = require('body-parser');
+//const {Place} = require('../place/models')
 
 const {BucketList} = require('./models');
+
+
 
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
 
 //--------------- Get user bucket list
-router.get('/', (req, res) => {
+router.get('/i', (req, res) => {
 
     BucketList
-    	.findOne({user: req.user.id}).populate('user', 'firstName lastName username')
+    	.findOne({user: req.user.id})
+        .populate('user', 'firstName lastName username')
+        
+        //.populate('Place', 'country')
         .then(list => res.json(
             list
             //BucketList
@@ -22,10 +31,44 @@ router.get('/', (req, res) => {
             res.status(500).json({message: 'Something went wrong'})}
         );
 
+        /* 
+ BucketList
+        .findOne({user: req.user.id}).populate('user', 'firstName lastName username')
+        .then(list => res.json(
+            list
+            //BucketList
+        ))
+        .catch(err => {
+            console.error(err)
+            res.status(500).json({message: 'Something went wrong'})}
+        );
+        */
+
      	console.log('getting bucketlist');
 
 });
 
+
+//router.get('/try', (req, res) => {
+router.get('/', (req, res) => {
+BucketList
+      .findOne({user:  req.user.id})
+        .populate('user', 'firstName lastName username')
+        .populate({
+           path: 'places.place',
+            model: 'place'
+        })
+        //.populate('Place', 'country')
+        .then(list => res.json(
+            list
+            //BucketList
+        ))
+        .catch(err => {
+            console.error(err)
+            res.status(500).json({message: 'Something went wrong'})}
+        );
+
+});
 
 //--------------- Check off place - update Place on list as visited
 router.put('/checkoff', (req, res) => {
@@ -86,11 +129,13 @@ router.put('/', (req, res) => {
 
     if(!req.body.country) {
         res.status(400).json({message: 'Missing country'});
-    }
-
-    if(!req.body.locId) {
+    } else if(!req.body.locId) {
         res.status(400).json({message: 'Missing location id'});
-    }
+            } else { 
+
+
+
+    
 
     const country = req.body.country;
     const locId = req.body.locId;
@@ -99,17 +144,19 @@ router.put('/', (req, res) => {
     const planNotes = req.body.planNotes;
 
     let newPlaceToAdd = {
-    	country: country,		
+    	//country: country,		
     	visited: 'false',
-    	locId: locId,
+    	place: mongoose.Types.ObjectId(locId),
         departDate: departDate,
         returnDate: returnDate,
         planNotes: planNotes	
     }
 
-    if(req.body.city) { 
-        newPlaceToAdd.city = req.body.city;
-    }
+   // if(req.body.city) { 
+   //     newPlaceToAdd.city = req.body.city;
+   // }
+
+console.log("---------", newPlaceToAdd  );
 
 
    // if(true === false) {
@@ -124,6 +171,7 @@ router.put('/', (req, res) => {
         .update(
     	{user: req.user.id},
     	{$push: {places: newPlaceToAdd} },
+        //{place: newPlaceToAdd.place},
     	function(err, bucketlist) {
     		if(err) {
                 console.log("error ", err);
@@ -132,7 +180,9 @@ router.put('/', (req, res) => {
     	}
     );
   
+ }
 });
+
 
 //find the place on the list by index number, delete it and save bucketlist
 router.delete('/', (req, res) => {
