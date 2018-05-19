@@ -1254,68 +1254,7 @@ function main() {
 
 	}
 
-	function showBucketListView() {
-
-
-		//inputs
-/*
-		$('.list-set').on('click', '.checkbox-btn', function(event) {
-	  		console.log('checked button clicked', event.target);
-	  		//event.preventDefault();
-	  		let placeIndex = event.target.getAttribute('placeIndex');
-	  		console.log("place ind on client: ", placeIndex);
-	  		//const listItem = USER_LIST.userList.find(item => item.locId === locChecked);
-	  		//listItem.visited = "true"; 
-	  		//event.target.prop("checked", true );  //needs to be a straight javascript setProperty? 
-	  		//console.log("user list: ", USER_LIST);
-
-	  		checkOffPlace(placeIndex); 
-
-	  		$('.modal-checkedoff-section').removeClass('hide');
-
-	  		//ok button event handler
-	  		$('.check-modal-ok').click(function(event) {
-	  		event.preventDefault();
-	  		$('.modal-checkedoff-section').addClass('hide');
-	  		});
-
-	  	});
-
-	$('.list-set').on('click', '.btn-delete', function(event) {
-
-			console.log('clicked..', event.target.tagName);
-
-		  var el;
-  
-		  // we can check the tag type, and if it's not the <a>, move up.
-		  if (event.target.tagName == 'path') {
-		    el = event.target.parentElement.parentElement;
-
-		    console.log('changing targ to', el); 
-
-		  	} else if (event.target.tagName == 'svg') {
-		    	el = event.target.parentElement;
-		  		} else {
-		    			el = event.target;
-		  				}
-		  	console.log(el.getAttribute("placeIndex"));
-		
-		
-		let placeIndex = el.getAttribute('placeIndex');
-
-		if(!placeIndex) {
-			placeIndex = el.getAttribute('placeindex');
-		}
-
-		console.log("place ind on client for delete: ", placeIndex);
-		
-		deletePlace(placeIndex);
-
-		getAndDisplayUserList();
-		});
-		*/
-
-	}
+	
 
 	function showModal(text, option1txt,option2txt, affirmCallback, negateCallback) {
 		
