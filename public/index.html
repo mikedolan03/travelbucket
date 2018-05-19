@@ -47,12 +47,11 @@
             <div class= "login-input-group"> 
               <label name="username input ">
               <input type="text" name="username" class="username no-box-input" placeholder="Username"></label>
-              <div class="error-text complimentary-color hide">Incorrect username, please try again.</div>
             </div>
             <div class= "login-input-group">
               <label class= "login-label" name="password input">
               <input type="password" name="password" class="password no-box-input" placeholder="Password"></label>
-              <div class="error-text-pass complimentary-color hide">Incorrect password, please try again.</div>
+              <div class="error-text-pass black-text shaker hide"><div class="complimentary-color-text inline-div"><i class="fas fa-lock"></i></div> Incorrect username or password, please try again.</div>
             </div>
             <div class="center">
               <button type="submit" class="login-button button-95 white-background main-color-text">Login</button>
@@ -72,7 +71,7 @@
     <section>
         
       <form class="create-account-form hide">
-        <div class="login-form-container blue-background">
+        <div class="login-form-container blue-background ">
         <div class="center-text top-icon complimentary-color-text"><i class="fas fa-id-card fa-4x"></i></div>  
         <legend>Sign Up</legend>
         <div class= "create-input-group"> 
@@ -96,6 +95,7 @@
         <div class="error-text-usepass complimentary-color hide">Oop! Make sure you have a username and password.</div>
         <div class="error-text-usertaken complimentary-color hide">Oop! That user name is taken.</div>
           <button type="submit" class="create-button complimentary-color button-95 white-text ">Let's Go!</button>
+          <button class="back-to-login blend-button">Already have an account? <u>Login</u></button>
 
 
         </div>
@@ -281,6 +281,7 @@
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>
+    
     <script src="/client.js"></script>
 </body>
 </html>

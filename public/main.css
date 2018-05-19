@@ -15,7 +15,7 @@ body {
 }
 
 .main-container {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .front-page-background {
@@ -218,7 +218,7 @@ body {
 
 .big-headers {
 	padding-left: 8px;
-	padding-top: 10px;
+/*	padding-top: 10px; */
 	text-align: center;
 }
 
@@ -311,7 +311,6 @@ legend {
 
 
 .create-account-form {
-	margin-left: 5px;
 	margin-top: 10px;
 }
 
@@ -390,8 +389,8 @@ margin-top:   10px;
 
 .show-join-button {
 	 display: block;
-    width: 30%;
-    height: 25px;
+    width: 50%;
+    height: 40px;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -539,6 +538,67 @@ position: relative;
 textarea {
   max-width:  90%; 
 }
+
+.inline-div {
+  display:  inline-block;
+}
+
+.error-text-pass {
+font-weight:  800;
+margin-top:   5px;
+}
+
+.shaker {
+  -webkit-animation: shake .75s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake .75s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes fadeIn {
+   0% {opacity:   0}
+   100% {opacity:   1}
+}
+
+
+.fade-in {
+  -webkit-animation: fadeIn .5s;
+  animation-name: fadeIn; 
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+
+  /*opacity:  1;*/
+}
+
+
+
+@keyframes mymove {
+    50% {opacity: 0;}
+}
+.fade-in2 {
+ 
+ animation: mymove 5s infinite;
+}
+
 /*.rating > span:hover:before,
 .rating > span:hover ~ span:before {
    content: "\2605";
