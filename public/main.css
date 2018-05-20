@@ -216,6 +216,23 @@ body {
   padding-top: 10px;
 }
 
+.hamburger-menu-button-container {
+  float:  right;
+  margin-right:   10px;
+  margin-top:   -5px;
+}
+
+.hamburger-menu {
+  position: absolute;
+    top: 60px;
+    width: 290px;
+    left: 33.33%;
+    margin-left: -92px;
+    background-color: #41e4bc;
+    padding-left: 10px;
+    border-style: solid;
+    border-color: lightslategrey;
+}
 .big-headers {
 	padding-left: 8px;
 /*	padding-top: 10px; */
@@ -242,13 +259,11 @@ body {
   padding-right: 10px;
   margin-right: 5px;
   margin-left: 5px;
-  z-index: 1;
   width:  100%;
 }
 
 .tab-current {
  background-color: #ff8f64;
- z-index: 1;
 }
 
 .list-background {
@@ -634,7 +649,6 @@ margin-top:   5px;
   padding-right: 10px;
   margin-right: 5px;
   margin-left: 5px;
-  z-index: 1;
   width:  auto;
 }
 
@@ -642,7 +656,6 @@ margin-top:   5px;
  background-color: #ff8f64;
  position: relative;
   top: -27px;
-  z-index: 1;
   font-size: 20px;
 }
 

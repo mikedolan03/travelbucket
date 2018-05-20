@@ -362,7 +362,12 @@ function main() {
 					$('.list-set').append ("Time to build a bucket list! Click 'Find a new place' tab to start searching!");
 					//add a button
 			} */
+		$('.show-menu-button').on('click', function(event) {
 
+	  		showHamburgerMenu(); 
+	  	});
+
+	 	/*
 
 	 	$('.show-menu-button').on('click', function(event) {
 	 			
@@ -385,6 +390,8 @@ function main() {
 	 		      }
 
 	 	 });
+
+	 	 */
 
 	 	$('.add-button').on('click', function(event) {
 	  		event.preventDefault();
@@ -460,6 +467,8 @@ function main() {
 		$('.visited-list').removeClass('tab-current');
 		$('.back-to-list').removeClass('tab-current');
 
+		$('.search-box').val('');
+
 		getAndDisplayLocationList();
 
 	  	$('.user-list-section').hide().hide().addClass('hide');
@@ -472,8 +481,10 @@ function main() {
 	  	});
 
 	  	$('.show-menu-button').on('click', function(event) {
+
+	  		showHamburgerMenu(); 
 	 			
-	 		
+	 		/*
 	 		if(!menuShowing) {
 
 	 			$('.back-to-list').fadeIn(300).removeClass('hide');
@@ -490,6 +501,7 @@ function main() {
 	 			menuShowing	 = false; 
 
 	 		      }
+	 		      */
 
 	 	 });
 
@@ -536,6 +548,85 @@ function main() {
 
 	}	
 
+
+	function showHamburgerMenu() {
+
+			if(!menuShowing) {
+
+				$('.hamburger-menu').html(`
+					<div class="back-to-listm">
+						<button class="back-buttonm blend-button">
+							<i class="fas fa-list-alt"></i> Bucket List
+						</button>
+					</div>
+				    <div class="visited-listm">
+				    	<button name="visited-button" class="visited-buttonm" value="Places You've Visited">
+				    		<i class="fas fa-map-pin"></i> Places You've Visited
+				    	</button>
+				    </div>
+				    <div class="add-button-tabm">
+				    	<button class="add-buttonm">
+				      		<i class="fas fa-search"></i> Find a New Place
+				      	</button>
+				    </div> 
+				    <div class="log-out-m">
+				    	<button class="logout-buttonm blend-button hide ">
+				     	<i class="fas fa-sign-out-alt"></i> Sign Out
+				      	</button>
+				    </div>`); 
+
+	 			$('.hamburger-menu').fadeIn(300).removeClass('hide');
+	 			//$('.add-button-tab').fadeIn(300).removeClass('hide');
+	 			//$('.visited-list').fadeIn(300).removeClass('hide');
+
+	 			menuShowing = true; 
+
+	 	$('.back-buttonm').on('click', function(event) {
+		  	event.preventDefault();
+		  	$('.user-list-section').fadeIn(300).removeClass('hide');
+		  	$('.search-results').html(" ");
+		  	$('.add-section').hide().addClass('hide');
+		  	$('.list-set').html("");
+		  	$('.back-buttonm').off('click');
+		  	getAndDisplayUserList();
+	    } );
+
+	    $('.visited-buttonm').on('click', function(event) {
+	  		event.preventDefault();
+	  		console.log('loading visited list');
+	  		$('.user-list-section').fadeIn(300).removeClass('hide');
+		  	$('.search-results').html(" ");
+		  	$('.add-section').hide().addClass('hide');
+		  	$('.list-set').html("");
+	  		$('.visited-buttonm').off('click');
+	  		//showUserList(data, true);
+	  		getAndDisplayUserListforVisited();
+	  	})
+
+	  	$('.add-buttonm').on('click', function(event) {
+	  		event.preventDefault();
+	  		console.log("add screen fired"); 
+
+	  		$('.add-buttonm').off('click'); 
+
+	  		showSearchPageView(); 
+
+
+	  	});
+
+
+
+	 		} else {
+
+	 			$('.hamburger-menu').hide().addClass('hide');
+	 			//$('.add-button-tab').hide().addClass('hide');
+	 			//$('.visited-list').hide().addClass('hide');
+
+	 			menuShowing	 = false; 
+
+	 		      }
+	}
+
 	//this function will eventually be an ajax call to query the database
 	function getLocations (searchTerm, callbackFunction) {
 
@@ -564,7 +655,7 @@ function main() {
 		//console.log("locations filterd: ", featuredResults2);
 
 		console.log("locations: ", featuredResults.length	);
-		$('.featured-places').html(" ");
+		$('.featured-places').html(" ").hide();
 
 		let locationsContent =' '; 
 
@@ -641,7 +732,7 @@ function main() {
 				locationsContent +=	`</div>`;
 		     
 
-			$('.featured-places').append (locationsContent);
+			$('.featured-places').append (locationsContent).fadeIn(300);
 
 			//do buttons here
 			$(`.add-feat-${i}`).on('click', function(event) {
@@ -1021,14 +1112,14 @@ function main() {
 		if($('.username').val() == '') {
 
 		console.log( "user test failed", $('.username').val() );
-			$('.error-text-pass').fadeIn(300).removeClass('hide'); 
+			$('.error-text-pass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 );
 				return;
 		 }
 
 		if($('.password').val() == ''){
 		 console.log( "pass test failed", $('.password').val() );
 		
-			$('.error-text-pass').fadeIn(300).removeClass('hide'); 
+			$('.error-text-pass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
 				return;
 		 }
 
@@ -1165,6 +1256,28 @@ function main() {
 
 	function createAccount() {
 		console.log('creating account');
+		$('.error-text-usepass').hide().addClass('hide');
+			if($('.new-username').val() == '') {
+
+		console.log( "user test failed", $('.new-username').val() );
+			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
+				return;
+		 }
+
+		if($('.new-password').val() == ''){
+		 console.log( "pass test failed", $('.new-password').val() );
+		
+			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
+				return;
+		 }
+
+		 if($('.first-name').val() == ''){
+		 console.log( "name test failed", $('.first-name').val() );
+		
+			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
+				return;
+		 }
+
 		
 		let data = {};
 
@@ -1246,8 +1359,9 @@ function main() {
 	  	$('.create-account-form').fadeIn(300);//removeClass('hide')
 	  	
 	  
-		$('.create-account-form').submit(function(event) {
+		$('.create-button').click(function(event) {
 	    	event.preventDefault();
+	    	console.log('create clicked');
 	    	createAccount();
 	  	});
 

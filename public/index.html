@@ -17,11 +17,24 @@
 </head>
   <body class="front-page-background">
     <header role="banner" class="blue-background title-box">
-      <div class="logOut-button smaller-text"><button class="logout-button blend-button hide ">Sign Out</button></div>
+      <div class="hamburger-menu-button-container dont-show-bigscreen">
+        <button class="show-menu-button"><i class="fas fa-bars fa-2x"></i></button>
+      </div>
+        <div class="logOut-button smaller-text">
+          <button class="logout-button blend-button hide ">Sign Out</button>
+        </div>
       <h1><i class="fas fa-map-signs"></i>  Travel Bucket!</h1>
     </header>
+
     <main role="main">
       <div class="main-container">
+        <div class="hamburger-menu hide">
+      
+      <div class="back-to-list"><button class="back-button blend-button"><i class="fas fa-list-alt"></i> Bucket List</button></div>
+      <div class="visited-list"><i class="fas fa-map-pin"></i> Places You've Visited</div>
+      <div class="add-button-tab"><button class="add-button"><i class="fas fa-search"></i> Find a New Place</button></div> 
+      <div class="back-to-list"><button class="logout-button blend-button hide "><i class="fas fa-sign-out-alt"></i> Sign Out</button></div>     
+    </div>
       <section class="welcome-page ">
         <div class="row">
         <div class="col-12">
@@ -51,7 +64,7 @@
             <div class= "login-input-group">
               <label class= "login-label" name="password input">
               <input type="password" name="password" class="password no-box-input" placeholder="Password"></label>
-              <div class="error-text-pass black-text shaker hide"><div class="complimentary-color-text inline-div"><i class="fas fa-lock"></i></div> Incorrect username or password, please try again.</div>
+              <div class="error-text-pass black-text hide"><div class="complimentary-color-text inline-div"><i class="fas fa-lock"></i></div> Incorrect username or password, please try again.</div>
             </div>
             <div class="center">
               <button type="submit" class="login-button button-95 white-background main-color-text">Login</button>
@@ -92,8 +105,8 @@
         <div class= "create-input-group"> 
         <input type="text" name="country" class="country  no-box-input" placeholder="Country">
         </div>
-        <div class="error-text-usepass complimentary-color hide">Oop! Make sure you have a username and password.</div>
-        <div class="error-text-usertaken complimentary-color hide">Oop! That user name is taken.</div>
+        <div class="error-text-usepass black-text hide"><div class="complimentary-color-text inline-div"><i class="fas fa-exclamation-circle"></i></div>Oop! Make sure you have a username,  password and first name.</div>
+        <div class="error-text-usertaken black-text hide"><div class="complimentary-color-text inline-div"><i class="fas fa-exclamation-circle"></i></div>Oop! That user name is taken.</div>
           <button type="submit" class="create-button complimentary-color button-95 white-text ">Let's Go!</button>
           <button class="back-to-login blend-button">Already have an account? <u>Login</u></button>
 
@@ -174,7 +187,7 @@
         <div class="col-12">
         <form class = "search-box-form">
           <div class="search-box-content">
-            <label for="search">Search to find your next destsination: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
+            <label for="search">Search to find your next destination: <input type="text" id="search" class="search-box" name="search" placeholder="Search for..."></label><div class="search-button-container"><button name="search-button" class="search-button button-35-b contrast-color" value="Search">Find it!</button></div> 
           </div>
           </form>
       </div>
