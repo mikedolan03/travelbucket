@@ -78,6 +78,10 @@ function main() {
 		});
 
 		$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List`); 
+		$('.hamburger-menu-button-container').removeClass('hide');
+		$('.hamburger-menu-button-container').html(' ');
+		$('.hamburger-menu-button-container').html('<button class="show-menu-button blend-button"><i class="fas fa-bars fa-2x"></i></button>');
+
 
 		$('.tab-show-menu').html('');
 		$('.tab-show-menu').html(`
@@ -138,7 +142,7 @@ function main() {
 
 		 	count++; 
 
-		 	console.log(userBucketList.places[i].visited);  
+		 	//console.log(userBucketList.places[i].visited);  
 
 		 	let backgroundColor = "";
 
@@ -151,7 +155,7 @@ function main() {
 
 
 		 	if(userBucketList.places[i].visited == "true") {
-		 		console.log("checked");
+		 		//console.log("checked");
 		 		toggle = "checked";
 		 	} else {
 		 		toggle = "";
@@ -175,7 +179,7 @@ function main() {
 		 		placeName = userBucketList.places[i].place.country; 
 		 	}
 
-		 	if(userBucketList.places[i].departDate == null) console.log("place " + i + " doesn have depart");
+		 	//if(userBucketList.places[i].departDate == null) console.log("place " + i + " doesn have depart");
 
 		 	if(typeof userBucketList.places[i].departDate != 'undefined' 
 		 	&& typeof userBucketList.places[i].departDate != 'null' && userBucketList.places[i].departDate != null) {
@@ -186,11 +190,11 @@ function main() {
 		 		let anotherDate = aDate.getUTCFullYear()+"-"+(aDate.getUTCMonth()+1) +"-" + aDate.getUTCDate(); 
 		 		aDate	= new Date( anotherDate);
 
-		 			console.log	("aDate	", aDate);
+		 			//console.log	("aDate	", aDate);
 
 		 		aDate = aDate.toString().substr(3,13);
 
-		 		console.log('departDate ', userBucketList.places[i].departDate);
+		 		//console.log('departDate ', userBucketList.places[i].departDate);
 		 		tripDate =  'Traveling there on '+ aDate;
 		 	} else {
 		 		tripDate = ""; 
@@ -270,7 +274,7 @@ function main() {
 
 		  	$('.list-set').append (userListContent);
 
-		  	console.log("visited? ",userBucketList.places[i].visited );
+		  	//console.log("visited? ",userBucketList.places[i].visited );
 
 		  	if(userBucketList.places[i].visited == "true") {
 		  		$(`.check-mark${i}`).fadeIn(300).removeClass('hide');
@@ -363,7 +367,8 @@ function main() {
 					//add a button
 			} */
 		$('.show-menu-button').on('click', function(event) {
-
+			event.preventDefault();
+			console.log('clicked drop menu');
 	  		showHamburgerMenu(); 
 	  	});
 
@@ -436,6 +441,10 @@ function main() {
 
 //----------------------------- ADD NEW PLACES FUNCTIONS
 	function showSearchPageView() {
+
+
+	$('.hamburger-menu-button-container').html(' ');
+		$('.hamburger-menu-button-container').html('<button class="show-menu-button blend-button"><i class="fas fa-bars fa-2x"></i></button>');
 
 		$('.tab-show-menu').html('');
 		$('.tab-show-menu').html(`
@@ -560,17 +569,17 @@ function main() {
 						</button>
 					</div>
 				    <div class="visited-listm">
-				    	<button name="visited-button" class="visited-buttonm" value="Places You've Visited">
+				    	<button name="visited-button" class="visited-buttonm blend-button" value="Places You've Visited">
 				    		<i class="fas fa-map-pin"></i> Places You've Visited
 				    	</button>
 				    </div>
 				    <div class="add-button-tabm">
-				    	<button class="add-buttonm">
+				    	<button class="add-buttonm blend-button">
 				      		<i class="fas fa-search"></i> Find a New Place
 				      	</button>
 				    </div> 
 				    <div class="log-out-m">
-				    	<button class="logout-buttonm blend-button hide ">
+				    	<button class="logout-buttonm blend-button">
 				     	<i class="fas fa-sign-out-alt"></i> Sign Out
 				      	</button>
 				    </div>`); 
@@ -579,7 +588,11 @@ function main() {
 	 			//$('.add-button-tab').fadeIn(300).removeClass('hide');
 	 			//$('.visited-list').fadeIn(300).removeClass('hide');
 
-	 			menuShowing = true; 
+	 			menuShowing = true;
+
+	 	$('.logout-buttonm').click(function() { 
+			location.reload(); 
+		}); 
 
 	 	$('.back-buttonm').on('click', function(event) {
 		  	event.preventDefault();
@@ -588,6 +601,11 @@ function main() {
 		  	$('.add-section').hide().addClass('hide');
 		  	$('.list-set').html("");
 		  	$('.back-buttonm').off('click');
+
+		  	$('.hamburger-menu').hide().addClass('hide');
+	 			
+
+	 			menuShowing	 = false; 
 		  	getAndDisplayUserList();
 	    } );
 
@@ -600,6 +618,11 @@ function main() {
 		  	$('.list-set').html("");
 	  		$('.visited-buttonm').off('click');
 	  		//showUserList(data, true);
+
+	  		$('.hamburger-menu').hide().addClass('hide');
+	 			
+
+	 			menuShowing	 = false; 
 	  		getAndDisplayUserListforVisited();
 	  	})
 
@@ -608,6 +631,11 @@ function main() {
 	  		console.log("add screen fired"); 
 
 	  		$('.add-buttonm').off('click'); 
+
+	  		$('.hamburger-menu').hide().addClass('hide');
+	 			
+
+	 			menuShowing	 = false; 
 
 	  		showSearchPageView(); 
 
@@ -619,8 +647,7 @@ function main() {
 	 		} else {
 
 	 			$('.hamburger-menu').hide().addClass('hide');
-	 			//$('.add-button-tab').hide().addClass('hide');
-	 			//$('.visited-list').hide().addClass('hide');
+	 			
 
 	 			menuShowing	 = false; 
 
@@ -738,7 +765,7 @@ function main() {
 			$(`.add-feat-${i}`).on('click', function(event) {
 		  		console.log('add featured button clicked', i);
 		  		event.preventDefault();
-		  		$(this).off(event);
+		  		//$(this).off(event);
 
 		  		planTripView(i);
 
@@ -777,7 +804,7 @@ function main() {
 		  		$('.add-plan-button-cont').html(`<button type="submit" 
 			class="adding-button blue-background button-95 white-text">Add to list</button>`);
 
-		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window">X</button></div>');
+		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window button-35-b complimentary-color">X</button></div>');
 
 
 		  		if (featuredResults[i].city) {
@@ -844,7 +871,7 @@ function main() {
 
 		  		let placeAddedName = userBucketList.places[i].place.country;
 
-		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window">X</button></div>');
+		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window button-35-b complimentary-color">X</button></div>');
 
 
 		  		if (userBucketList.places[i].city) {
@@ -932,7 +959,7 @@ function main() {
 			headerText	= userBucketList.places[placeInd].place.city;
 		}
 		headerText	+= " " + userBucketList.places[placeInd].place.country; 
-		$('.rp-class-button').html('<div class="text-align-right"><button class="r-close-window">X</button></div>');
+		$('.rp-class-button').html('<div class="text-align-right"><button class="r-close-window button-35-b complimentary-color">X</button></div>');
 		$('.review-options-header').html(`How did you like ${headerText}?`);
 
 		$('.rating').on('click', function(event) {

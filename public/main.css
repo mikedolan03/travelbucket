@@ -15,7 +15,9 @@ body {
 }
 
 .main-container {
-  margin-top: 5px;
+  margin-left: auto; 
+  margin-right: auto;
+  width: 90%;
 }
 
 .front-page-background {
@@ -267,9 +269,10 @@ body {
 }
 
 .list-background {
-  background-color: #93e1ff;
-  width: 100%;
-  border-radius: 10px;
+    background-color: #93e1ff;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .date-label {
@@ -372,13 +375,15 @@ legend {
     text-align: center;
     color: white;
     font-weight: 700;
-    padding: 5px;
+    padding: 0px 5px;
     outline:  none; 
     border-style:   none;
     border-radius:  5px;
     margin-left: 5px;
     margin-right: 5px;
     width: 100%;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .button-trash {
@@ -501,13 +506,13 @@ padding: 5px;
     padding: 20px;
     border: 1px solid #888;
     border-radius: 20px;
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 268px;
  }
 
  .modal-text {
   padding: 5px;
-  margin-top: 10px; 
+  margin-top: 30px; 
  }
 
  .modal-button {
@@ -632,6 +637,11 @@ margin-top:   5px;
 
 @media only screen and (min-width: 640px) {
 
+.list-background {
+   
+}
+
+
 .search-button-container {
   margin-top:   10px;
   display:  inline-block; 
@@ -669,8 +679,9 @@ margin-top:   5px;
 }
 
 .main-container {
-     margin-left: 5%; 
-    margin-right: 5%;
+     margin-left: auto; 
+    margin-right: auto;
+    width: 80%;
    }
 
 .dont-show-bigscreen {
