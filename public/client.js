@@ -9,53 +9,19 @@ function main() {
 	let menuShowing = false;
 	let onlyVisits	= false; 
 
-	
-	//use a promise here
-	//handle the failure here before success
-	//write a wrapper called get data from api - shows modal that says loading then
-	//hides it once loaded
 
-	//this function will eventually be an ajax call to query the database
 	function getUserList (callbackFunction) {
 
 		 getAPIData( callType='GET', data={}, myToken, myUrl = '/api/bucketlist', callbackFunction);
 
-		//setTimeout(function() {
-		//	callbackFunction(USER_LIST)
-		//}, 1);
-
 	}
 
-	function wrapperExample (requestObj) {
+	//USER VIEWS - Bucket List Places to Go, Bucket List Visited, Search Page
 
-		$('.loading-modal').fadeIn(300).removeClass('hide');
-	console.log("loading");
-
-		return $.ajax( requestObj )
-	  	  	.always(function() {
-	    	$('.loading-modal').hide().addClass('hide');
-	    	console.log("done loading");
-	  		});
-
-
-		/*promise = new promise ((resolve, reject) => {
-			setTimeout(function() {
-			resolve(USER_LIST);
-		}, 1);
-
-			promise.finally( function() {  
-				$('.loading-modal').hide().addClass('hide');
-			});
-
-		} );  */
-
-		
-
-	}
-
+	//this is the main Bucket List view
+	//it can show the places a user has selected to go someday
+	//or places they've already checked off.
 	function showUserList(data){
-
-		//let onlyVisits = true;
 
 		console.log("menu status", menuShowing);
 
@@ -121,31 +87,6 @@ function main() {
 		}
 
 
-		/*$('.add-form').html('');
-		$('.add-form').html(`
-			<input type="button" name="add-button" 
-			class="add-button button-35-b blue-background center" 
-			value="Add new location to list">`);
-			*/
-
-		/*   --could we add users ratings to the visited page? 
-
-		find the review in the places list
-
-
-				featuredResults = featuredResults.filter(function(placeF) {
-			console.log("comparing f: ",placeF);
-			return !userBucketList.places.some(function(placeU) {
-				
-				console.log("comparing u: ", placeU);
-	
-
-
-				return	placeF._id === placeU.place._id;
-			});
-		});	
-
-		*/	
 
 		let count = 0;
 
@@ -166,8 +107,6 @@ function main() {
 
 		 	count++; 
 
-		 	//console.log(userBucketList.places[i].visited);  
-
 		 	let backgroundColor = "";
 
 		 	if(count%2) {
@@ -179,7 +118,6 @@ function main() {
 
 
 		 	if(userBucketList.places[i].visited == "true") {
-		 		//console.log("checked");
 		 		toggle = "checked";
 		 	} else {
 		 		toggle = "";
@@ -189,7 +127,6 @@ function main() {
 		 	let tripDate = ""; 
 		 	let returningDate	= "";
 		 	let notes = "";
-		 	//console.log("city value: ", userBucketList.places[i].place.city ); 
 
 		 	if(typeof userBucketList.places[i].place.city != 'undefined') {
 
@@ -203,7 +140,6 @@ function main() {
 		 		placeName = userBucketList.places[i].place.country; 
 		 	}
 
-		 	//if(userBucketList.places[i].departDate == null) console.log("place " + i + " doesn have depart");
 
 		 	if(typeof userBucketList.places[i].departDate != 'undefined' 
 		 	&& typeof userBucketList.places[i].departDate != 'null' && userBucketList.places[i].departDate != null) {
@@ -214,11 +150,9 @@ function main() {
 		 		let anotherDate = aDate.getUTCFullYear()+"-"+(aDate.getUTCMonth()+1) +"-" + aDate.getUTCDate(); 
 		 		aDate	= new Date( anotherDate);
 
-		 			//console.log	("aDate	", aDate);
 
 		 		aDate = aDate.toString().substr(3,13);
 
-		 		//console.log('departDate ', userBucketList.places[i].departDate);
 		 		
 		 		if(onlyVisits) {
 		 				tripDate =  '<strong>Traveled there on</strong> '+ aDate;
@@ -231,11 +165,12 @@ function main() {
 		 		tripDate = ""; 
 		 	}
 
+		 	//Checking to see if the user has added a plan and adjusting messages according;y
+
 		 	if(typeof userBucketList.places[i].returnDate != 'undefined' 
 		 	&& typeof userBucketList.places[i].returnDate != 'null' 
 		 	&& userBucketList.places[i].returnDate != null) {
 		 		returningDate = userBucketList.places[i].returnDate;
-		 		//console.log('departDate ', userBucketList.places[i].returnDate);
 		 		let raDate = new Date( returningDate.toString() );
 		 		let ranotherDate = raDate.getUTCFullYear()+"-"+(raDate.getUTCMonth()+1) +"-" + raDate.getUTCDate(); 
 		 		raDate	= new Date( ranotherDate);
@@ -257,7 +192,6 @@ function main() {
 		 	if(typeof userBucketList.places[i].planNotes != 'undefined' 
 		 	&& typeof userBucketList.places[i].planNotes != 'null' && userBucketList.places[i].planNotes != '') {
 		 		notes = userBucketList.places[i].planNotes;
-		 		//console.log('departDate ', userBucketList.places[i].planNotes);
 		 		notes =  '<strong>Things to see:</strong> '+ notes;
 		 	} else {
 		 		notes = ""; 
@@ -303,6 +237,9 @@ function main() {
 	
 		 	}	
 
+		 	//Since we reuse this code for unvisited and visited, this code checks for the user's reviews
+		 	//if we are only showing the visited places
+
 		 	if(onlyVisits) {
 		 		let reviewObj = $.grep(userBucketList.places[i].place.reviews, function(robj){return robj.userId === userBucketList.user._id;})[0];
 		 		if(!reviewObj) reviewObj = $.grep(userBucketList.places[i].place.reviews, function(robj){return robj.user === userBucketList.user._id;})[0];
@@ -341,12 +278,13 @@ function main() {
 
 		  	$('.list-set').append (userListContent);
 
-		  	//console.log("visited? ",userBucketList.places[i].visited );
 
 		  	if(userBucketList.places[i].visited == "true") {
 		  		$(`.check-mark${i}`).removeClass('hide');
 		  		$(`.uncheck-mark${i}`).addClass('hide');
 		  	} 
+
+		  	//INPUT EVENTS for buttons shown on this page
 
 		  	$(`.checkbox-btn-${i}`).click( function(event) {
 		  		event.preventDefault();
@@ -374,9 +312,7 @@ function main() {
 
 			 let placeIndex = parseInt( event.target.closest('button').getAttribute('placeIndex'));
 				
-
-			
-				console.log("place ind on client for delete: ", placeIndex);
+		
 				
 				showModal(`Are you sure you want to delete ${placeName} from your list?`, 'Yes', 'No', 
 					function() {
@@ -393,9 +329,6 @@ function main() {
 					, hideModal);
 
 
-				//deletePlace(placeIndex);
-
-				//getAndDisplayUserList();
 			});
 
 
@@ -411,41 +344,14 @@ function main() {
 					$('.list-set').append(`<button class="button-35-b complimentary-color black-text add-button" 
 					>Find new places!</button>`);
 			} 
-	 		/*if(userBucketList.places.length <=0) {
-					$('.list-set').append ("Time to build a bucket list! Click 'Find a new place' tab to start searching!");
-					//add a button
-			} */
+	 		
 		$('.show-menu-button').on('click', function(event) {
 			event.preventDefault();
 			console.log('clicked drop menu');
 	  		showHamburgerMenu(); 
 	  	});
 
-	 	/*
-
-	 	$('.show-menu-button').on('click', function(event) {
-	 			
-	 		
-	 		if(!menuShowing) {
-
-	 			$('.back-to-list').fadeIn(300).removeClass('hide');
-	 			$('.add-button-tab').fadeIn(300).removeClass('hide');
-	 			$('.visited-list').fadeIn(300).removeClass('hide');
-
-	 			menuShowing = true; 
-	 		} else {
-
-	 			$('.back-to-list').hide().addClass('hide');
-	 			$('.add-button-tab').hide().addClass('hide');
-	 			$('.visited-list').hide().addClass('hide');
-
-	 			menuShowing	 = false; 
-
-	 		      }
-
-	 	 });
-
-	 	 */
+	 	
 
 	 	$('.add-button').on('click', function(event) {
 	  		event.preventDefault();
@@ -478,17 +384,10 @@ function main() {
 		  	getAndDisplayUserList();
 	    } );
 
-
-
-
-	 
-
-	 //$('body').append ('</ul>');
-
-
 	}
 
-//----------------------------- ADD NEW PLACES FUNCTIONS
+//this view is the page a user can search for and find new places to visit
+
 	function showSearchPageView() {
 
 
@@ -541,25 +440,6 @@ function main() {
 	  	$('.show-menu-button').on('click', function(event) {
 
 	  		showHamburgerMenu(); 
-	 			
-	 		/*
-	 		if(!menuShowing) {
-
-	 			$('.back-to-list').fadeIn(300).removeClass('hide');
-	 			$('.add-button-tab').fadeIn(300).removeClass('hide');
-	 			$('.visited-list').fadeIn(300).removeClass('hide');
-
-	 			menuShowing = true; 
-	 		} else {
-
-	 			$('.back-to-list').hide().addClass('hide');
-	 			$('.add-button-tab').hide().addClass('hide');
-	 			$('.visited-list').hide().addClass('hide');
-
-	 			menuShowing	 = false; 
-
-	 		      }
-	 		      */
 
 	 	 });
 
@@ -571,7 +451,6 @@ function main() {
 
 	  		showSearchPageView(); 
 
-
 	  	});
 
 	  	$('.visited-button').on('click', function(event) {
@@ -582,11 +461,8 @@ function main() {
 		  	$('.add-section').hide().addClass('hide');
 		  	$('.list-set').html("");
 	  		$('.visited-button').off('click');
-	  		//showUserList(data, true);
 	  		getAndDisplayUserListforVisited();
 	  	})
-
-
 
 	  	//-----this back button will reload the user List View
 	  	$('.back-button').on('click', function(event) {
@@ -599,10 +475,7 @@ function main() {
 		  	getAndDisplayUserList();
 	    } );
 
-
 	  	//=== featured 
-
-
 
 	}	
 
@@ -814,13 +687,11 @@ function main() {
 			$(`.add-feat-${i}`).on('click', function(event) {
 		  		console.log('add featured button clicked', i);
 		  		event.preventDefault();
-		  		//$(this).off(event);
 
 		  		planTripView(i);
 
 		  	});
 		
-			//$('.featured-places').append (`<input type="button" class="add-feature-button" placeIndex="${i}" name="${data[i].longName}" locationId="${data[i]._id}" city="${data[i].city}" country="${data[i].country}" value="Add to list"></li>`);
 			
 		}
 
@@ -829,7 +700,7 @@ function main() {
 		     	console.log	('no content');
 		     	locationsContent = `<div>
 		    						<div class="row">
-        							<div class="col-12">No places were found. Try another search!
+        							<div class="col-12">No places were found. Try another search! Hint: Type a country name or a big city.
         							</div>
         							</div>`;
 		     } else {
@@ -838,7 +709,7 @@ function main() {
 
 		
 		
-		$('.featured-places').append (locationsContent);
+		$('.featured-places').append (locationsContent).fadeIn(300);
 
 
 
