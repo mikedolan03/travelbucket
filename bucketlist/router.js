@@ -197,7 +197,7 @@ router.delete('/', (req, res) => {
     if(req.body.placeIndex == null) {
             console.log("------------------error in req", req.body.placeIndex);
             res.status(400).json({message: 'Missing place to remove'});
-        }
+        } else {
 
         console.log("req body", req.body);
 
@@ -225,6 +225,6 @@ router.delete('/', (req, res) => {
         });
 
 
-
+    }
  } );
 module.exports = {router};

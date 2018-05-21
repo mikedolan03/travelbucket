@@ -69,41 +69,41 @@ router.put('/', (req, res) => {
 
     if(!req.body.locId) {
         res.status(400).json({message: 'Missing location id'});
-            } else if(!req.body.userId) {
-                res.status(400).json({message: 'Missing userid'});
-                } else if(!req.body.content) {
-                                    res.status(400).json({message: 'Missing content'});
-                                } else if(!req.body.rating) {
-                                         res.status(400).json({message: 'Missing rating'});
-                                        }
+    } else if(!req.body.userId) {
+        res.status(400).json({message: 'Missing userid'});
+        } else if(!req.body.content) {
+            res.status(400).json({message: 'Missing content'});
+            } else if(!req.body.rating) {
+                res.status(400).json({message: 'Missing rating'});
+                } else { 
     
     
 
-    let newReview = {
-    	 user: req.body.userId,
-		 username: req.body.userName,
-		 content: req.body.content,
-		 starRating: req.body.rating	
-    }
+        let newReview = {
+        	 user: req.body.userId,
+    		 username: req.body.userName,
+    		 content: req.body.content,
+    		 starRating: req.body.rating	
+        }
 
 
-   // console.log("adding on server side ", newPlaceToAdd);
+       // console.log("adding on server side ", newPlaceToAdd);
 
-    //console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
+        //console.log("locating list: ", BucketList.findOne({user: req.user.id}) );
 
-    //mongoose - look for update only if.. 
-    Place
-        .update(
-    	{_id: req.body.locId},
-    	{$push: {reviews: newReview} },
-    	function(err, updatedPlace) {
-    		if(err) {
-                console.log("error ", err);
-            }
-    		res.send(updatedPlace);
-    	}
-    );
-  
+        //mongoose - look for update only if.. 
+        Place
+            .update(
+        	{_id: req.body.locId},
+        	{$push: {reviews: newReview} },
+        	function(err, updatedPlace) {
+        		if(err) {
+                    console.log("error ", err);
+                }
+        		res.send(updatedPlace);
+        	}
+        );
+  }
 });
 
 module.exports = {router};

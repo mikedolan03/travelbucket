@@ -939,6 +939,13 @@ function main() {
 
 				if( $('.trip-review').val() == '') {
 					console.log("no review was written"); 
+					$('.review-error').removeClass('hide');
+					return;
+				}
+
+				if( ratingCount <= 0) {
+					console.log("no stars was selected"); 
+					$('.review-error').removeClass('hide');
 					return;
 				}
 
