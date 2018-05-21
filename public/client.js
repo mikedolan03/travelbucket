@@ -878,7 +878,7 @@ function main() {
 		let ratingCount	= 0;
 
 		if (userBucketList.places[placeInd].departDate) {
-		  			console.log('setting departDate');
+		  			//console.log('setting departDate');
 
 		  			$('.departure-date2').val(userBucketList.places[placeInd].departDate.toString().substr(0,10)); 
 		  		} else {
@@ -913,9 +913,9 @@ function main() {
 		$('.review-options-header').html(`How did you like ${headerText}?`);
 
 		$('.rating').on('click', function(event) {
-			console.log('rating clicked', headerText);
+			//console.log('rating clicked', headerText);
 			ratingCount = parseInt( event.target.closest('span').getAttribute('data'));
-			console.log("stars ", ratingCount);
+			//console.log("stars ", ratingCount);
 
 			$(`.stars`).html('<i class="far fa-star"></i>');
 
@@ -941,20 +941,20 @@ function main() {
 			//$('.checkit-button').off('click'); 
 
 				if( $('.trip-review').val() == '') {
-					console.log("no review was written"); 
+					//console.log("no review was written"); 
 					$('.review-error').removeClass('hide');
 					return;
 				}
 
 				if( ratingCount <= 0) {
-					console.log("no stars was selected"); 
+					//console.log("no stars was selected"); 
 					$('.review-error').removeClass('hide');
 					return;
 				}
 
 			$(this).off(event);
 
-			console.log('depart date before send:', $('.departure-date').val() );
+			//console.log('depart date before send:', $('.departure-date').val() );
 
 			let location = {
 			  		bucketId: userBucketList._id,
@@ -976,7 +976,7 @@ function main() {
 			};
 
 			addReview(newReviewdata); 
-			console.log('checking off', placeInd);
+			//console.log('checking off', placeInd);
 			checkOffPlace(placeInd);
 			$('.review-place-options-pop-up').hide().addClass('hide');
 
@@ -995,9 +995,9 @@ function main() {
 	function getAndDisplayUserListPromiseExample() {
 
 		getUserList(showUserList)
-		.fail(function(error) { console.log("error", error); } )
+		.fail(function(error) { } )
 		.done (function(data) {
-		console.log("heres the userlist", data); 
+		//console.log("heres the userlist", data); 
 		})
 	}
 
@@ -1039,7 +1039,7 @@ function main() {
 
 
 	function userSearch(searchTerm) {
-		console.log("search for ", searchTerm);
+		//console.log("search for ", searchTerm);
 		$('.search-results').html(" ");
 
 		//let searchResultsContent = `<div class="lightgrey-box-background results-box"><ul>`;
@@ -1065,10 +1065,10 @@ function main() {
 
 		data = JSON.stringify(data);
 
-		console.log('data to send:', data);
+		//console.log('data to send:', data);
 
 		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/planTrip', function () {
-		 	console.log("sent plan update to server ");
+		 	//console.log("sent plan update to server ");
 		 });	
 	
 	}
@@ -1086,10 +1086,10 @@ function main() {
 			};
 		data = JSON.stringify(data);
 
-		console.log('data to send:', data);
+		//console.log('data to send:', data);
 
 		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/', function () {
-		 	console.log("sent update to server ");
+		 	//console.log("sent update to server ");
 		 });
 	}
 
@@ -1099,10 +1099,10 @@ function main() {
 
 		reviewData = JSON.stringify(reviewData);
 
-		console.log('review data to send:', reviewData);
+		//console.log('review data to send:', reviewData);
 
 		getAPIData( callType='PUT', reviewData, myToken, myUrl = '/api/place/', function () {
-		 	console.log("sent review to server ");
+		 	//console.log("sent review to server ");
 		 });
 	}
 
@@ -1115,13 +1115,13 @@ function main() {
 		
 		if($('.username').val() == '') {
 
-		console.log( "user test failed", $('.username').val() );
+		//console.log( "user test failed", $('.username').val() );
 			$('.error-text-pass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 );
 				return;
 		 }
 
 		if($('.password').val() == ''){
-		 console.log( "pass test failed", $('.password').val() );
+		 //console.log( "pass test failed", $('.password').val() );
 		
 			$('.error-text-pass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
 				return;
@@ -1141,8 +1141,8 @@ function main() {
 		 	contentType: 'application/json',
 		 	url: '/api/auth/login',						
 		 	success: function(data) {
-				   console.log('success in ajax');
-				   console.log(JSON.stringify(data));
+				   //console.log('success in ajax');
+				   //console.log(JSON.stringify(data));
 				   $('.user-status').text('logging in');
 				   myToken = data.authToken;
 
@@ -1184,14 +1184,14 @@ function main() {
 					 type: callType,
 					 data: data,//JSON.stringify(data),
 					 beforeSend: function (xhr){ 
-					 	console.log(data.authToken);
+					 	//console.log(data.authToken);
 		        	 xhr.setRequestHeader('Authorization', ('BEARER '+ userToken)); 
 		    		 },
 					 contentType: 'application/json',
 					 url: myUrl
 					})					
 					 .done( function(data) {
-							   console.log('success in getting API');
+							   //console.log('success in getting API');
 							   callback(data);
 					    	  }) //finally? hide modal 
 					 .always( function() {
@@ -1219,7 +1219,7 @@ function main() {
 
 
 		getAPIData( callType='DELETE', data, myToken, myUrl = '/api/bucketlist/', function () {
-			console.log("sent delete to server ");
+			//console.log("sent delete to server ");
 			getAndDisplayUserList();
 			});
 	}
@@ -1233,7 +1233,7 @@ function main() {
 
  
 		getAPIData( callType='PUT', data, myToken, myUrl = '/api/bucketlist/checkoff', function () {
-			console.log("sent check off update to server ");
+			//console.log("sent check off update to server ");
 			getAndDisplayUserListforVisited();
 			});
 
@@ -1246,24 +1246,24 @@ function main() {
 	}
 
 	function createAccount() {
-		console.log('creating account');
+		//console.log('creating account');
 		$('.error-text-usepass').hide().addClass('hide');
 			if($('.new-username').val() == '') {
 
-		console.log( "user test failed", $('.new-username').val() );
+		//console.log( "user test failed", $('.new-username').val() );
 			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
 				return;
 		 }
 
 		if($('.new-password').val() == ''){
-		 console.log( "pass test failed", $('.new-password').val() );
+		 //console.log( "pass test failed", $('.new-password').val() );
 		
 			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
 				return;
 		 }
 
 		 if($('.first-name').val() == ''){
-		 console.log( "name test failed", $('.first-name').val() );
+		 //console.log( "name test failed", $('.first-name').val() );
 		
 			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
 				return;
@@ -1290,8 +1290,8 @@ function main() {
 		 contentType: 'application/json',
 		 url: '/api/users',						
 		 success: 	function(data) {
-					   console.log('success in ajax');
-					   console.log(JSON.stringify(data));
+					   //console.log('success in ajax');
+					   //console.log(JSON.stringify(data));
 					   $('.user-status').text('done creating an account- try logging in!');
 					   let userdata = {};
 
@@ -1305,8 +1305,8 @@ function main() {
 						 	contentType: 'application/json',
 						 	url: '/api/auth/login',						
 						 	success: function(data) {
-									   console.log('success in ajax');
-									   console.log(JSON.stringify(data));
+									   //console.log('success in ajax');
+									   //console.log(JSON.stringify(data));
 									   $('.user-status').text('logging in');
 									   myToken = data.authToken;
 
@@ -1356,7 +1356,7 @@ function main() {
 	  
 		$('.create-button').click(function(event) {
 	    	event.preventDefault();
-	    	console.log('create clicked');
+	    	//console.log('create clicked');
 	    	createAccount();
 	  	});
 
@@ -1411,7 +1411,7 @@ function main() {
 
 			$('.modal-ok-button').on('click', function(event) {
 			  	event.preventDefault();
-			  	console.log	('ok button clicked');
+			  	//console.log	('ok button clicked');
 			  	$(this).off(event);
 			  	affirmCallback();
 	    	} );
@@ -1467,128 +1467,3 @@ $(function() {
 	main(); 
 });
 	
-
-	//getAndDisplayUserList();
-	  
-
-//---this button loads the Add View
-/*
-	  $('.add-button').click(function(event) {
-	  	event.preventDefault();
-
-	  	showSearchPageView();
-
-	  	
-
-	  	$('.featured-places').on('click', function(event) {
-	  		console.log('add featured button clicked');
-	  		event.preventDefault();
-	  		$('.featured-places').off('click'); 
-
-	  		//show modal planning option window
-
-			let fLindex = event.target.getAttribute('placeIndex');
-			
-
-	  		//event handle option windows add submit button
-	  		$('.adding-place-options-pop-up').fadeIn(300).removeClass('hide');
-
-	  		let placeAddedName = featuredResults[fLindex].country;
-
-	  		if (featuredResults[fLindex].city) {
-	  			placeAddedName = featuredResults[fLindex].city+", "+ placeAddedName;
-	  		}
-	  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
-
-	  		$('.adding-button').click(function(event) {
-		  		event.preventDefault();
-
-		  		let depDate = $('.departure-date').val();
-		  		let retDate = $('.return-date').val();
-		  		let planNotes = $('.plan-notes').val();
-
-		  		let location = { 
-	  			city: featuredResults[fLindex].city,
-	  			country:featuredResults[fLindex].country,
-	  			Id:featuredResults[fLindex]._id,
-	  			departDate: depDate,
-	  			returnDate: retDate,
-	  			planNotes: planNotes
-	  			}
-
-				addLocationToList(location);
-
-				//reset the listed places ------still need to check suggestion against user list
-				$('.featured-places').html(" ");
-		  		getAndDisplayLocationList();
-		  		$('.adding-place-options-pop-up').hide().addClass('hide');
-		  	});
-
-	  		
-
-	  	});
-
-	  	$('.search-results').on('click', function(event) {
-	  		console.log('add button clicked');
-	  		event.preventDefault();
-	  		$('.search-results').off('click'); 
-	  		//let locAddedId = event.target.getAttribute('data');
-	  		//console.log("added ",locAddedId);
-
-	  		let fLindex = event.target.getAttribute('placeIndex');
-			
-
-	  		//event handle option windows add submit button
-	  		$('.adding-place-options-pop-up').fadeIn(300).removeClass('hide');
-
-	  		let placeAddedName = locationSearchResults[fLindex].country;
-
-	  		if (locationSearchResults[fLindex].city) {
-	  			placeAddedName = locationSearchResults[fLindex].city+", "+ placeAddedName;
-	  		}
-	  		$('.place-options-header').html(`Let's plan your trip to ${placeAddedName}!`);
-
-	  		$('.adding-button').click(function(event) {
-		  		event.preventDefault();
-
-		  		let depDate = $('.departure-date').val();
-		  		let retDate = $('.return-date').val();
-		  		let planNotes = $('.plan-notes').val();
-
-		  		let location = { 
-	  			city: locationSearchResults[fLindex].city,
-	  			country:locationSearchResults[fLindex].country,
-	  			Id:locationSearchResults[fLindex]._id,
-	  			departDate: depDate,
-	  			returnDate: retDate,
-	  			planNotes: planNotes
-	  			}
-
-				addLocationToList(location);
-
-				//reset the listed places ------still need to check suggestion against user list
-				$('.search-results').html(" ");
-	  			userSearch($('.search-box').val());
-		  		$('.adding-place-options-pop-up').hide().addClass('hide');
-		  	});
-
-	  	});
-
-//-----this back button will reload the user List View
-	  	$('.back-button').click(function(event) {
-	  	event.preventDefault();
-	  	$('.user-list-section').fadeIn(300).removeClass('hide');
-	  	$('.search-results').html(" ");
-	  	$('.add-section').hide().addClass('hide');
-	  	$('.list-set').html("");
-	  	getAndDisplayUserList();
-	    } );
-
-
-
-
-	  });
-
-
-});
-*/
