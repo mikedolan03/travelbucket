@@ -871,6 +871,9 @@ function main() {
 
 		$('.rating').off('click');
 
+		$('.review-error').addClass('hide');
+
+
 		let starId = "";
 		let ratingCount	= 0;
 
