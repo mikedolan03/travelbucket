@@ -28,7 +28,7 @@
 
     <main role="main">
       <div class="main-container">
-        <div class="hamburger-menu hide">
+        <div class="hamburger-menu hide" aria-live="assertive">
       
       <div class="back-to-list"><button class="back-button blend-button"><i class="fas fa-list-alt"></i> Bucket List</button></div>
       <div class="visited-list"><i class="fas fa-map-pin"></i> Places You've Visited</div>
@@ -83,7 +83,7 @@
 
     <section>
         
-      <form class="create-account-form hide">
+      <form class="create-account-form hide" aria-live="assertive" >
         <div class="login-form-container blue-background ">
         <div class="center-text top-icon complimentary-color-text dont-show-mobile"><i class="fas fa-id-card fa-4x"></i></div>  
         <div class="center-text top-icon complimentary-color-text dont-show-bigscreen"><i class="fas fa-id-card fa-2x"></i></div>  
@@ -143,7 +143,7 @@
           <div class="col-12">
             <div class="bucketlist-form-container">
               <form name="bucketlist-form" class="bucketlist-form">
-                <fieldset class="list-set">
+                <fieldset class="list-set" aria-live="assertive" >
               
                 </fieldset>
               </form>
@@ -153,7 +153,7 @@
       </div>
       </section>
 
-      <section class="add-section hide">
+      <section class="add-section hide" aria-live="assertive" >
       <div class="row row30">
         <div class="col-12">
         <header>
@@ -201,13 +201,13 @@
       </div>
       
       </div>
-        <div class="featured-places">
+        <div class="featured-places" aria-live="assertive" >
 
         </div>
   </div>
       </section>
 
-      <section class="adding-place-options-pop-up hide">
+      <section class="adding-place-options-pop-up hide" aria-live="assertive" >
         <div class="modal">
           <div class="pop-up-container">
             <div class="p-close-button"></div>
@@ -230,7 +230,7 @@
           </div>
       </div>
       </section>
-       <section class="review-place-options-pop-up hide">
+       <section class="review-place-options-pop-up hide" aria-live="assertive" >
         <div class="modal">
           <div class="pop-up-container">
             <div class="rp-class-button"></div>
@@ -258,7 +258,7 @@
           </div>
       </div>
       </section>
-      <section class="modal-general-section hide">
+      <section class="modal-general-section hide" aria-live="assertive" >
         <div class="modal">
           <div class="modal-content gen-modal-content">
             <h3 class="modal-text">Are you Sure?</h3>
@@ -270,29 +270,6 @@
           <div class="modal-content load-modal-content">
             <h3 class="modal-text">Are you Sure?</h3>
           </div>
-        </div>
-      </section>
-
-      <section class="modal-checkedoff-section hide">
-        <div class="modal center">
-          <div class="modal-content center">
-            <form>
-              <h3> Great job! You checked a place off your list!</h3>
-              <input type="button" name="check-modal-ok" id="check-modal-ok" class="check-modal-ok big-button important-button" value="Ok">
-            </form>  
-          </div>
-        </div>
-
-      </section>
-
-      <section class="modal-added-section hide">
-        <div class="modal">
-          <div class="modal-content">
-            <form>
-            Location added to your list! <br>
-            <input type="button" name="add-modal-ok" id="add-modal-ok" class="add-modal-ok blue-background" value="Ok">
-            </form> 
-          </div> 
         </div>
       </section>
 
