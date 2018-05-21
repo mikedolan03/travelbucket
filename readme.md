@@ -2,13 +2,11 @@ Travel Bucket
 ====================
 It's a big world out there. What avid globetrotter doesn't have a bucket list of places to go. Travel Bucket is a bucket list app for travel enthusiasts that allows travelers to search for new places to visit, list and plan trips, as well as check off and review places they visit on their bucket list. 
 
-[Click here to try out the app: ](https://tranquil-sea-63131.herokuapp.com/)
+[Click here to try out the app ](https://tranquil-sea-63131.herokuapp.com/)
 
--Create your own user 
-
-- or use 
-Username: testuser 
-Password: test
+Create your own user with the Join button or use:  
+- Username: testuser 
+- Password: test
 
 Technology
 ==========
