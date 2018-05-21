@@ -15,7 +15,9 @@ body {
 }
 
 .main-container {
-  margin-top: 10px;
+  margin-left: auto; 
+  margin-right: auto;
+  width: 90%;
 }
 
 .front-page-background {
@@ -82,23 +84,22 @@ body {
 
 .search-box-form {
     padding-top: 10px;
-    display: table;
     vertical-align: middle;
 }
 
 .search-box {
-  width:  300px; 
+  width:  200px; 
 }
 
 .search-box-content {
-  display: table-cell;
+  display: block;
   vertical-align: middle;
 }
 
 .search-button-container {
   margin-top:   10px;
   display:  inline-block; 
-  float: right;
+  margin-bottom: 8px;
 }
 
 .top-message {
@@ -216,9 +217,26 @@ body {
   padding-top: 10px;
 }
 
+.hamburger-menu-button-container {
+  float:  right;
+  margin-right:   10px;
+  margin-top:   -5px;
+}
+
+.hamburger-menu {
+  position: absolute;
+    top: 60px;
+    width: 290px;
+    left: 33.33%;
+    margin-left: -92px;
+    background-color: #41e4bc;
+    padding-left: 10px;
+    border-style: solid;
+    border-color: lightslategrey;
+}
 .big-headers {
 	padding-left: 8px;
-	padding-top: 10px;
+/*	padding-top: 10px; */
 	text-align: center;
 }
 
@@ -242,19 +260,18 @@ body {
   padding-right: 10px;
   margin-right: 5px;
   margin-left: 5px;
-  z-index: 1;
   width:  100%;
 }
 
 .tab-current {
  background-color: #ff8f64;
- z-index: 1;
 }
 
 .list-background {
-  background-color: #93e1ff;
-  width: 100%;
-  border-radius: 10px;
+    background-color: #93e1ff;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .date-label {
@@ -274,7 +291,7 @@ h2 {
 }
 
 .login-form-container {
-    width: 300px;
+    /*width: 300px; */
     padding: 40px;
     border-radius: 3px;
     margin: 0px auto; 
@@ -311,7 +328,6 @@ legend {
 
 
 .create-account-form {
-	margin-left: 5px;
 	margin-top: 10px;
 }
 
@@ -358,13 +374,15 @@ legend {
     text-align: center;
     color: white;
     font-weight: 700;
-    padding: 5px;
+    padding: 0px 5px;
     outline:  none; 
     border-style:   none;
     border-radius:  5px;
     margin-left: 5px;
     margin-right: 5px;
     width: 100%;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .button-trash {
@@ -384,14 +402,13 @@ font-size: 12px;
 }
 
 .search-button {
-margin-left: 5px;
-margin-top:   10px; 
+margin-left: 5px; 
 }
 
 .show-join-button {
 	 display: block;
-    width: 30%;
-    height: 25px;
+    width: 50%;
+    height: 40px;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -464,6 +481,15 @@ padding: 5px;
     
 }
 
+.place-results-header-box {
+    border: 1px solid #ddd;
+    border-right-width: 0px;
+    border-left-width:  0px;
+    padding: 2px;
+    margin-bottom:  3px;
+    color: white;
+}
+
 
 /* The Modal (background) */
 .modal {
@@ -487,13 +513,13 @@ padding: 5px;
     padding: 20px;
     border: 1px solid #888;
     border-radius: 20px;
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 268px;
  }
 
  .modal-text {
   padding: 5px;
-  margin-top: 10px; 
+  margin-top: 30px; 
  }
 
  .modal-button {
@@ -539,6 +565,67 @@ position: relative;
 textarea {
   max-width:  90%; 
 }
+
+.inline-div {
+  display:  inline-block;
+}
+
+.error-text-pass {
+font-weight:  800;
+margin-top:   5px;
+}
+
+.shaker {
+  -webkit-animation: shake .75s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake .75s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes fadeIn {
+   0% {opacity:   0}
+   100% {opacity:   1}
+}
+
+
+.fade-in {
+  -webkit-animation: fadeIn .5s;
+  animation-name: fadeIn; 
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+
+  /*opacity:  1;*/
+}
+
+
+
+@keyframes mymove {
+    50% {opacity: 0;}
+}
+.fade-in2 {
+ 
+ animation: mymove 5s infinite;
+}
+
 /*.rating > span:hover:before,
 .rating > span:hover ~ span:before {
    content: "\2605";
@@ -557,6 +644,14 @@ textarea {
 
 @media only screen and (min-width: 640px) {
 
+.list-background {
+   
+}
+
+.search-box {
+  width:  300px; 
+}
+
 .search-button-container {
   margin-top:   10px;
   display:  inline-block; 
@@ -568,21 +663,19 @@ textarea {
   border-top-right-radius: 10px;
   border-top-left-radius: 10Px;
   position: relative;
-  top: -27px;
+  top: -29px;
   background-color: #83d6f7;
   padding-left: 10px;
   padding-right: 10px;
   margin-right: 5px;
   margin-left: 5px;
-  z-index: 1;
   width:  auto;
 }
 
 .tab-current {
  background-color: #ff8f64;
  position: relative;
-  top: -27px;
-  z-index: 1;
+  top: -30px;
   font-size: 20px;
 }
 
@@ -596,8 +689,9 @@ textarea {
 }
 
 .main-container {
-     margin-left: 5%; 
-    margin-right: 5%;
+     margin-left: auto; 
+    margin-right: auto;
+    width: 80%;
    }
 
 .dont-show-bigscreen {

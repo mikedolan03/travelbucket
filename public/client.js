@@ -28,12 +28,12 @@ function main() {
 
 	function wrapperExample (requestObj) {
 
-		$('.loading-modal').removeClass('hide');
+		$('.loading-modal').fadeIn(300).removeClass('hide');
 	console.log("loading");
 
 		return $.ajax( requestObj )
 	  	  	.always(function() {
-	    	$('.loading-modal').addClass('hide');
+	    	$('.loading-modal').hide().addClass('hide');
 	    	console.log("done loading");
 	  		});
 
@@ -44,7 +44,7 @@ function main() {
 		}, 1);
 
 			promise.finally( function() {  
-				$('.loading-modal').addClass('hide');
+				$('.loading-modal').hide().addClass('hide');
 			});
 
 		} );  */
@@ -64,18 +64,31 @@ function main() {
 
 		console.log("bucketlist", userBucketList);
 
-		$('.welcome-login').addClass('hide');
-		$('.welcome-page').addClass('hide');
-		$('.user-list-section').removeClass('hide');
-		$('.join-form-section').addClass('hide');
+		$('.welcome-login').hide().addClass('hide');
+		$('.welcome-page').hide().addClass('hide');
+			//hide it first then fade it in -  since two tabs uses this code - want to show transition
+		$('.user-list-section').hide().addClass('hide');
+		$('.user-list-section').fadeIn(300).removeClass('hide');
+		$('.join-form-section').hide().addClass('hide');
 		$('.list-set').html(" ");
-		$('.logout-button').removeClass('hide');
+		$('.logout-button').fadeIn(300).removeClass('hide');
 
 		$('.logout-button').click(function() { 
 			location.reload(); 
 		});
 
-		$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List`); 
+		if(!onlyVisits) { 
+			$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List!`); 
+						} else {
+						$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here are the places you've been!`); 
+
+						}
+		
+
+		$('.hamburger-menu-button-container').removeClass('hide');
+		$('.hamburger-menu-button-container').html(' ');
+		$('.hamburger-menu-button-container').html('<button class="show-menu-button blend-button"><i class="fas fa-bars fa-2x"></i></button>');
+
 
 		$('.tab-show-menu').html('');
 		$('.tab-show-menu').html(`
@@ -115,7 +128,24 @@ function main() {
 			value="Add new location to list">`);
 			*/
 
-			
+		/*   --could we add users ratings to the visited page? 
+
+		find the review in the places list
+
+
+				featuredResults = featuredResults.filter(function(placeF) {
+			console.log("comparing f: ",placeF);
+			return !userBucketList.places.some(function(placeU) {
+				
+				console.log("comparing u: ", placeU);
+	
+
+
+				return	placeF._id === placeU.place._id;
+			});
+		});	
+
+		*/	
 
 		let count = 0;
 
@@ -136,7 +166,7 @@ function main() {
 
 		 	count++; 
 
-		 	console.log(userBucketList.places[i].visited);  
+		 	//console.log(userBucketList.places[i].visited);  
 
 		 	let backgroundColor = "";
 
@@ -149,7 +179,7 @@ function main() {
 
 
 		 	if(userBucketList.places[i].visited == "true") {
-		 		console.log("checked");
+		 		//console.log("checked");
 		 		toggle = "checked";
 		 	} else {
 		 		toggle = "";
@@ -173,7 +203,7 @@ function main() {
 		 		placeName = userBucketList.places[i].place.country; 
 		 	}
 
-		 	if(userBucketList.places[i].departDate == null) console.log("place " + i + " doesn have depart");
+		 	//if(userBucketList.places[i].departDate == null) console.log("place " + i + " doesn have depart");
 
 		 	if(typeof userBucketList.places[i].departDate != 'undefined' 
 		 	&& typeof userBucketList.places[i].departDate != 'null' && userBucketList.places[i].departDate != null) {
@@ -184,25 +214,42 @@ function main() {
 		 		let anotherDate = aDate.getUTCFullYear()+"-"+(aDate.getUTCMonth()+1) +"-" + aDate.getUTCDate(); 
 		 		aDate	= new Date( anotherDate);
 
-		 			console.log	("aDate	", aDate);
+		 			//console.log	("aDate	", aDate);
 
 		 		aDate = aDate.toString().substr(3,13);
 
-		 		console.log('departDate ', userBucketList.places[i].departDate);
-		 		tripDate =  'Traveling there on '+ aDate;
+		 		//console.log('departDate ', userBucketList.places[i].departDate);
+		 		
+		 		if(onlyVisits) {
+		 				tripDate =  'Traveled there on '+ aDate;
+		 			} else {
+		 				tripDate =  'Traveling there on '+ aDate;
+		 			}
+
+
 		 	} else {
 		 		tripDate = ""; 
 		 	}
 
 		 	if(typeof userBucketList.places[i].returnDate != 'undefined' 
-		 	&& typeof userBucketList.places[i].returnDate != 'null' && userBucketList.places[i].returnDate != null) {
+		 	&& typeof userBucketList.places[i].returnDate != 'null' 
+		 	&& userBucketList.places[i].returnDate != null) {
 		 		returningDate = userBucketList.places[i].returnDate;
 		 		//console.log('departDate ', userBucketList.places[i].returnDate);
 		 		let raDate = new Date( returningDate.toString() );
 		 		let ranotherDate = raDate.getUTCFullYear()+"-"+(raDate.getUTCMonth()+1) +"-" + raDate.getUTCDate(); 
 		 		raDate	= new Date( ranotherDate);
 		 		raDate = raDate.toString().substr(3,13);
-		 		returningDate =  'Coming back on '+ raDate;
+
+			 	if(onlyVisits) {
+			 		returningDate =  'Came back on '+ raDate;
+
+			 	} else {
+
+			 		returningDate =  'Coming back on '+ raDate;
+			 	}
+		 	
+
 		 	} else {
 		 		returningDate = ""; 
 		 	}
@@ -221,9 +268,10 @@ function main() {
 		 	}
 
 		 	let userListContent = "";
+		 	let userListContentReview = "";
 
 			
-		 	userListContent = `<div class="bucket-list-item ${backgroundColor}" placeIndex="${i}" >
+		 	userListContent = `<div class="bucket-list-item ${backgroundColor} " placeIndex="${i}" >
 		  		<div class="row">
         			<div class="col-6">
 		  				<div class="check-mark${i} check hide"><i class="far fa-check-circle"></i></div>
@@ -233,11 +281,21 @@ function main() {
 		   			<div class="col-6 text-align-right">
 		   				`;
 
-		   	if(userBucketList.places[i].visited == "false") {
-
-				if(typeof userBucketList.places[i].departDate != 'undefined' 
+		   				/*
+		if(typeof userBucketList.places[i].departDate != 'undefined' 
 					&& typeof userBucketList.places[i].departDate != 'null'
-					&& userBucketList.places[i].departDate != null) {
+					&& userBucketList.places[i].departDate != null 
+					&& userBucketList.places[i].returnDate != null
+					&& userBucketList.places[i].planNotes != " "
+					)
+		   				*/
+
+		   	if(userBucketList.places[i].visited == "false") {
+		   					console.log("plan notes", userBucketList.places[i].planNotes);
+				if( userBucketList.places[i].departDate != null 
+					&& userBucketList.places[i].returnDate != null
+					&& userBucketList.places[i].planNotes != " "
+					) {
 					userListContent += `<button class="btn-plan-${i} button-35-b 
 										contrast-color-darker black-text" 
 		   								placeIndex="${i}">Edit Trip</button>`;
@@ -250,7 +308,28 @@ function main() {
 					userListContent += `<button class="checkbox-btn-${i} button-35-b contrast-color black-text" 
 					placeIndex="${i}">Been there</button>`;
 	
-		 	}		
+		 	}	
+
+		 	if(onlyVisits) {
+		 		let reviewObj = $.grep(userBucketList.places[i].place.reviews, function(robj){return robj.userId === userBucketList.user._id;})[0];
+		 		if(!reviewObj) reviewObj = $.grep(userBucketList.places[i].place.reviews, function(robj){return robj.user === userBucketList.user._id;})[0];
+
+		 		console.log("review found:", reviewObj	);
+
+		 		if(reviewObj) {
+
+		 		 userListContentReview = "<p class='smaller-text complimentary-color-text'>Rating: ";
+
+			   	 if(reviewObj.starRating	> 0) {
+			   		for(let iii = 1; iii <= reviewObj.starRating; iii++){
+			   			userListContentReview +=`<i class="fas fa-star"></i>`
+			   		}
+			     }
+
+			   	 userListContentReview +=`</p><p class="smaller-text">Review: ${reviewObj.content}</p> `;
+
+			     }
+		 	}	
 		   	
 		   	userListContent += `
 		   	<button class="btn-delete-${i} button-35-b button-trash complimentary-color black-text" 
@@ -261,14 +340,15 @@ function main() {
 		   			<div class="col-9">
 		   				<p class="smaller-text">${tripDate}</p> 
 		   				<p class="smaller-text">${returningDate}</p> 
-		   				<p class="smaller-text">${notes}</p> 
+		   				<p class="smaller-text">${notes}</p>
+		   				${userListContentReview} 
 		   			</div>
 		   		</div>
 		   		</div>`;
 
 		  	$('.list-set').append (userListContent);
 
-		  	console.log("visited? ",userBucketList.places[i].visited );
+		  	//console.log("visited? ",userBucketList.places[i].visited );
 
 		  	if(userBucketList.places[i].visited == "true") {
 		  		$(`.check-mark${i}`).removeClass('hide');
@@ -291,12 +371,12 @@ function main() {
 
 		  		/*checkOffPlace(placeIndex); 
 
-		  		$('.modal-checkedoff-section').removeClass('hide');
+		  		$('.modal-checkedoff-section').fadeIn(300).removeClass('hide');
 
 		  		//ok button event handler
 		  		$('.check-modal-ok').click(function(event) {
 		  		event.preventDefault();
-		  		$('.modal-checkedoff-section').addClass('hide');
+		  		$('.modal-checkedoff-section').hide().addClass('hide');
 
 		  		getListofPlaces();
 		  		});
@@ -327,9 +407,9 @@ function main() {
 					function() {
 						event.preventDefault();
 					 	deletePlace(placeIndex);
-							$('.user-list-section').removeClass('hide');
+							$('.user-list-section').fadeIn(300).removeClass('hide');
 				  			$('.search-results').html(" ");
-				  			$('.add-section').addClass('hide');
+				  			$('.add-section').hide().addClass('hide');
 				  			$('.list-set').html("");
 				  			$('.back-button').off('click');
 				  			//getAndDisplayUserList();  -done as api callback
@@ -360,29 +440,37 @@ function main() {
 					$('.list-set').append ("Time to build a bucket list! Click 'Find a new place' tab to start searching!");
 					//add a button
 			} */
+		$('.show-menu-button').on('click', function(event) {
+			event.preventDefault();
+			console.log('clicked drop menu');
+	  		showHamburgerMenu(); 
+	  	});
 
+	 	/*
 
 	 	$('.show-menu-button').on('click', function(event) {
 	 			
 	 		
 	 		if(!menuShowing) {
 
-	 			$('.back-to-list').removeClass('hide');
-	 			$('.add-button-tab').removeClass('hide');
-	 			$('.visited-list').removeClass('hide');
+	 			$('.back-to-list').fadeIn(300).removeClass('hide');
+	 			$('.add-button-tab').fadeIn(300).removeClass('hide');
+	 			$('.visited-list').fadeIn(300).removeClass('hide');
 
 	 			menuShowing = true; 
 	 		} else {
 
-	 			$('.back-to-list').addClass('hide');
-	 			$('.add-button-tab').addClass('hide');
-	 			$('.visited-list').addClass('hide');
+	 			$('.back-to-list').hide().addClass('hide');
+	 			$('.add-button-tab').hide().addClass('hide');
+	 			$('.visited-list').hide().addClass('hide');
 
 	 			menuShowing	 = false; 
 
 	 		      }
 
 	 	 });
+
+	 	 */
 
 	 	$('.add-button').on('click', function(event) {
 	  		event.preventDefault();
@@ -407,9 +495,9 @@ function main() {
 	  	$('.back-button').on('click', function(event) {
 		  	event.preventDefault();
 		  	console.log('clicked user list button');
-		  	$('.user-list-section').removeClass('hide');
+		  	$('.user-list-section').fadeIn(300).removeClass('hide');
 		  	$('.search-results').html(" ");
-		  	$('.add-section').addClass('hide');
+		  	$('.add-section').hide().addClass('hide');
 		  	$('.list-set').html("");
 		  	$('.back-button').off('click');
 		  	getAndDisplayUserList();
@@ -427,6 +515,10 @@ function main() {
 
 //----------------------------- ADD NEW PLACES FUNCTIONS
 	function showSearchPageView() {
+
+
+	$('.hamburger-menu-button-container').html(' ');
+		$('.hamburger-menu-button-container').html('<button class="show-menu-button blend-button"><i class="fas fa-bars fa-2x"></i></button>');
 
 		$('.tab-show-menu').html('');
 		$('.tab-show-menu').html(`
@@ -452,16 +544,18 @@ function main() {
 		$('.search-button-container').html('');
 		$('.search-button-container').html(`<button name="search-button" 
 			class="search-button button-35-b contrast-color" 
-			value="Search">Find it!</button>`);
+			value="Search"><i class="fas fa-search"></i></button>`);
 		
 		$('.add-button-tab').addClass('tab-current');
 		$('.visited-list').removeClass('tab-current');
 		$('.back-to-list').removeClass('tab-current');
 
+		$('.search-box').val('');
+
 		getAndDisplayLocationList();
 
-	  	$('.user-list-section').addClass('hide');
-	  	$('.add-section').removeClass('hide');
+	  	$('.user-list-section').hide().hide().addClass('hide');
+	  	$('.add-section').fadeIn(300).removeClass('hide');
 
 	  	$('.search-button').click(function(event) {
 	  		event.preventDefault();
@@ -470,24 +564,27 @@ function main() {
 	  	});
 
 	  	$('.show-menu-button').on('click', function(event) {
+
+	  		showHamburgerMenu(); 
 	 			
-	 		
+	 		/*
 	 		if(!menuShowing) {
 
-	 			$('.back-to-list').removeClass('hide');
-	 			$('.add-button-tab').removeClass('hide');
-	 			$('.visited-list').removeClass('hide');
+	 			$('.back-to-list').fadeIn(300).removeClass('hide');
+	 			$('.add-button-tab').fadeIn(300).removeClass('hide');
+	 			$('.visited-list').fadeIn(300).removeClass('hide');
 
 	 			menuShowing = true; 
 	 		} else {
 
-	 			$('.back-to-list').addClass('hide');
-	 			$('.add-button-tab').addClass('hide');
-	 			$('.visited-list').addClass('hide');
+	 			$('.back-to-list').hide().addClass('hide');
+	 			$('.add-button-tab').hide().addClass('hide');
+	 			$('.visited-list').hide().addClass('hide');
 
 	 			menuShowing	 = false; 
 
 	 		      }
+	 		      */
 
 	 	 });
 
@@ -505,9 +602,9 @@ function main() {
 	  	$('.visited-button').on('click', function(event) {
 	  		event.preventDefault();
 	  		console.log('loading visited list');
-	  		$('.user-list-section').removeClass('hide');
+	  		$('.user-list-section').fadeIn(300).removeClass('hide');
 		  	$('.search-results').html(" ");
-		  	$('.add-section').addClass('hide');
+		  	$('.add-section').hide().addClass('hide');
 		  	$('.list-set').html("");
 	  		$('.visited-button').off('click');
 	  		//showUserList(data, true);
@@ -519,9 +616,9 @@ function main() {
 	  	//-----this back button will reload the user List View
 	  	$('.back-button').on('click', function(event) {
 		  	event.preventDefault();
-		  	$('.user-list-section').removeClass('hide');
+		  	$('.user-list-section').fadeIn(300).removeClass('hide');
 		  	$('.search-results').html(" ");
-		  	$('.add-section').addClass('hide');
+		  	$('.add-section').hide().addClass('hide');
 		  	$('.list-set').html("");
 		  	$('.back-button').off('click');
 		  	getAndDisplayUserList();
@@ -533,6 +630,103 @@ function main() {
 
 
 	}	
+
+
+	function showHamburgerMenu() {
+
+			if(!menuShowing) {
+
+				$('.hamburger-menu').html(`
+					<div class="back-to-listm">
+						<button class="back-buttonm blend-button">
+							<i class="fas fa-list-alt"></i> Bucket List
+						</button>
+					</div>
+				    <div class="visited-listm">
+				    	<button name="visited-button" class="visited-buttonm blend-button" value="Places You've Visited">
+				    		<i class="fas fa-map-pin"></i> Places You've Visited
+				    	</button>
+				    </div>
+				    <div class="add-button-tabm">
+				    	<button class="add-buttonm blend-button">
+				      		<i class="fas fa-search"></i> Find a New Place
+				      	</button>
+				    </div> 
+				    <div class="log-out-m">
+				    	<button class="logout-buttonm blend-button">
+				     	<i class="fas fa-sign-out-alt"></i> Sign Out
+				      	</button>
+				    </div>`); 
+
+	 			$('.hamburger-menu').fadeIn(300).removeClass('hide');
+	 			//$('.add-button-tab').fadeIn(300).removeClass('hide');
+	 			//$('.visited-list').fadeIn(300).removeClass('hide');
+
+	 			menuShowing = true;
+
+	 	$('.logout-buttonm').click(function() { 
+			location.reload(); 
+		}); 
+
+	 	$('.back-buttonm').on('click', function(event) {
+		  	event.preventDefault();
+		  	$('.user-list-section').fadeIn(300).removeClass('hide');
+		  	$('.search-results').html(" ");
+		  	$('.add-section').hide().addClass('hide');
+		  	$('.list-set').html("");
+		  	$('.back-buttonm').off('click');
+
+		  	$('.hamburger-menu').hide().addClass('hide');
+	 			
+
+	 			menuShowing	 = false; 
+		  	getAndDisplayUserList();
+	    } );
+
+	    $('.visited-buttonm').on('click', function(event) {
+	  		event.preventDefault();
+	  		console.log('loading visited list');
+	  		$('.user-list-section').fadeIn(300).removeClass('hide');
+		  	$('.search-results').html(" ");
+		  	$('.add-section').hide().addClass('hide');
+		  	$('.list-set').html("");
+	  		$('.visited-buttonm').off('click');
+	  		//showUserList(data, true);
+
+	  		$('.hamburger-menu').hide().addClass('hide');
+	 			
+
+	 			menuShowing	 = false; 
+	  		getAndDisplayUserListforVisited();
+	  	})
+
+	  	$('.add-buttonm').on('click', function(event) {
+	  		event.preventDefault();
+	  		console.log("add screen fired"); 
+
+	  		$('.add-buttonm').off('click'); 
+
+	  		$('.hamburger-menu').hide().addClass('hide');
+	 			
+
+	 			menuShowing	 = false; 
+
+	  		showSearchPageView(); 
+
+
+	  	});
+
+
+
+	 		} else {
+
+	 			$('.hamburger-menu').hide().addClass('hide');
+	 			
+
+	 			menuShowing	 = false; 
+
+	 		      }
+	}
 
 	//this function will eventually be an ajax call to query the database
 	function getLocations (searchTerm, callbackFunction) {
@@ -562,7 +756,7 @@ function main() {
 		//console.log("locations filterd: ", featuredResults2);
 
 		console.log("locations: ", featuredResults.length	);
-		$('.featured-places').html(" ");
+		$('.featured-places').html(" ").hide();
 
 		let locationsContent =' '; 
 
@@ -576,7 +770,7 @@ function main() {
 				backgroundColor = 'lightblue-background';
 			}
 
-		    locationsContent = `<div class="place-result ${backgroundColor}">
+		    locationsContent = `<div class="place-result ${backgroundColor} ">
 		    						<div class="row">
         								<div class="col-6">`;
 
@@ -639,13 +833,13 @@ function main() {
 				locationsContent +=	`</div>`;
 		     
 
-			$('.featured-places').append (locationsContent);
+			$('.featured-places').append (locationsContent).fadeIn(300);
 
 			//do buttons here
 			$(`.add-feat-${i}`).on('click', function(event) {
 		  		console.log('add featured button clicked', i);
 		  		event.preventDefault();
-		  		$(this).off(event);
+		  		//$(this).off(event);
 
 		  		planTripView(i);
 
@@ -677,14 +871,14 @@ function main() {
 
 	function planTripView(i) {
 
-		$('.adding-place-options-pop-up').removeClass('hide');
+		$('.adding-place-options-pop-up').fadeIn(300).removeClass('hide');
 
 		  		let placeAddedName = featuredResults[i].country;
 
 		  		$('.add-plan-button-cont').html(`<button type="submit" 
 			class="adding-button blue-background button-95 white-text">Add to list</button>`);
 
-		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window">X</button></div>');
+		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window button-35-b complimentary-color">X</button></div>');
 
 
 		  		if (featuredResults[i].city) {
@@ -701,7 +895,7 @@ function main() {
 		  		$('.p-close-window').on('click', function(event) {
         				event.preventDefault();
 			  			$(this).off(event);
-			  			$('.adding-place-options-pop-up').addClass('hide');
+			  			$('.adding-place-options-pop-up').hide().addClass('hide');
         		})
 
 		  		$('.adding-button').click(function(event) {
@@ -725,9 +919,9 @@ function main() {
 
 					showModal(`You are on your way to ${placeAddedName}!`, 'Ok', null, function() {
 						hideModal();
-						$('.user-list-section').removeClass('hide');
+						$('.user-list-section').fadeIn(300).removeClass('hide');
 		  				$('.search-results').html(" ");
-		  				$('.add-section').addClass('hide');
+		  				$('.add-section').hide().addClass('hide');
 		  				$('.list-set').html("");
 		  				$('.back-button').off('click');
 		  				getAndDisplayUserList();
@@ -736,22 +930,22 @@ function main() {
 					//reset the listed places ------still need to check suggestion against user list
 					$('.featured-places').html(" ");
 			  		//getAndDisplayLocationList();
-			  		$('.adding-place-options-pop-up').addClass('hide');
+			  		$('.adding-place-options-pop-up').hide().addClass('hide');
 			  	});
 	}
 
 	function planTripFromBucketListView(i) {
 
-		$('.adding-place-options-pop-up').removeClass('hide');
+		$('.adding-place-options-pop-up').fadeIn(300).removeClass('hide');
 
 		$('.add-plan-button-cont').html(`<button type="submit" 
-			class="adding-button blue-background button-95 white-text">Update Plan</button>`);
+			class="adding-button blue-background button-95 white-text">Save Plan</button>`);
 
              
 
 		  		let placeAddedName = userBucketList.places[i].place.country;
 
-		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window">X</button></div>');
+		  		$('.p-close-button').html('<div class="text-align-right"><button class="p-close-window button-35-b complimentary-color">X</button></div>');
 
 
 		  		if (userBucketList.places[i].city) {
@@ -787,7 +981,7 @@ function main() {
 		  		$('.p-close-window').on('click', function(event) {
         				event.preventDefault();
 			  			$(this).off(event);
-			  			$('.adding-place-options-pop-up').addClass('hide');
+			  			$('.adding-place-options-pop-up').hide().addClass('hide');
         		})
 
 		  		$('.adding-button').click(function(event) {
@@ -811,9 +1005,9 @@ function main() {
 
 					showModal(`You are on your way to ${placeAddedName}!`, 'Ok', null, function() {
 						hideModal();
-						$('.user-list-section').removeClass('hide');
+						$('.user-list-section').fadeIn(300).removeClass('hide');
 		  				$('.search-results').html(" ");
-		  				$('.add-section').addClass('hide');
+		  				$('.add-section').hide().addClass('hide');
 		  				$('.list-set').html("");
 		  				$('.back-button').off('click');
 		  				getAndDisplayUserList();
@@ -822,27 +1016,55 @@ function main() {
 					//reset the listed places ------still need to check suggestion against user list
 					$('.featured-places').html(" ");
 			  		//getAndDisplayLocationList();
-			  		$('.adding-place-options-pop-up').addClass('hide');
+			  		$('.adding-place-options-pop-up').hide().addClass('hide');
 			  	});
 	}
 
 
 	function ratePlaceView(locationId, placeInd) {
 
+		$('.rating').off('click');
+
 		let starId = "";
+		let ratingCount	= 0;
+
+		if (userBucketList.places[placeInd].departDate) {
+		  			console.log('setting departDate');
+
+		  			$('.departure-date2').val(userBucketList.places[placeInd].departDate.toString().substr(0,10)); 
+		  		} else {
+		  			$('.departure-date2').val(''); 
+		  		}
+
+		  		if (userBucketList.places[placeInd].returnDate) {
+
+		  			$('.return-date2').val(userBucketList.places[placeInd].returnDate.toString().substr(0,10)); 
+		  		} else {
+		  			$('.return-date2').val('');
+		  		}
+
+		$('.rating').html(`
+							<span class="stars" id="star1" data="1"><i class="far fa-star"></i></span>
+							<span class="stars" id="star2" data="2"><i class="far fa-star"></i></span>
+							<span class="stars" data="3" id="star3"><i class="far fa-star"></i></span>
+							<span class="stars" data="4" id="star4"><i class="far fa-star"></i></span>
+							<span class="stars" data="5" id="star5"><i class="far fa-star"></i></span>
+		`);	
+
 		$(`.stars`).html('<i class="far fa-star"></i>');
 		$('.trip-review').val('');
-		$('.review-place-options-pop-up').removeClass('hide');
+		$('.review-place-options-pop-up').fadeIn(300).removeClass('hide');
 
 		let headerText = "";
 		if (userBucketList.places[placeInd].place.city) {
 			headerText	= userBucketList.places[placeInd].place.city;
 		}
 		headerText	+= " " + userBucketList.places[placeInd].place.country; 
-		$('.rp-class-button').html('<div class="text-align-right"><button class="r-close-window">X</button></div>');
+		$('.rp-class-button').html('<div class="text-align-right"><button class="r-close-window button-35-b complimentary-color">X</button></div>');
 		$('.review-options-header').html(`How did you like ${headerText}?`);
 
 		$('.rating').on('click', function(event) {
+			console.log('rating clicked', headerText);
 			ratingCount = parseInt( event.target.closest('span').getAttribute('data'));
 			console.log("stars ", ratingCount);
 
@@ -859,8 +1081,8 @@ function main() {
 
 		$('.r-close-window').on('click', function(event) {
         		event.preventDefault();
-			  	$(this).off(event);
-			  	$('.review-place-options-pop-up').addClass('hide');
+			  	$(this).off(event); 
+			  	$('.review-place-options-pop-up').hide().addClass('hide');
         })
 
 
@@ -868,7 +1090,26 @@ function main() {
 			
 			event.preventDefault();
 			//$('.checkit-button').off('click'); 
+
+				if( $('.trip-review').val() == '') {
+					console.log("no review was written"); 
+					return;
+				}
+
 			$(this).off(event);
+
+			console.log('depart date before send:', $('.departure-date').val() );
+
+			let location = {
+			  		bucketId: userBucketList._id,
+			  		placeIndex: placeInd,
+		  			departDate: $('.departure-date2').val(),
+		  			returnDate: $('.return-date2').val(),
+		  			planNotes: userBucketList.places[placeInd].planNotes
+		  			}
+
+		  	
+					addPlanToList(location);
 
 			let newReviewdata = {
 			locId: userBucketList.places[placeInd].place._id,
@@ -881,7 +1122,7 @@ function main() {
 			addReview(newReviewdata); 
 			console.log('checking off', placeInd);
 			checkOffPlace(placeInd);
-			$('.review-place-options-pop-up').addClass('hide');
+			$('.review-place-options-pop-up').hide().addClass('hide');
 
 			showModal(`${headerText} review saved.`, 'Ok', null, hideModal, null);
 
@@ -1019,14 +1260,14 @@ function main() {
 		if($('.username').val() == '') {
 
 		console.log( "user test failed", $('.username').val() );
-			$('.error-text').removeClass('hide'); 
+			$('.error-text-pass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 );
 				return;
 		 }
 
 		if($('.password').val() == ''){
 		 console.log( "pass test failed", $('.password').val() );
 		
-			$('.error-text-pass').removeClass('hide'); 
+			$('.error-text-pass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
 				return;
 		 }
 
@@ -1057,15 +1298,15 @@ function main() {
 	    		},
 	    		401: function() {
 
-	    		$('.error-text').removeClass('hide'); 
-	    			$('.error-text-pass').removeClass('hide'); 
+	    		//$('.error-text').fadeIn(300).removeClass('hide'); 
+	    			$('.error-text-pass').fadeIn(300).removeClass('hide'); 
 	    			//username or password were incorrect");
 	    		},
 	    		400: function() {
 	    			//missing a username or password");
 
-	    		$('.error-text').removeClass('hide'); 
-	    		$('.error-text-pass').removeClass('hide'); 
+	    		//$('.error-text').fadeIn(300).removeClass('hide'); 
+	    		$('.error-text-pass').fadeIn(300).removeClass('hide'); 
 	    		}
 	    	}
 			
@@ -1163,6 +1404,28 @@ function main() {
 
 	function createAccount() {
 		console.log('creating account');
+		$('.error-text-usepass').hide().addClass('hide');
+			if($('.new-username').val() == '') {
+
+		console.log( "user test failed", $('.new-username').val() );
+			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
+				return;
+		 }
+
+		if($('.new-password').val() == ''){
+		 console.log( "pass test failed", $('.new-password').val() );
+		
+			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
+				return;
+		 }
+
+		 if($('.first-name').val() == ''){
+		 console.log( "name test failed", $('.first-name').val() );
+		
+			$('.error-text-usepass').fadeIn(300).removeClass('hide').animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ).animate({ "padding-left": "+=10px" }, 100 ).animate({ "padding-left": "-=10px" }, 100 ); 
+				return;
+		 }
+
 		
 		let data = {};
 
@@ -1201,7 +1464,7 @@ function main() {
 									   $('.user-status').text('logging in');
 									   myToken = data.authToken;
 
-									   $('.create-account-form').addClass('hide');
+									   $('.create-account-form').hide().addClass('hide');
 
 									   getAPIData( callType='GET', data ={}, myToken, myUrl = '/api/bucketlist/', showUserList);
 									}
@@ -1212,11 +1475,11 @@ function main() {
 		statusCode: { 
 						500: function() {
       						//alert( "no user or pass" );
-      						$('.error-text-usepass').removeClass('hide');
+      						$('.error-text-usepass').fadeIn(300).removeClass('hide');
     					},
     					422: function() {
       						//alert( "user taken" );
-      						$('.error-text-usertaken').removeClass('hide');
+      						$('.error-text-usertaken').fadeIn(300).removeClass('hide');
 
     					}
 					}
@@ -1226,26 +1489,34 @@ function main() {
 
 	function welcomePageView() {
 
-	$('.modal-added-section').addClass('hide');
-	$('.user-list-section').addClass('hide');
-	$('.add-section').addClass('hide');
+	$('.modal-added-section').hide().addClass('hide');
+	$('.user-list-section').hide().addClass('hide');
+	$('.add-section').hide().addClass('hide');
 
 	//input
  	$('.login-form').submit(function(event) {
 	    event.preventDefault();
 	    login();
-	    $('.join-button-area').addClass('hide');
+	    //$('.join-button-area').hide().addClass('hide');
 	  });
 
  	$('.show-join-button').click(function(event) {
 	  	event.preventDefault();
-	  	$('.create-account-form').removeClass('hide');
-	  	$('.welcome-login').addClass('hide');
-		$('.join-button-area').addClass('hide');
+	  	$('.welcome-login').hide().addClass('hide');
+		$('.join-button-area').hide().addClass('hide');
+	  	$('.create-account-form').fadeIn(300);//removeClass('hide')
+	  	
 	  
-		$('.create-account-form').submit(function(event) {
+		$('.create-button').click(function(event) {
 	    	event.preventDefault();
+	    	console.log('create clicked');
 	    	createAccount();
+	  	});
+
+	  	$('.back-to-login').click(function(event) { 
+	  			event.preventDefault();
+	  			location.reload(); 
+
 	  	});
 	  });
 
@@ -1259,9 +1530,10 @@ function main() {
 	function showModal(text, option1txt,option2txt, affirmCallback, negateCallback) {
 		
 
-		let modalContent = `<div class="text-align-right">
-		<button class="close-window button-35-b complimentary-color">X</button></div><div class="modal-text black-text">${text}</div>
-            `;
+		/*let modalContent =`<div class="text-align-right">
+		<button class="close-window button-35-b complimentary-color">X</button></div>` */
+
+		let modalContent = `<div class="modal-text black-text">${text}</div>`;
 
         if(option1txt != null) {
 
@@ -1279,16 +1551,16 @@ function main() {
 
         $('.gen-modal-content').html(modalContent); 
 
-        $('.close-window').on('click', function(event) {
+      /*  $('.close-window').on('click', function(event) {
         		event.preventDefault();
 			  	$(this).off(event);
 			  	hideModal();
-        })
+        }) */
 		
-		$('.modal-general-section').removeClass('hide'); 
+		$('.modal-general-section').fadeIn(300).removeClass('hide'); 
 
 		
-			$('.modal-ok-button').removeClass('hide'); 
+			$('.modal-ok-button').fadeIn(300).removeClass('hide'); 
 
 			$('.modal-ok-button').on('click', function(event) {
 			  	event.preventDefault();
@@ -1299,14 +1571,14 @@ function main() {
 
 
 		if( option2txt != null) {
-			$('.modal-cancel-button').removeClass('hide'); 
+			$('.modal-cancel-button').fadeIn(300).removeClass('hide'); 
 			$('.modal-cancel-button').on('click', function(event) {
 			  	event.preventDefault();
 			  	$(this).off(event);
 			  	negateCallback();
 	    	} );
 		} else {
-			$('.modal-cancel-button').addClass('hide');
+			$('.modal-cancel-button').hide().addClass('hide');
 			
 		}
 
@@ -1314,13 +1586,13 @@ function main() {
 	}
 
 	function hideModal() {
-		$('.modal-general-section').addClass('hide'); 
+		$('.modal-general-section').hide().addClass('hide'); 
 	}
 
 	function showLoadModal() {
 		
 
-		let modalContent = `<div class="modal-text black-text">Loading...</div>`;
+		let modalContent = `<div class="modal-text black-text">Loading...<br/><br/><i class="fas fa-spinner fa-pulse fa-3x"></i></div>`;
 
         
       
@@ -1372,7 +1644,7 @@ $(function() {
 			
 
 	  		//event handle option windows add submit button
-	  		$('.adding-place-options-pop-up').removeClass('hide');
+	  		$('.adding-place-options-pop-up').fadeIn(300).removeClass('hide');
 
 	  		let placeAddedName = featuredResults[fLindex].country;
 
@@ -1402,7 +1674,7 @@ $(function() {
 				//reset the listed places ------still need to check suggestion against user list
 				$('.featured-places').html(" ");
 		  		getAndDisplayLocationList();
-		  		$('.adding-place-options-pop-up').addClass('hide');
+		  		$('.adding-place-options-pop-up').hide().addClass('hide');
 		  	});
 
 	  		
@@ -1420,7 +1692,7 @@ $(function() {
 			
 
 	  		//event handle option windows add submit button
-	  		$('.adding-place-options-pop-up').removeClass('hide');
+	  		$('.adding-place-options-pop-up').fadeIn(300).removeClass('hide');
 
 	  		let placeAddedName = locationSearchResults[fLindex].country;
 
@@ -1450,7 +1722,7 @@ $(function() {
 				//reset the listed places ------still need to check suggestion against user list
 				$('.search-results').html(" ");
 	  			userSearch($('.search-box').val());
-		  		$('.adding-place-options-pop-up').addClass('hide');
+		  		$('.adding-place-options-pop-up').hide().addClass('hide');
 		  	});
 
 	  	});
@@ -1458,9 +1730,9 @@ $(function() {
 //-----this back button will reload the user List View
 	  	$('.back-button').click(function(event) {
 	  	event.preventDefault();
-	  	$('.user-list-section').removeClass('hide');
+	  	$('.user-list-section').fadeIn(300).removeClass('hide');
 	  	$('.search-results').html(" ");
-	  	$('.add-section').addClass('hide');
+	  	$('.add-section').hide().addClass('hide');
 	  	$('.list-set').html("");
 	  	getAndDisplayUserList();
 	    } );

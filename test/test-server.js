@@ -1,5 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const faker = require('faker');
+const mongoose = require('mongoose');
 
 const expect = chai.expect;
 
@@ -33,6 +35,24 @@ describe('Bucket List Load Page and Log in', function() {
 			expect(res).to.have.header('content-type','text/html; charset=UTF-8');
 			//console.log(res);
 		});
+	});
+
+	it('should create a user account and return', function() {
+		let newUser = {};
+			
+		newUser.username = faker.internet.userAgent();	
+		console.log("user name",newUser.username);
+		newUser.password = faker.internet.password();
+		newUser.firstName = faker.name.firstName();
+
+		return	chai.request(app)
+		.post('/api/user/')
+		.send(newUser)
+		then(function(res) {
+			expect(res.status).to.equal(201)
+			expect(res.body).to.be.a('object');
+			expect(res.body).to.have.all.keys('username','_id')
+		})
 	});
 
 
