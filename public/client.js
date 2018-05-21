@@ -189,7 +189,7 @@ function main() {
 		 	let tripDate = ""; 
 		 	let returningDate	= "";
 		 	let notes = "";
-		 	console.log("city value: ", userBucketList.places[i].place.city ); 
+		 	//console.log("city value: ", userBucketList.places[i].place.city ); 
 
 		 	if(typeof userBucketList.places[i].place.city != 'undefined') {
 
@@ -221,9 +221,9 @@ function main() {
 		 		//console.log('departDate ', userBucketList.places[i].departDate);
 		 		
 		 		if(onlyVisits) {
-		 				tripDate =  'Traveled there on '+ aDate;
+		 				tripDate =  '<strong>Traveled there on</strong> '+ aDate;
 		 			} else {
-		 				tripDate =  'Traveling there on '+ aDate;
+		 				tripDate =  '<strong>Traveling there on</strong> '+ aDate;
 		 			}
 
 
@@ -242,11 +242,11 @@ function main() {
 		 		raDate = raDate.toString().substr(3,13);
 
 			 	if(onlyVisits) {
-			 		returningDate =  'Came back on '+ raDate;
+			 		returningDate =  '<strong>Came back on</strong> '+ raDate;
 
 			 	} else {
 
-			 		returningDate =  'Coming back on '+ raDate;
+			 		returningDate =  '<strong>Coming back on</strong> '+ raDate;
 			 	}
 		 	
 
@@ -258,7 +258,7 @@ function main() {
 		 	&& typeof userBucketList.places[i].planNotes != 'null' && userBucketList.places[i].planNotes != '') {
 		 		notes = userBucketList.places[i].planNotes;
 		 		//console.log('departDate ', userBucketList.places[i].planNotes);
-		 		notes =  'Things to see: '+ notes;
+		 		notes =  '<strong>Things to see:</strong> '+ notes;
 		 	} else {
 		 		notes = ""; 
 		 	}
@@ -281,14 +281,7 @@ function main() {
 		   			<div class="col-6 text-align-right">
 		   				`;
 
-		   				/*
-		if(typeof userBucketList.places[i].departDate != 'undefined' 
-					&& typeof userBucketList.places[i].departDate != 'null'
-					&& userBucketList.places[i].departDate != null 
-					&& userBucketList.places[i].returnDate != null
-					&& userBucketList.places[i].planNotes != " "
-					)
-		   				*/
+		   			
 
 		   	if(userBucketList.places[i].visited == "false") {
 		   					console.log("plan notes", userBucketList.places[i].planNotes);
@@ -318,7 +311,7 @@ function main() {
 
 		 		if(reviewObj) {
 
-		 		 userListContentReview = "<p class='smaller-text complimentary-color-text'>Rating: ";
+		 		 userListContentReview = "<p class='complimentary-color-text'>Rating: ";
 
 			   	 if(reviewObj.starRating	> 0) {
 			   		for(let iii = 1; iii <= reviewObj.starRating; iii++){
@@ -326,7 +319,7 @@ function main() {
 			   		}
 			     }
 
-			   	 userListContentReview +=`</p><p class="smaller-text">Review: ${reviewObj.content}</p> `;
+			   	 userListContentReview +=`</p><p class=""><strong>Review:</strong> ${reviewObj.content}</p> `;
 
 			     }
 		 	}	
@@ -338,9 +331,9 @@ function main() {
 		   		</div>
 		   		<div class = "row">
 		   			<div class="col-9">
-		   				<p class="smaller-text">${tripDate}</p> 
-		   				<p class="smaller-text">${returningDate}</p> 
-		   				<p class="smaller-text">${notes}</p>
+		   				<p class="">${tripDate}</p> 
+		   				<p class="">${returningDate}</p> 
+		   				<p class="">${notes}</p>
 		   				${userListContentReview} 
 		   			</div>
 		   		</div>
@@ -360,28 +353,10 @@ function main() {
 		  		console.log('checked-i button clicked', userBucketList.places[i]);
 		  		let placeIndex = i;
 		  		console.log("place ind on client: ", placeIndex);
-		  		//const listItem = USER_LIST.userList.find(item => item.locId === locChecked);
-		  		//listItem.visited = "true"; 
-		  		//event.target.prop("checked", true );  //needs to be a straight javascript setProperty? 
-		  		//console.log("user list: ", USER_LIST);
-
-		  	//showModal(`You are on your way to ${placeAddedName}!`, true, false, false, false, hideModal, null);
-
+		  
 		  		ratePlaceView(userBucketList.places[i].locId, i);
 
-		  		/*checkOffPlace(placeIndex); 
-
-		  		$('.modal-checkedoff-section').fadeIn(300).removeClass('hide');
-
-		  		//ok button event handler
-		  		$('.check-modal-ok').click(function(event) {
-		  		event.preventDefault();
-		  		$('.modal-checkedoff-section').hide().addClass('hide');
-
-		  		getListofPlaces();
-		  		});
-
-		  		*/
+		  		
 
 	  		});
 
@@ -824,7 +799,7 @@ function main() {
 			   			}
 			    }
 
-			   	locationsContent +=`</p><p>Review: ${featuredResults[i].reviews[reviewNumber].username} says "${featuredResults[i].reviews[reviewNumber].content}"</p> 
+			   	locationsContent +=`</p><p><strong>Review:</strong> ${featuredResults[i].reviews[reviewNumber].username} says "${featuredResults[i].reviews[reviewNumber].content}"</p> 
 			   			 </div>
 			   		</div>`
 			}
@@ -1489,7 +1464,6 @@ function main() {
 
 	function welcomePageView() {
 
-	$('.modal-added-section').hide().addClass('hide');
 	$('.user-list-section').hide().addClass('hide');
 	$('.add-section').hide().addClass('hide');
 
