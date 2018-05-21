@@ -85,7 +85,8 @@
         
       <form class="create-account-form hide">
         <div class="login-form-container blue-background ">
-        <div class="center-text top-icon complimentary-color-text"><i class="fas fa-id-card fa-4x"></i></div>  
+        <div class="center-text top-icon complimentary-color-text dont-show-mobile"><i class="fas fa-id-card fa-4x"></i></div>  
+        <div class="center-text top-icon complimentary-color-text dont-show-bigscreen"><i class="fas fa-id-card fa-2x"></i></div>  
         <legend>Sign Up</legend>
         <div class= "create-input-group"> 
           <input type="text" name="username" class="new-username no-box-input" placeholder="User Name">
@@ -192,11 +193,11 @@
           </form>
       </div>
     </div>
-      <div class="row">
+      <div class="row3 place-results-header-box blue-background">
         <div class="col-12">
-        <header>
-          <h3 class="place-results-header">Top Rated Places</h3>
-        </header>
+          <header>
+              <h3 class="place-results-header">Top Rated Places</h3>
+          </header>
       </div>
       
       </div>
@@ -232,12 +233,18 @@
        <section class="review-place-options-pop-up hide">
         <div class="modal">
           <div class="pop-up-container">
-            <div class="rp-class-button button-35-b complimentary-color"></div>
+            <div class="rp-class-button"></div>
             <h3 class="review-options-header">How was your trip to New Zealand?</h3>
             <form name="review-place-options">
               <div class= "create-input-group"> 
+                <label class="date-label">When did you go? <input type="date" name="departure-date2" class="departure-date2"></label>
+              </div>
+              <div class= "create-input-group"> 
+                <label class="date-label">When did you return? <input type="date" name="return-date2" class="return-date2"></label>
+              </div>
+              <div class= "create-input-group"> 
                 <label> Rate your trip -  
-                <div class="rating">
+                <div class="rating complimentary-color-text">
                   <span class="stars" id="star1" data="1"><i class="far fa-star"></i></span><span class="stars" id="star2" data="2"><i class="far fa-star"></i></span><span class="stars" data="3" id="star3"><i class="far fa-star"></i></span><span class="stars" data="4" id="star4"><i class="far fa-star"></i></span><span class="stars" data="5" id="star5"><i class="far fa-star"></i></span>
                 </div></label>
               </div>

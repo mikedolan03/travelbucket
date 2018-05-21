@@ -77,7 +77,14 @@ function main() {
 			location.reload(); 
 		});
 
-		$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List`); 
+		if(!onlyVisits) { 
+			$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here is your Bucket List!`); 
+						} else {
+						$('.bucklist-title').html(`Hi ${userBucketList.user.firstName}, here are the places you've been!`); 
+
+						}
+		
+
 		$('.hamburger-menu-button-container').removeClass('hide');
 		$('.hamburger-menu-button-container').html(' ');
 		$('.hamburger-menu-button-container').html('<button class="show-menu-button blend-button"><i class="fas fa-bars fa-2x"></i></button>');
@@ -121,7 +128,24 @@ function main() {
 			value="Add new location to list">`);
 			*/
 
-			
+		/*   --could we add users ratings to the visited page? 
+
+		find the review in the places list
+
+
+				featuredResults = featuredResults.filter(function(placeF) {
+			console.log("comparing f: ",placeF);
+			return !userBucketList.places.some(function(placeU) {
+				
+				console.log("comparing u: ", placeU);
+	
+
+
+				return	placeF._id === placeU.place._id;
+			});
+		});	
+
+		*/	
 
 		let count = 0;
 
@@ -195,20 +219,37 @@ function main() {
 		 		aDate = aDate.toString().substr(3,13);
 
 		 		//console.log('departDate ', userBucketList.places[i].departDate);
-		 		tripDate =  'Traveling there on '+ aDate;
+		 		
+		 		if(onlyVisits) {
+		 				tripDate =  'Traveled there on '+ aDate;
+		 			} else {
+		 				tripDate =  'Traveling there on '+ aDate;
+		 			}
+
+
 		 	} else {
 		 		tripDate = ""; 
 		 	}
 
 		 	if(typeof userBucketList.places[i].returnDate != 'undefined' 
-		 	&& typeof userBucketList.places[i].returnDate != 'null' && userBucketList.places[i].returnDate != null) {
+		 	&& typeof userBucketList.places[i].returnDate != 'null' 
+		 	&& userBucketList.places[i].returnDate != null) {
 		 		returningDate = userBucketList.places[i].returnDate;
 		 		//console.log('departDate ', userBucketList.places[i].returnDate);
 		 		let raDate = new Date( returningDate.toString() );
 		 		let ranotherDate = raDate.getUTCFullYear()+"-"+(raDate.getUTCMonth()+1) +"-" + raDate.getUTCDate(); 
 		 		raDate	= new Date( ranotherDate);
 		 		raDate = raDate.toString().substr(3,13);
-		 		returningDate =  'Coming back on '+ raDate;
+
+			 	if(onlyVisits) {
+			 		returningDate =  'Came back on '+ raDate;
+
+			 	} else {
+
+			 		returningDate =  'Coming back on '+ raDate;
+			 	}
+		 	
+
 		 	} else {
 		 		returningDate = ""; 
 		 	}
@@ -227,6 +268,7 @@ function main() {
 		 	}
 
 		 	let userListContent = "";
+		 	let userListContentReview = "";
 
 			
 		 	userListContent = `<div class="bucket-list-item ${backgroundColor} " placeIndex="${i}" >
@@ -239,11 +281,21 @@ function main() {
 		   			<div class="col-6 text-align-right">
 		   				`;
 
-		   	if(userBucketList.places[i].visited == "false") {
-
-				if(typeof userBucketList.places[i].departDate != 'undefined' 
+		   				/*
+		if(typeof userBucketList.places[i].departDate != 'undefined' 
 					&& typeof userBucketList.places[i].departDate != 'null'
-					&& userBucketList.places[i].departDate != null) {
+					&& userBucketList.places[i].departDate != null 
+					&& userBucketList.places[i].returnDate != null
+					&& userBucketList.places[i].planNotes != " "
+					)
+		   				*/
+
+		   	if(userBucketList.places[i].visited == "false") {
+		   					console.log("plan notes", userBucketList.places[i].planNotes);
+				if( userBucketList.places[i].departDate != null 
+					&& userBucketList.places[i].returnDate != null
+					&& userBucketList.places[i].planNotes != " "
+					) {
 					userListContent += `<button class="btn-plan-${i} button-35-b 
 										contrast-color-darker black-text" 
 		   								placeIndex="${i}">Edit Trip</button>`;
@@ -256,7 +308,28 @@ function main() {
 					userListContent += `<button class="checkbox-btn-${i} button-35-b contrast-color black-text" 
 					placeIndex="${i}">Been there</button>`;
 	
-		 	}		
+		 	}	
+
+		 	if(onlyVisits) {
+		 		let reviewObj = $.grep(userBucketList.places[i].place.reviews, function(robj){return robj.userId === userBucketList.user._id;})[0];
+		 		if(!reviewObj) reviewObj = $.grep(userBucketList.places[i].place.reviews, function(robj){return robj.user === userBucketList.user._id;})[0];
+
+		 		console.log("review found:", reviewObj	);
+
+		 		if(reviewObj) {
+
+		 		 userListContentReview = "<p class='smaller-text complimentary-color-text'>Rating: ";
+
+			   	 if(reviewObj.starRating	> 0) {
+			   		for(let iii = 1; iii <= reviewObj.starRating; iii++){
+			   			userListContentReview +=`<i class="fas fa-star"></i>`
+			   		}
+			     }
+
+			   	 userListContentReview +=`</p><p class="smaller-text">Review: ${reviewObj.content}</p> `;
+
+			     }
+		 	}	
 		   	
 		   	userListContent += `
 		   	<button class="btn-delete-${i} button-35-b button-trash complimentary-color black-text" 
@@ -267,7 +340,8 @@ function main() {
 		   			<div class="col-9">
 		   				<p class="smaller-text">${tripDate}</p> 
 		   				<p class="smaller-text">${returningDate}</p> 
-		   				<p class="smaller-text">${notes}</p> 
+		   				<p class="smaller-text">${notes}</p>
+		   				${userListContentReview} 
 		   			</div>
 		   		</div>
 		   		</div>`;
@@ -277,8 +351,8 @@ function main() {
 		  	//console.log("visited? ",userBucketList.places[i].visited );
 
 		  	if(userBucketList.places[i].visited == "true") {
-		  		$(`.check-mark${i}`).fadeIn(300).removeClass('hide');
-		  		$(`.uncheck-mark${i}`).hide().addClass('hide');
+		  		$(`.check-mark${i}`).removeClass('hide');
+		  		$(`.uncheck-mark${i}`).addClass('hide');
 		  	} 
 
 		  	$(`.checkbox-btn-${i}`).click( function(event) {
@@ -470,7 +544,7 @@ function main() {
 		$('.search-button-container').html('');
 		$('.search-button-container').html(`<button name="search-button" 
 			class="search-button button-35-b contrast-color" 
-			value="Search">Find it!</button>`);
+			value="Search"><i class="fas fa-search"></i></button>`);
 		
 		$('.add-button-tab').addClass('tab-current');
 		$('.visited-list').removeClass('tab-current');
@@ -865,7 +939,7 @@ function main() {
 		$('.adding-place-options-pop-up').fadeIn(300).removeClass('hide');
 
 		$('.add-plan-button-cont').html(`<button type="submit" 
-			class="adding-button blue-background button-95 white-text">Update Plan</button>`);
+			class="adding-button blue-background button-95 white-text">Save Plan</button>`);
 
              
 
@@ -949,7 +1023,34 @@ function main() {
 
 	function ratePlaceView(locationId, placeInd) {
 
+		$('.rating').off('click');
+
 		let starId = "";
+		let ratingCount	= 0;
+
+		if (userBucketList.places[placeInd].departDate) {
+		  			console.log('setting departDate');
+
+		  			$('.departure-date2').val(userBucketList.places[placeInd].departDate.toString().substr(0,10)); 
+		  		} else {
+		  			$('.departure-date2').val(''); 
+		  		}
+
+		  		if (userBucketList.places[placeInd].returnDate) {
+
+		  			$('.return-date2').val(userBucketList.places[placeInd].returnDate.toString().substr(0,10)); 
+		  		} else {
+		  			$('.return-date2').val('');
+		  		}
+
+		$('.rating').html(`
+							<span class="stars" id="star1" data="1"><i class="far fa-star"></i></span>
+							<span class="stars" id="star2" data="2"><i class="far fa-star"></i></span>
+							<span class="stars" data="3" id="star3"><i class="far fa-star"></i></span>
+							<span class="stars" data="4" id="star4"><i class="far fa-star"></i></span>
+							<span class="stars" data="5" id="star5"><i class="far fa-star"></i></span>
+		`);	
+
 		$(`.stars`).html('<i class="far fa-star"></i>');
 		$('.trip-review').val('');
 		$('.review-place-options-pop-up').fadeIn(300).removeClass('hide');
@@ -963,6 +1064,7 @@ function main() {
 		$('.review-options-header').html(`How did you like ${headerText}?`);
 
 		$('.rating').on('click', function(event) {
+			console.log('rating clicked', headerText);
 			ratingCount = parseInt( event.target.closest('span').getAttribute('data'));
 			console.log("stars ", ratingCount);
 
@@ -979,7 +1081,7 @@ function main() {
 
 		$('.r-close-window').on('click', function(event) {
         		event.preventDefault();
-			  	$(this).off(event);
+			  	$(this).off(event); 
 			  	$('.review-place-options-pop-up').hide().addClass('hide');
         })
 
@@ -988,7 +1090,26 @@ function main() {
 			
 			event.preventDefault();
 			//$('.checkit-button').off('click'); 
+
+				if( $('.trip-review').val() == '') {
+					console.log("no review was written"); 
+					return;
+				}
+
 			$(this).off(event);
+
+			console.log('depart date before send:', $('.departure-date').val() );
+
+			let location = {
+			  		bucketId: userBucketList._id,
+			  		placeIndex: placeInd,
+		  			departDate: $('.departure-date2').val(),
+		  			returnDate: $('.return-date2').val(),
+		  			planNotes: userBucketList.places[placeInd].planNotes
+		  			}
+
+		  	
+					addPlanToList(location);
 
 			let newReviewdata = {
 			locId: userBucketList.places[placeInd].place._id,
@@ -1409,9 +1530,10 @@ function main() {
 	function showModal(text, option1txt,option2txt, affirmCallback, negateCallback) {
 		
 
-		let modalContent = `<div class="text-align-right">
-		<button class="close-window button-35-b complimentary-color">X</button></div><div class="modal-text black-text">${text}</div>
-            `;
+		/*let modalContent =`<div class="text-align-right">
+		<button class="close-window button-35-b complimentary-color">X</button></div>` */
+
+		let modalContent = `<div class="modal-text black-text">${text}</div>`;
 
         if(option1txt != null) {
 
@@ -1429,11 +1551,11 @@ function main() {
 
         $('.gen-modal-content').html(modalContent); 
 
-        $('.close-window').on('click', function(event) {
+      /*  $('.close-window').on('click', function(event) {
         		event.preventDefault();
 			  	$(this).off(event);
 			  	hideModal();
-        })
+        }) */
 		
 		$('.modal-general-section').fadeIn(300).removeClass('hide'); 
 

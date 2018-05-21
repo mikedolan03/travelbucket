@@ -84,23 +84,22 @@ body {
 
 .search-box-form {
     padding-top: 10px;
-    display: table;
     vertical-align: middle;
 }
 
 .search-box {
-  width:  300px; 
+  width:  200px; 
 }
 
 .search-box-content {
-  display: table-cell;
+  display: block;
   vertical-align: middle;
 }
 
 .search-button-container {
   margin-top:   10px;
   display:  inline-block; 
-  float: right;
+  margin-bottom: 8px;
 }
 
 .top-message {
@@ -292,7 +291,7 @@ h2 {
 }
 
 .login-form-container {
-    width: 300px;
+    /*width: 300px; */
     padding: 40px;
     border-radius: 3px;
     margin: 0px auto; 
@@ -403,8 +402,7 @@ font-size: 12px;
 }
 
 .search-button {
-margin-left: 5px;
-margin-top:   10px; 
+margin-left: 5px; 
 }
 
 .show-join-button {
@@ -481,6 +479,15 @@ padding: 5px;
     overflow: auto;
     margin: 2px;
     
+}
+
+.place-results-header-box {
+    border: 1px solid #ddd;
+    border-right-width: 0px;
+    border-left-width:  0px;
+    padding: 2px;
+    margin-bottom:  3px;
+    color: white;
 }
 
 
@@ -641,6 +648,9 @@ margin-top:   5px;
    
 }
 
+.search-box {
+  width:  300px; 
+}
 
 .search-button-container {
   margin-top:   10px;
@@ -653,7 +663,7 @@ margin-top:   5px;
   border-top-right-radius: 10px;
   border-top-left-radius: 10Px;
   position: relative;
-  top: -27px;
+  top: -29px;
   background-color: #83d6f7;
   padding-left: 10px;
   padding-right: 10px;
@@ -665,7 +675,7 @@ margin-top:   5px;
 .tab-current {
  background-color: #ff8f64;
  position: relative;
-  top: -27px;
+  top: -30px;
   font-size: 20px;
 }
 
