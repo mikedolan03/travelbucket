@@ -1122,7 +1122,8 @@ function main() {
 
 		currentUserName = data.username;
 
-									
+		showLoadModal();
+				
 		$.ajax({
 			
 		 	type: 'POST',
@@ -1156,7 +1157,9 @@ function main() {
 	    		}
 	    	}
 			
-		 });
+		 }).always( function() {
+					 		hideLoadModal();
+					 		});
 
 
 
@@ -1186,23 +1189,7 @@ function main() {
 					 		});
 		 			
 
-		/*$.ajax({
-					 type: callType,
-					 data: data,//JSON.stringify(data),
-					 beforeSend: function (xhr){ 
-					 	console.log(data.authToken);
-		        	 xhr.setRequestHeader('Authorization', ('BEARER '+ userToken)); 
-		    		 },
-					 contentType: 'application/json',
-					 url: myUrl,						
-					 success: function(data) {
-							   console.log('success in getting API');
-							   callback(data);
-					    	  }, //finally? hide modal 
-					 always: function() {
-					 		hideModal();
-					 		}
-		 			});  */
+	
 	}
 
 	function addPlace() {
@@ -1283,6 +1270,9 @@ function main() {
 		data.country =$('.country').val();
 		//getAPIData( callType='POST', data, myToken, myUrl = '/api/bucketlist', showUserList);
 
+		showLoadModal();
+
+
 		$.ajax({
 			
 		 type: 'POST',
@@ -1330,7 +1320,9 @@ function main() {
     					}
 					}
 
-		});
+		}).always( function() {
+					 		hideLoadModal();
+					 		});
 	}
 
 	function welcomePageView() {
